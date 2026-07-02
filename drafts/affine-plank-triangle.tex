@@ -1,0 +1,635 @@
+\documentclass[11pt,reqno]{amsart}
+%==============================================================
+%  Transport and tiling bounds for the affine plank problem on the triangle:
+%  new sharp cases, a rigidity theorem, and a normalizer obstruction.
+%
+%  ACADEMIC-CORRECTNESS POLICY (binding): every Theorem/Proposition/Lemma is
+%  either cited (with attribution) or proved in full here. Not-yet-established
+%  statements live in Conjecture/Problem/Remark and are never used as proved.
+%  SCOPE (honest): this studies the triangle as a CONCRETE body plus method.
+%  It is NOT an attack on the general conjecture via Ambrus (whose reduction
+%  targets simplices of dimension 2N-1; the triangle is never a target).
+%==============================================================
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[margin=1.1in]{geometry}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue]{hyperref}
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{problem}[theorem]{Problem}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newcommand{\rw}{\operatorname{rw}}
+\newcommand{\Leb}{\operatorname{Leb}}
+\newcommand{\R}{\mathbb{R}}
+\DeclareMathOperator{\wid}{w}
+\DeclareMathOperator{\vol}{vol}
+
+\title{Transport and tiling bounds for the affine plank problem on the triangle}
+% AUTHOR BLOCK — decision pending (see 03-work-plan.md §5); fill before submission.
+\author{[Author names]}
+\address{[Affiliation]}
+\email{[email]}
+\date{Draft --- \today}
+
+\begin{document}
+\begin{abstract}
+Bang's affine (relative-width) plank conjecture asserts that if a convex body $K$
+is covered by planks $P_1,\dots,P_n$ then $\sum_i \rw_K(P_i)\ge 1$, where
+$\rw_K(P)=\wid(P)/\wid_K(u_P)$ is the width of $P$ relative to the width of $K$ in
+$P$'s direction. It is open for non-symmetric bodies, and open already for three
+planks in the plane. We study the triangle as a concrete test body. We give (i) a
+short single-measure proof of $\sum\rw\ge 1/d$ for $d\ge2$, whose per-plank estimate
+is sharp at the simplex, so that no single-measure argument can improve on $1/d$;
+(ii) sharp
+$\sum\rw\ge 1$ for two directions and for facet-parallel families (all dimensions);
+(iii) a Hunter-free proof of the ``three facets $+$ one arbitrary plank'' case; and,
+as our main results, (iv) what is, to our knowledge, the first \emph{tight
+non-facet} case with full rigidity:
+three planks parallel to the medians of a triangle satisfy $\sum\rw\ge1$ with
+equality if and only if each is the central third of its median; and (v) a
+\emph{weighted-perimeter theorem} extending the bound to a two-parameter family of
+generic concurrent direction triples, via an explicit witness measure with edge
+masses $1-2p_j$. We isolate the transport method behind (i)--(v) as a
+\emph{uniform-marginal witness measure} and give a dimension-agnostic necessary
+condition for its existence (concurrence of the mid-level lines); for cyclic triples
+the condition is also sufficient, giving a complete characterization. Finally we
+record a structural obstruction: the chord-lemma step in the sign argument of Bang,
+which yields the chord-normalized bound $\sum \wid(P_i)/\ell_K(u_i)\ge1$, is sharp,
+so that argument cannot be pushed past the longest chord: no normalizer strictly
+between chord and width is reachable by it. We claim no proof of the conjecture.
+\end{abstract}
+\maketitle
+
+\section{Introduction}\label{sec:intro}
+
+A \emph{plank} of width $w$ is the region between two parallel hyperplanes at
+distance $w$. For a convex body $K\subset\R^d$ and a plank $P$ with unit normal $u$,
+the \emph{relative width} of $P$ is $\rw_K(P)=\wid(P)/\wid_K(u)$, where
+$\wid_K(u)=\max_{x\in K}\langle u,x\rangle-\min_{x\in K}\langle u,x\rangle$. Bang's
+affine plank conjecture~\cite{Bang51,Ambrus} states:
+\begin{conjecture}[Affine plank problem; Bang 1951]\label{conj:bang}
+If $K$ is covered by planks $P_1,\dots,P_n$, then $\sum_{i=1}^n \rw_K(P_i)\ge 1$.
+\end{conjecture}
+Ball~\cite{Ball91} proved Conjecture~\ref{conj:bang} for centrally symmetric $K$.
+For general bodies it is open, and, as emphasised by Bakaev--Yehudayoff~\cite{BY26},
+it is open \emph{already in the plane} --- only the two-plank case is settled there.
+The best general lower bound is
+$\sum\rw\ge 2/(1+\sqrt d)$~\cite{BY26}; on the equilateral triangle their method
+gives $\sum\rw\ge 4\sqrt3-6\approx0.928$.
+
+\smallskip
+\noindent\textbf{Scope.}\ This paper studies the triangle as a concrete body and
+develops the associated \emph{transport} (witness-measure) and \emph{tiling}
+methods. It is \emph{not} an attack on Conjecture~\ref{conj:bang} through the Ambrus
+reduction: that reduction sends a covering by $N$ planks to a simplex of dimension
+$2N-1$, so the triangle (the $2$-simplex) is never a target
+(Remark~\ref{rem:ambrus}). Our results are new sharp cases for a fixed body, a
+rigidity theorem, a dimension-agnostic structural characterization, and an
+obstruction; we prove nothing about the general conjecture.
+
+\begin{remark}\label{rem:ambrus}
+Ambrus's reduction~\cite{Ambrus} sends a covering by $N$ planks to a covering of a
+simplex of dimension $2N-1$ (two points per plank). The target simplices thus have
+odd dimension growing with $N$; the $2$-simplex (triangle) is never among them. So
+proving the conjecture for the triangle does \emph{not} imply the planar case, and
+our results are about the triangle as a concrete body, not a reduction of
+Conjecture~\ref{conj:bang}.
+\end{remark}
+
+\subsection*{The triangle model}
+By affine invariance take $\Delta=\{x\in\R^3:x_i\ge0,\ x_1+x_2+x_3=1\}$. A
+normalized plank is $P=\{x\in\Delta: f(x)\in I\}$ with $f:\Delta\to[0,1]$ affine
+onto $[0,1]$ and $I\subset[0,1]$ an interval; then $\rw_\Delta(P)=|I|$. Covering
+means $\Delta\subset\bigcup_i P_i$. The restriction $I\subset[0,1]$ loses no
+generality: replacing $I$ by $I\cap[0,1]$ leaves $P\cap\Delta$ unchanged and does
+not increase $|I|$.
+
+\subsection*{Results}
+Theorem~\ref{thm:oned} (\S\ref{sec:measure}), Theorems~\ref{thm:twodir}
+and~\ref{thm:facet} (\S\ref{sec:sharp}), Theorem~\ref{thm:3plus1}
+(\S\ref{sec:3plus1}), and the centerpieces: Theorem~\ref{thm:median} with rigidity
+(\S\ref{sec:median}) and the weighted-perimeter Theorem~\ref{thm:wper}
+(\S\ref{sec:concur}), which extends the sharp bound from the medians to a
+two-parameter family of generic concurrent triples.
+Proposition~\ref{prop:concur} (\S\ref{sec:concur}) is the dimension-agnostic
+necessary condition, and Corollary~\ref{cor:iff} the resulting characterization for
+cyclic triples; Proposition~\ref{thm:nogo} (\S\ref{sec:nogo}) is the normalizer
+obstruction.
+
+\section{The single-measure bound $\sum\rw\ge 1/d$}\label{sec:measure}
+\begin{theorem}\label{thm:oned}
+Let $d\ge2$. If $K\subset\R^d$ is covered by planks $P_1,\dots,P_n$, then
+$\sum_i\rw_K(P_i)\ge 1/d$. The per-plank estimate $\mu(P)\le d\,\rw_K(P)$ used in the
+proof is sharp at the simplex; hence no single-measure argument can improve the
+constant $1/d$. (For $d=1$ the conjecture itself is trivial: intervals covering an
+interval satisfy $\sum\rw\ge1$.)
+\end{theorem}
+\begin{proof}
+Let $\mu$ be the uniform probability measure on $K$. Fix $u$, normalize
+$\langle u,\cdot\rangle\in[0,w]$, $w=\wid_K(u)$. The marginal density is
+$f(t)=V(t)/\vol(K)$ with $V(t)=\vol_{d-1}(K\cap\{\langle u,\cdot\rangle=t\})$; by
+Brunn--Minkowski $g:=V^{1/(d-1)}$ is concave on $[0,w]$. If $g$ peaks at $t^\ast$
+with value $g^\ast$, then $g\ge g^\ast h$ for the tent $h$ ($h(0)=h(w)=0$,
+$h(t^\ast)=1$), so $f=g^{d-1}\ge(\max f)\,h^{d-1}$ and
+$1=\int f\ge(\max f)\int_0^w h^{d-1}=(\max f)\,w/d$, giving $\max f\le d/w$. Hence
+$\mu(P)=\int_I f\le d\,\rw_K(P)$ for each plank, and
+$1=\mu(K)\le\sum_i\mu(P_i)\le d\sum_i\rw_K(P_i)$. For sharpness of the per-plank
+estimate: equality in $\max f\le d/w$ forces $V\propto h^{d-1}$ (conical sections),
+realized by the simplex $K=\Delta^d$ with $u$ a vertex--facet direction, where a
+thin plank at the facet has $\mu(P)=(d-o(1))\rw_K(P)$. Thus for the simplex no
+single probability measure can certify a constant larger than $1/d$ by the union
+bound; this does \emph{not} assert any covering of the simplex with
+$\sum\rw$ near $1/d$ (indeed Theorem~\ref{thm:facet} gives $\sum\rw\ge1$ for
+facet-parallel coverings).
+\end{proof}
+\begin{remark}
+The bound cannot exceed $1/d$ by a single measure: uniform marginals in all
+directions would force $\mathbb E[x_k]=1/2$ against $\sum x_k=1$. This is Gardner's
+obstruction~\cite{Gardner88}: for the triangle there is no relative-width measure
+for the three side-directions.
+\end{remark}
+
+\section{Sharp cases: two directions and facet-parallel families}\label{sec:sharp}
+\begin{theorem}\label{thm:twodir}
+If every plank covering the triangle is parallel to one of two fixed
+\emph{non-parallel} directions, then $\sum\rw\ge1$, and this is sharp. (If the two
+directions are parallel the statement is trivial: all planks share one normalized
+coordinate $f$, the intervals $f(P_i)$ cover $[0,1]$, and $\sum\rw=\sum|I_i|\ge1$.)
+\end{theorem}
+\begin{proof}
+Let $f_u,f_v:\Delta\to[0,1]$ be the two affine coordinates; since the directions are
+non-parallel, $\Phi=(f_u,f_v)$ is an
+affine bijection onto a triangle $T\subset[0,1]^2$ with full projections. By
+\cite[Theorem~1]{Gardner88}, which constructs a relative-width measure for any
+\emph{two} directions on any planar convex body,
+there is a probability measure $\nu$ on $\Delta$ with $f_{u\#}\nu=f_{v\#}\nu=\Leb$.
+Then $\nu(P)=|I|=\rw(P)$ for each plank, and
+$1=\nu(\Delta)\le\sum\nu(P_i)=\sum\rw(P_i)$.
+\end{proof}
+\begin{theorem}\label{thm:facet}
+Planks parallel to the facets of a simplex $\Delta^d$, in any number, that cover
+$\Delta^d$ satisfy $\sum\rw\ge1$, and this is sharp.
+\end{theorem}
+\begin{proof}
+Write $\Delta^d=\{\lambda\in[0,1]^{d+1}:\sum_k\lambda_k=1\}$ in barycentric
+coordinates; a plank parallel to facet $k$ is a coordinate slab
+$\{\lambda_k\in I\}$. Grouping the planks by facet, let
+$U_k=\bigcup_{c(i)=k}I_i\subset[0,1]$ be the forbidden set on facet $k$, so
+$\sum_k|U_k|\le\sum_i|I_i|=:R$, and set $C_k=[0,1]\setminus U_k$. A point
+$\lambda\in\Delta^d$ is uncovered iff $\lambda_k\in C_k$ for every $k$; since
+$C_k\subset[0,1]$, an uncovered point exists \emph{iff}
+$1\in C_1+\dots+C_{d+1}$ (Minkowski sum).
+
+Assume $R<1$; we produce an uncovered point. Each $C_k$ is nonempty compact
+($|C_k|=1-|U_k|\ge1-R>0$). Put $D=C_1+\dots+C_d$. By the one-dimensional
+Brunn--Minkowski inequality $|A+B|\ge|A|+|B|$ (for nonempty compact $A,B\subset\R$,
+iterated), $|D|\ge\sum_{k=1}^d|C_k|=d-\sum_{k=1}^d|U_k|$; as $D\subseteq[0,d]$,
+$|[0,1]\setminus D|\le|[0,d]\setminus D|\le\sum_{k=1}^d|U_k|$, whence
+$|D\cap[0,1]|\ge1-\sum_{k=1}^d|U_k|$. Also $(1-C_{d+1})\cap[0,1]$ has measure
+$|C_{d+1}|=1-|U_{d+1}|$. Both sets lie in $[0,1]$ and their measures sum to
+$2-\sum_k|U_k|\ge2-R>1$, so they intersect: there is $t\in D$ with $1-t\in C_{d+1}$.
+Then $t+(1-t)=1\in C_1+\dots+C_{d+1}$, i.e.\ an uncovered $\lambda$ exists.
+Contrapositively, covering forces $R\ge1$. Sharpness: the facet tiling
+$I_k=[0,\tfrac1{d+1}]$ gives $\sum\rw=1$.
+\end{proof}
+\begin{remark}
+The edge-by-edge argument does \emph{not} prove this: on an edge only two
+barycentric coordinates vary, so no single edge can force $\sum_k|U_k|\ge1$ across
+all $d+1$ facets. The Minkowski-sum reduction above is the correct route; note that
+no witness \emph{measure} can prove it either, since facet directions violate the
+concurrence condition of Proposition~\ref{prop:concur}.
+\end{remark}
+
+\section{Three facets plus one arbitrary plank}\label{sec:3plus1}
+\begin{theorem}\label{thm:3plus1}
+Let $P_i=\{\lambda_i\in I_i\}$ ($i=1,2,3$) be facet-parallel with $a_i=|I_i|$, and
+let $Q=\{f\in J\}$, $t=|J|$, with $f:\Delta\to[0,1]$ affine normalized. If
+$\Delta\subset P_1\cup P_2\cup P_3\cup Q$ then $a_1+a_2+a_3+t\ge1$.
+\end{theorem}
+\begin{proof}
+Choose an active edge of $f$; relabelling, $f(v_j)=0$, $f(v_k)=1$, and let $v_i$ be
+the opposite vertex, $\theta=f(v_i)$. For $s\in[0,1]$ consider the fibre
+$F_s=\{\lambda_i=s\}$, parametrized by $u=\lambda_k\in[0,1-s]$, so
+$\lambda_j=1-s-u$ and $f|_{F_s}(u)=\theta s+u$. On $F_s$: $P_i\cap F_s=F_s$ if
+$s\in I_i$ (else $\varnothing$); $P_j\cap F_s$, $P_k\cap F_s$, $Q\cap F_s$ have
+lengths $\le a_j,a_k,t$. Put $B=a_j+a_k+t$. If $s\notin I_i$ and $F_s$ is covered,
+its length $1-s\le B$. If $B\ge1$ we are done; else $[0,1-B)\subset I_i$, so
+$a_i\ge1-B$. In both cases $a_1+a_2+a_3+t=a_i+B\ge1$.
+\end{proof}
+
+\section{The median theorem and its rigidity}\label{sec:median}
+Let $m_1,m_2,m_3$ be the medians of $\Delta$ as normalized affine forms: with
+$A,B,C$ the vertices,
+\[ m_1=(\tfrac12,0,1),\quad m_2=(0,1,\tfrac12),\quad m_3=(1,\tfrac12,0), \]
+(vertex values). One has $m_1+m_2+m_3\equiv\tfrac32$. A \emph{median plank} is
+$P_i=\{m_i\in I_i\}$, $I_i=[l_i,h_i]$, $r_i=|I_i|>0$.
+\begin{theorem}\label{thm:median}
+If three median planks cover $\Delta$, then $r_1+r_2+r_3\ge1$, with equality if and
+only if $I_1=I_2=I_3=[\tfrac13,\tfrac23]$.
+\end{theorem}
+To our knowledge this is the first tight \emph{non-facet} case of the three-plank
+problem with full rigidity: the sharp cases recorded in the survey
+\cite{Verreault} (and in \cite{Gardner88,BY26}) concern facet/coordinate directions,
+two directions, or symmetric bodies, and we are not aware of a comparable tilted
+tight instance in the literature.
+\begin{proof}[Proof of the bound]
+Let $\mu$ be the perimeter measure: uniform in the parameter on each of the three
+edges, mass $\tfrac13$ each. A direct computation shows each pushforward
+$m_{i\#}\mu=\Leb[0,1]$. Indeed for $m_1$: on $AB$, $m_1$ ranges over $[0,\tfrac12]$
+with Jacobian $2$ (density $\tfrac13\cdot2$); on $CA$, over $[\tfrac12,1]$ likewise;
+on $BC$, over $[0,1]$ with Jacobian $1$ (density $\tfrac13$); the total density is
+$1$ on $[0,1]$. Hence $\mu(P_i)=\Leb(I_i)=r_i$,
+and $1=\mu(\Delta)\le\sum\mu(P_i)\le\sum r_i$.
+\end{proof}
+\begin{proof}[Proof of rigidity]
+Equality in $1\le\sum\mu(P_i)$ forces the $P_i$ to
+partition $\mu$ a.e.; since $\mu$ lives on the edges, \emph{on each edge the three
+traces tile $[0,1]$}. We claim there are exactly three such edge-tilings, and only
+one covers the interior.
+
+\emph{Three edge-tilings.} On each edge each median is affine, so the three traces
+are explicit intervals depending piecewise-linearly on $(l_i,h_i)$ through
+$a_i=|I_i\cap[0,\tfrac12]|$ and $b_i=|I_i\cap[\tfrac12,1]|$. Classifying each $I_i$ by
+crossing type (contained in $[0,\tfrac12]$, crossing $\tfrac12$, or contained in
+$[\tfrac12,1]$) and each edge by the left-to-right order of its traces, the abutting
+(tiling) conditions become a finite family of linear systems in $(l_i,h_i)$.
+
+\begin{lemma}\label{lem:three}
+The edge-tiling conditions have exactly three solutions with $0\le l_i<h_i\le1$:
+$[\tfrac13,\tfrac23]^3$, $[0,\tfrac13]^3$, and $[\tfrac23,1]^3$.
+\end{lemma}
+This is the case $\tau_i=\tfrac12$ of Proposition~\ref{prop:tilings}, proved in
+full in Appendix~\ref{app:tilings} for arbitrary cyclic triples: the symmetries
+of the configuration reduce the a priori $27$ crossing patterns to seven
+classes, five of which are impossible and two of which lead to cyclic linear
+systems with unique solutions. The lemma has also been verified by three
+independent exact computer enumerations, archived as ancillary files.
+
+\emph{Interior witness.} The centroid $G$ has $m(G)=(\tfrac12,\tfrac12,\tfrac12)$.
+Since $\tfrac12\notin[0,\tfrac13]\cup[\tfrac23,1]$, the tilings $[0,\tfrac13]^3$ and
+$[\tfrac23,1]^3$ leave $G$ uncovered; they tile the boundary but are not coverings
+of $\Delta$. The tiling $[\tfrac13,\tfrac23]^3$ covers $\Delta$ and has
+$\sum r_i=1$. Hence the unique covering with $\sum r_i=1$ is $[\tfrac13,\tfrac23]^3$.
+\end{proof}
+
+\section{A dimension-agnostic necessary condition for transport}\label{sec:concur}
+The proofs of Theorems~\ref{thm:twodir} and~\ref{thm:median} share one device: a
+probability measure whose pushforward under each direction is uniform. Which
+direction-tuples admit one?
+\begin{proposition}\label{prop:concur}
+Let $u_1,\dots,u_{d+1}$ be normalized affine forms on $\Delta^d$ with vertex-value
+matrix $V$ invertible. If a probability measure $\mu$ on $\Delta^d$ has
+$u_{i\#}\mu=\Leb[0,1]$ for all $i$, then its barycenter $p\in\Delta^d$ satisfies
+$Vp=\tfrac12\mathbf 1$; equivalently the mid-level hyperplanes $\{u_i=\tfrac12\}$
+concur at $p$, which requires $\mathbf 1^\top V^{-1}\mathbf 1=2$ and
+$V^{-1}\mathbf 1\ge0$.
+\end{proposition}
+\begin{proof}
+$\tfrac12=\mathbb E_\mu[u_i]=\sum_j V_{ij}\mathbb E_\mu[x_j]=(Vp)_i$, and
+$p\in\Delta^d$ gives $\mathbf 1^\top p=1$, $p\ge0$; substitute $p=\tfrac12V^{-1}\mathbf1$.
+\end{proof}
+The three medians satisfy this with $p$ the centroid; the three facets do not
+($\mathbf 1^\top V^{-1}\mathbf 1=3\ne2$), recovering Gardner's obstruction. The
+concurrence family is two-dimensional (parametrized by $p$): a normalized direction
+has vertex values $\{0,\tau,1\}$, and $Vp=\tfrac12\mathbf1$ ties each $\tau_i$ to $p$.
+The medians are the case $p=$ centroid, forcing $\tau_i=\tfrac12$. Among these, the
+explicit perimeter measure singles out the medians:
+\begin{proposition}\label{prop:tauhalf}
+For a direction $u$ with vertex values $\{0,\tau,1\}$, the perimeter measure $\mu$
+(uniform on each edge, mass $\tfrac13$) satisfies $u_\#\mu=\Leb[0,1]$ if and only if
+$\tau=\tfrac12$.
+\end{proposition}
+\begin{proof}
+On the three edges $u$ is affine between the pairs $\{0,\tau\},\{\tau,1\},\{0,1\}$,
+so $u_\#\mu$ has density $\tfrac1{3\tau}+\tfrac13$ on $[0,\tau]$ and
+$\tfrac1{3(1-\tau)}+\tfrac13$ on $[\tau,1]$. Both equal $1$ iff $\tau=\tfrac12$.
+\end{proof}
+Uniform edge-weights thus single out the medians. Allowing \emph{unequal} edge
+masses, however, the construction covers a full two-parameter family:
+\begin{theorem}[weighted perimeter]\label{thm:wper}
+Let $p=(p_A,p_B,p_C)$ be interior with $\max_j p_j<\tfrac12$, and let
+$u_1=(\tau_1,0,1)$, $u_2=(0,1,\tau_2)$, $u_3=(1,\tau_3,0)$ (vertex values at
+$A,B,C$) be the cyclic directions concurrent at $p$, i.e.\
+$\tau_1=\frac{1/2-p_C}{p_A}$, $\tau_2=\frac{1/2-p_B}{p_C}$,
+$\tau_3=\frac{1/2-p_A}{p_B}$. Let $\mu_p$ be uniform on each edge with masses
+$w_{AB}=1-2p_C$, $w_{BC}=1-2p_A$, $w_{CA}=1-2p_B$ (summing to $1$). Then
+$u_{i\#}\mu_p=\Leb[0,1]$ for $i=1,2,3$; consequently every covering of $\Delta$ by
+planks in these three directions satisfies $\sum\rw\ge1$.
+\end{theorem}
+\begin{proof}
+Each $u_i$ is affine of full range $[0,1]$ on the edge joining its $0$- and
+$1$-vertices ($u_1$ on $BC$, $u_2$ on $AB$, $u_3$ on $CA$) and affine of range
+$[0,\tau_i]$, resp.\ $[\tau_i,1]$, on the other two. The pushforward of a uniform
+edge mass $w_e$ through an affine map of range length $L$ is uniform with density
+$w_e/L$. Hence $u_{1\#}\mu_p$ has density $w_{BC}+w_{AB}/\tau_1$ on $[0,\tau_1]$ and
+$w_{BC}+w_{CA}/(1-\tau_1)$ on $[\tau_1,1]$, and similarly for $u_2,u_3$: six
+equations. Using $p_A+p_B+p_C=1$, each composite term collapses by the identity
+$(1-2x)\,p/(\tfrac12-x)=2p$: e.g.\
+$w_{AB}/\tau_1=(1-2p_C)p_A/(\tfrac12-p_C)=2p_A$, so
+$w_{BC}+w_{AB}/\tau_1=(1-2p_A)+2p_A=1$; likewise
+$1-\tau_1=\frac{1/2-p_B}{p_A}$ gives $w_{CA}/(1-\tau_1)=2p_A$. All six densities
+equal $1$, so each marginal is $\Leb[0,1]$, and the transport argument of
+Theorem~\ref{thm:median} applies verbatim. Finally $\tau_i\in(0,1)$ for all $i$ iff
+$\max_jp_j<\tfrac12$ iff all three masses are positive, so every valid cyclic triple
+admits $\mu_p$.
+\end{proof}
+Taking $p$ the centroid recovers Theorem~\ref{thm:median}'s bound ($\tau_i=\tfrac12$,
+equal masses). For $p$ off the centroid the directions are generic non-median
+triples; e.g.\ $p=(\tfrac9{20},\tfrac3{10},\tfrac14)$ gives
+$\tau=(\tfrac59,\tfrac45,\tfrac16)$ with masses $(\tfrac12,\tfrac1{10},\tfrac25)$.
+Theorem~\ref{thm:wper} thus proves the bound of Conjecture~\ref{conj:bang} for a
+two-parameter family of generic direction triples on the triangle, answering the
+finite-direction existence question of~\cite{Gardner88} affirmatively for the cyclic
+concurrent family.
+
+Combining necessity (Proposition~\ref{prop:concur}) with the explicit construction
+(Theorem~\ref{thm:wper}) yields the first \emph{characterization} in this setting:
+\begin{corollary}\label{cor:iff}
+Call a direction triple \emph{cyclic} if its vertex values are
+$u_1=(\tau_1,0,1)$, $u_2=(0,1,\tau_2)$, $u_3=(1,\tau_3,0)$ with
+$\tau_i\in(0,1)$. A cyclic triple admits a uniform-marginal witness measure if and
+only if the three mid-level lines $\{u_i=\tfrac12\}$ concur. In that case the
+concurrence point $p$ automatically lies in the open medial triangle
+($p_j>0$ and $p_j<\tfrac12$ for all $j$), and the weighted-perimeter measure
+$\mu_p$ of Theorem~\ref{thm:wper} is a witness.
+\end{corollary}
+\begin{proof}
+The vertex-value matrix has $\det V=-(1+\tau_1\tau_2\tau_3)\ne0$, so
+Proposition~\ref{prop:concur} applies and gives necessity. Conversely, if the lines
+concur at $p$ (a point of the affine plane of $\Delta$, so $\sum_jp_j=1$), then $p$
+is the unique solution of $Vp=\tfrac12\mathbf1$, which in closed form reads
+$2(1+\tau_1\tau_2\tau_3)\,p_A=1-\tau_3(1-\tau_2)$ and cyclically; each right-hand
+side is positive for $\tau_i\in(0,1)$, so $p_j>0$, and the identities
+$\tfrac12-p_C=\tau_1p_A$, $\tfrac12-p_A=\tau_3p_B$, $\tfrac12-p_B=\tau_2p_C$ give
+$p_j<\tfrac12$. Theorem~\ref{thm:wper} then supplies $\mu_p$.
+\end{proof}
+\begin{remark}
+The \emph{anti-cyclic} pattern (all $0$- and $1$-roles exchanged) reduces to the
+cyclic one by a reflection of $\Delta$ (a transposition of two vertices), which
+maps the medial triangle to itself; Theorem~\ref{thm:wper} and
+Corollary~\ref{cor:iff} hold for it verbatim. Non-cyclic (mixed) role assignments,
+and the rigidity of the equality case for $p$ off the centroid, remain open
+(Problem~\ref{prob:suff}).
+\end{remark}
+
+\smallskip
+The concurrence condition is dimension-agnostic: the cyclic medians of $\Delta^d$
+($m_i(e_i)=\tfrac12$, $m_i(e_{i+1})=0$, $m_i(e_{i-1})=1$, else $\tfrac12$) have
+row-sums $\tfrac{d+1}2$, hence concur at the centroid in every dimension. Whether a
+witness measure then exists for $d\ge3$ is open (the perimeter measure is special to
+$d=2$); this is a higher-dimensional instance of the finite-direction question left
+open by Gardner~\cite{Gardner88}.
+
+\section{A normalizer obstruction}\label{sec:nogo}
+For a direction $u$ let $\ell_K(u)$ be the length of the longest chord of $K$
+parallel to $u$; always $\ell_K(u)\le\wid_K(u)$. Bakaev--Yehudayoff's chord bound
+$\sum_i\wid(P_i)/\ell_K(u_i)\ge1$~\cite{BY26} follows from Bang's sign argument
+via the chord lemma. Consider interpolating the normalizer,
+$N_c=(1-c)\ell+c\,\wid$, $c\in[0,1]$: $N_c=\ell$ at $c=0$ (chord bound) and
+$N_c=\wid$ at $c=1$ (Conjecture~\ref{conj:bang}).
+\begin{proposition}\label{thm:nogo}
+The chord-lemma step is sharp: for $u$ with $\|u\|=a/2$, the body
+$(K-u)\cap(K+u)$ contains a homothet of $K$ of ratio $(\ell-a)/\ell$
+\cite[Lem.~2.3]{Verreault}, and this ratio is attained (by a segment). Consequently
+the iterated chord-lemma placement of a Bang-system witness $x_0+\sum_j\pm u_j$
+proves $\sum_i\wid(P_i)/N(u_i)\ge1$ for $N=\ell$ and for no direction-normalizer
+$N>\ell$; in particular it does not establish $\sum_i\wid(P_i)/N_c(u_i)\ge1$ for
+any $c>0$.
+\end{proposition}
+\begin{proof}
+The placement argument runs as follows: iterating the chord lemma over the
+directions $u_j$, the common intersection $\bigcap_j\bigl((K-u_j)\cap(K+u_j)\bigr)$
+(in the appropriate nested form) is nonempty as soon as
+$\sum_j\wid(P_j)/\ell_j<1$, which places the witness and forces
+$\sum\wid(P_j)/\ell_j\ge1$ for coverings. The movement budget available in
+direction $u$ is therefore governed by the homothety ratio $(\ell-a)/\ell$. This
+ratio is tight: for a segment $K=[y,z]$ of length $\ell$ parallel to $u$,
+$(K-u)\cap(K+u)$ is a segment of length exactly $\ell-a$. Hence the total budget in
+direction $u$ is exactly the longest chord $\ell(u)$ and cannot be stretched to any
+$N(u)>\ell(u)$; since $N_c(u)=(1-c)\ell(u)+c\wid_K(u)>\ell(u)$ whenever $c>0$ and
+$\wid_K(u)>\ell(u)$, the claim follows.
+\end{proof}
+\begin{remark}
+Proposition~\ref{thm:nogo} does \emph{not} show $\sum\wid(P_i)/N_c(u_i)\ge1$ is false
+for $c>0$; it shows the sign-argument route cannot prove it. Beating $2/(1+\sqrt d)$ by
+this normalizer therefore requires a witness that is not a Bang-system point, i.e.\
+one exploiting the coupling of the covering. This is consistent with the
+sharpness of~\cite{BY26} for the cube.
+\end{remark}
+
+\section{Open problems}
+\begin{problem}
+The three-plank case for three genuinely tilted directions on the triangle
+(equivalently Conjecture~\ref{conj:bang} for the triangle).
+\end{problem}
+\begin{problem}\label{prob:suff}
+Corollary~\ref{cor:iff} characterizes the cyclic (and anti-cyclic) role
+assignments. For the remaining \emph{mixed} role assignments of a concurrent
+triple, decide whether a uniform-marginal witness measure exists; and determine the
+equality (rigidity) case of Theorem~\ref{thm:wper} for $p$ off the centroid ---
+does $\sum\rw=1$ force a tiling, and is it ever attained?
+\end{problem}
+\begin{problem}
+Whether $\sum\wid(P_i)/N_c(u_i)\ge1$ holds for some $c>0$ (a coupling certificate),
+which would improve the general bound past $2/(1+\sqrt d)$.
+\end{problem}
+
+\appendix
+\section{Edge tilings of cyclic triples}\label{app:tilings}
+
+Throughout, $u_1=(\tau_1,0,1)$, $u_2=(0,1,\tau_2)$, $u_3=(1,\tau_3,0)$ is a
+cyclic triple with arbitrary $\tau_1,\tau_2,\tau_3\in(0,1)$ (\emph{no}
+concurrence is assumed), and $I_i=[l_i,h_i]\subset[0,1]$, $l_i<h_i$, are three
+intervals. Say $(I_1,I_2,I_3)$ satisfies the \emph{edge-tiling conditions} if on
+each edge of $\Delta$ the traces $T_i=\{x\in\text{edge}: u_i(x)\in I_i\}$ cover
+the edge and have pairwise disjoint interiors. Indices are mod~$3$.
+
+\begin{proposition}\label{prop:tilings}
+For every $\tau\in(0,1)^3$ the edge-tiling conditions have exactly three
+solutions: with
+\[
+\lambda_i=\frac{\tau_i\bigl(1-\tau_{i+1}(1-\tau_{i+2})\bigr)}{1+\tau_1\tau_2\tau_3},
+\qquad
+\rho_i=\frac{1-\tau_{i+2}(1-\tau_i)}{1+(1-\tau_1)(1-\tau_2)(1-\tau_3)},
+\]
+they are $\bigl([\lambda_i,\rho_i]\bigr)_i$, $\bigl([0,\lambda_i]\bigr)_i$, and
+$\bigl([\rho_i,1]\bigr)_i$. One has $0<\lambda_i<\tau_i<\rho_i<1$ for all $i$ and
+all $\tau$. For $\tau_i\equiv\tfrac12$ (the medians) the solutions are
+$[\tfrac13,\tfrac23]^3$, $[0,\tfrac13]^3$, $[\tfrac23,1]^3$.
+\end{proposition}
+
+\subsection*{Setup}
+Parametrize the edges by $t\in[0,1]$ in the orientations $A\!\to\!B$,
+$B\!\to\!C$, $C\!\to\!A$. From the vertex values, each edge sees one direction
+with values $[0,\tau_c]$ (the \emph{low} direction $c$, $u_c(t)=\tau_c(1-t)$),
+one with values $[0,1]$ (the \emph{full} direction $f$, $u_f(t)=t$), and one
+with values $[\tau_g,1]$ (the \emph{high} direction $g$,
+$u_g(t)=1-(1-\tau_g)t$), with roles
+\[
+(c,f,g)=(1,2,3)\ \text{on } AB,\qquad (3,1,2)\ \text{on } BC,\qquad
+(2,3,1)\ \text{on } CA .
+\]
+Inverting, the traces on an edge with roles $(c,f,g)$ are
+\begin{equation}\label{eq:traces}
+\begin{aligned}
+T_c&=\Bigl[\max\bigl(0,1-\tfrac{h_c}{\tau_c}\bigr),\,1-\tfrac{l_c}{\tau_c}\Bigr]
+\ \ (\text{nondegenerate iff }l_c<\tau_c),\qquad T_f=[l_f,h_f],\\
+T_g&=\Bigl[\tfrac{1-h_g}{1-\tau_g},\,
+\min\bigl(1,\tfrac{1-l_g}{1-\tau_g}\bigr)\Bigr]
+\ \ (\text{nondegenerate iff }h_g>\tau_g).
+\end{aligned}
+\end{equation}
+Classify each $I_i$ by its position relative to $\tau_i$: type $\mathrm L$ if
+$h_i\le\tau_i$, type $\mathrm R$ if $l_i\ge\tau_i$, type $\mathrm M$ if
+$l_i<\tau_i<h_i$; every $I_i$ is of exactly one type. Two elementary
+observations, used throughout:
+
+\emph{(O1)} If $I_c$ is of type $\mathrm M$ then $T_c=[0,\,1-l_c/\tau_c]$ (it
+contains the left endpoint); if $I_c$ is of type $\mathrm R$ then $T_c$ is
+degenerate (a point or empty). Dually, if $I_g$ is of type $\mathrm M$ then
+$T_g=[(1-h_g)/(1-\tau_g),\,1]$; if $I_g$ is of type $\mathrm L$ then $T_g$ is
+degenerate.
+
+\emph{(O2)} The tiling condition is insensitive to degenerate traces: a
+degenerate trace covers at most one point, and since the nondegenerate traces
+are finitely many closed sets whose union contains $[0,1]$ minus finitely many
+points, that union is all of $[0,1]$. So on each edge the \emph{nondegenerate}
+traces tile $[0,1]$; in particular, finitely many closed intervals of positive
+length with disjoint interiors covering $[0,1]$ abut consecutively from $0$
+to~$1$.
+
+\subsection*{Symmetries}
+The rotation $A\to B\to C\to A$ maps the cyclic triple with parameters
+$(\tau_1,\tau_2,\tau_3)$ to the cyclic triple with parameters
+$(\tau_2,\tau_3,\tau_1)$ and acts on solutions by
+$(I_1,I_2,I_3)\mapsto(I_2,I_3,I_1)$, shifting type vectors cyclically. The
+reflection swapping $B$ and $C$, composed with the flip $s\mapsto1-s$ of each
+normalized direction (which leaves every plank unchanged), maps the cyclic
+triple $(\tau_1,\tau_2,\tau_3)$ to the cyclic triple
+$(1-\tau_1,\,1-\tau_3,\,1-\tau_2)$ and acts by
+$(I_1,I_2,I_3)\mapsto(1-I_1,\,1-I_3,\,1-I_2)$ (where $1-[l,h]=[1-h,1-l]$),
+exchanging types $\mathrm L\leftrightarrow\mathrm R$. Since we prove
+Proposition~\ref{prop:tilings} for \emph{all} $\tau$ at once, these symmetries
+permute the class of problems, and the $27$ type vectors
+$(X_1,X_2,X_3)\in\{\mathrm L,\mathrm M,\mathrm R\}^3$ reduce to seven orbit
+representatives:
+\[
+\mathrm{MMM};\quad \mathrm{LLL}\ (\sim\mathrm{RRR});\quad \mathrm{MML};\quad
+\mathrm{LLM};\quad \mathrm{LLR};\quad \mathrm{LMR};\quad \mathrm{LRM}
+\]
+(orbit sizes $1,2,6,6,6,3,3$). It suffices to analyze one representative per
+orbit.
+
+\subsection*{Case MMM}
+By (O1), on every edge $T_c=[0,\,1-l_c/\tau_c]$ and
+$T_g=[(1-h_g)/(1-\tau_g),\,1]$, both nondegenerate, and $T_f$ has positive
+length. Disjointness of interiors forces $T_f$ inside the gap between them, and
+covering forces the abutments
+\[
+l_f=1-\frac{l_c}{\tau_c},\qquad h_f=\frac{1-h_g}{1-\tau_g}.
+\]
+Reading this on the three edges gives two decoupled cyclic systems,
+\[
+l_2=1-\frac{l_1}{\tau_1},\quad l_1=1-\frac{l_3}{\tau_3},\quad
+l_3=1-\frac{l_2}{\tau_2};
+\qquad
+h_1=\frac{1-h_2}{1-\tau_2},\quad h_2=\frac{1-h_3}{1-\tau_3},\quad
+h_3=\frac{1-h_1}{1-\tau_1}.
+\]
+Each system composes three decreasing affine maps, so the composite self-map
+(of $l_1$, resp.\ $h_1$) is affine with negative slope
+($-1/(\tau_1\tau_2\tau_3)$, resp.\ $-1/\prod(1-\tau_i)$), hence has a unique
+fixed point: the solutions are $l_i=\lambda_i$, $h_i=\rho_i$ (direct
+substitution verifies the formulas; e.g.\
+$1-\lambda_1/\tau_1
+=\bigl(\tau_1\tau_2\tau_3+\tau_2(1-\tau_3)\bigr)/(1+\tau_1\tau_2\tau_3)
+=\lambda_2$). The chain
+$0<\lambda_i<\tau_i<\rho_i<1$ reduces to
+$\tau_{i+1}(\tau_{i+2}-1)<\tau_1\tau_2\tau_3$ and $\tau_i(1-\tau_{i+1})<1$,
+both automatic; so the solution is of type MMM and, by construction, tiles each
+edge as $[0,l_f]\cup[l_f,h_f]\cup[h_f,1]$.
+
+\subsection*{Case LLL}
+All $T_g$ are degenerate, so each edge is tiled by
+$T_c=[1-h_c/\tau_c,\,1-l_c/\tau_c]$ (the full image, as $I_c\subset[0,\tau_c]$)
+and $T_f=I_f$ with $h_f\le\tau_f<1$. The tile containing $1$ must be $T_c$,
+forcing $l_c=0$. If $h_c=\tau_c$ then $T_c=[0,1]$ and $T_f$ has empty interior,
+impossible; so $T_f$ contains $0$ ($l_f=0$) and abuts $T_c$:
+$h_f=1-h_c/\tau_c$. On the three edges: $l_i=0$ for all $i$, and the $h_i$
+satisfy the \emph{same} cyclic system as the $l_i$ in case MMM, so
+$h_i=\lambda_i$, giving $\bigl([0,\lambda_i]\bigr)_i$ (type $\mathrm L$ since
+$\lambda_i<\tau_i$). Applying the reflection symmetry, the orbit representative
+RRR yields the unique solution $h_i=1$, $l_i=\rho_i$, i.e.\
+$\bigl([\rho_i,1]\bigr)_i$; equivalently, the $l_i$ satisfy the same cyclic
+system as the $h_i$ in case MMM.
+
+\subsection*{Case MML \textup(impossible\textup)}
+On $AB$: $T_3$ is degenerate ($I_3$ of type $\mathrm L$), so $[0,1]$ is tiled
+by $T_1=[0,\,1-l_1/\tau_1]$ (O1) and $T_2=I_2$. If $1\in T_1$ then $T_1=[0,1]$
+and $T_2$ has empty interior, impossible; so $h_2=1$. Then on $BC$ the high
+trace \eqref{eq:traces} is
+$T_2=[\tfrac{1-h_2}{1-\tau_2},\min(1,\tfrac{1-l_2}{1-\tau_2})]=[0,1]$ (as
+$h_2=1$ and $l_2<\tau_2$), leaving the full trace $T_1=I_1$ (positive length)
+with empty interior --- contradiction.
+
+\subsection*{Case LLM \textup(impossible\textup)}
+On $BC$ ($(c,f,g)=(3,1,2)$): the high trace is degenerate ($I_2$ of type
+$\mathrm L$), so $[0,1]$ is tiled by $T_3=[0,\,1-l_3/\tau_3]$ (O1, $I_3$ of
+type $\mathrm M$) and $T_1=I_1$ with $h_1\le\tau_1<1$. The tile containing $1$
+must be $T_3$, so $l_3=0$ and $T_3=[0,1]$, leaving $T_1$ with empty interior
+--- contradiction.
+
+\subsection*{Case LLR \textup(impossible\textup)}
+On $BC$ both compressed traces are degenerate ($I_3$ of type $\mathrm R$ gives
+a degenerate low trace, $I_2$ of type $\mathrm L$ a degenerate high trace), so
+$T_1=I_1$ alone tiles $[0,1]$, forcing $h_1=1>\tau_1$ --- contradicting type
+$\mathrm L$.
+
+\subsection*{Case LMR \textup(impossible\textup)}
+On $BC$: low trace degenerate ($I_3$ type $\mathrm R$), so $T_1=I_1$ and
+$T_2=[\tfrac{1-h_2}{1-\tau_2},\,1]$ (O1) tile $[0,1]$; as above this forces
+$l_1=0$ and $h_1=\tfrac{1-h_2}{1-\tau_2}$. On $CA$: high trace degenerate
+($I_1$ type $\mathrm L$), so $T_2=[0,\,1-l_2/\tau_2]$ (O1) and $T_3=I_3$ tile,
+forcing $h_3=1$ and $l_3=1-l_2/\tau_2$. Now on $AB$ the high trace is
+$T_3=\bigl[0,\,\tfrac{1-l_3}{1-\tau_3}\bigr]
+=\bigl[0,\,\tfrac{l_2}{\tau_2(1-\tau_3)}\bigr]$
+(truncated at $1$ if larger, in which case $T_2$ already has empty interior, a
+contradiction), of positive length, so $l_2>0$; since
+$\tau_2(1-\tau_3)<1$, its right endpoint exceeds $l_2$, and the interiors of
+$T_3$ and $T_2=[l_2,h_2]$ overlap --- contradiction.
+
+\subsection*{Case LRM \textup(impossible\textup)}
+On $CA$: both compressed traces are degenerate ($I_2$ of type $\mathrm R$,
+$I_1$ of type $\mathrm L$), so $T_3=I_3$ alone tiles $[0,1]$, i.e.\
+$I_3=[0,1]$. Then on $AB$ the high trace \eqref{eq:traces} is
+$T_3=[\tfrac{1-h_3}{1-\tau_3},\min(1,\tfrac{1-l_3}{1-\tau_3})]=[0,1]$, leaving
+$T_2=I_2$ (positive length) with empty interior --- contradiction.
+
+\medskip
+All orbits are exhausted, proving Proposition~\ref{prop:tilings}. \qed
+
+\medskip
+The three solutions have also been verified by exact rational searches at
+$\tau=(\tfrac12,\tfrac12,\tfrac12)$ and $\tau=(\tfrac12,\tfrac23,\tfrac13)$,
+and the median enumeration was verified by two further independent exact
+computations; all scripts are archived as ancillary files.
+
+\begin{thebibliography}{9}
+\bibitem{Ambrus} G.\ Ambrus, \emph{Appendix: Plank problems}, manuscript, 2010.
+\bibitem{Ball91} K.\ Ball, \emph{The plank problem for symmetric bodies},
+Invent.\ Math.\ \textbf{104} (1991), 535--543.
+\bibitem{Bang51} T.\ Bang, \emph{A solution of the ``plank problem''},
+Proc.\ Amer.\ Math.\ Soc.\ \textbf{2} (1951), 990--993.
+\bibitem{BY26} E.\ Bakaev, A.\ Yehudayoff, \emph{A note on the affine plank
+conjecture}, arXiv:2602.20290, 2026.
+\bibitem{Gardner88} R.\ J.\ Gardner, \emph{Relative width measures and the plank
+problem}, Pacific J.\ Math.\ \textbf{135} (1988), no.\ 2, 299--312.
+\bibitem{Verreault} W.\ Verreault, \emph{Plank theorems and their applications: a
+survey}, arXiv:2203.05540v2, 2025.
+\end{thebibliography}
+\end{document}

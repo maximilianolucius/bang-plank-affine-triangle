@@ -1,0 +1,22 @@
+# PDFs de terceros (copyright) — ver README
+refs/
+
+# Trabajo ajeno a este proyecto (declarado en drafts/BUILD.md)
+drafts/hamilton-jacobi-*
+
+# Artefactos de LaTeX
+drafts/*.aux
+drafts/*.log
+drafts/*.out
+drafts/*.toc
+drafts/*.bbl
+drafts/*.blg
+drafts/*.synctex.gz
+
+# Builds
+experiments/prop2_rust/target/
+__pycache__/
+*.pyc
+
+# IDE
+.idea/

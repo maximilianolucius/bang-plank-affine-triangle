@@ -1,0 +1,13 @@
+{
+  "max_loops": 10,
+  "model": null,
+  "work_dir": "/home/maxim/PycharmProjects/bang-plank-euler-jacobi/kimi",
+  "yolo": true,
+  "quiet": true,
+  "thinking": false,
+  "dry_run": false,
+  "use_sessions": true,
+  "session_investigador": "d191aa20-02c8-4170-843c-b472005e8ab0",
+  "session_jefe": "1b5d045c-67aa-4551-851a-0753938e47fc",
+  "subprocess_timeout": 600
+}

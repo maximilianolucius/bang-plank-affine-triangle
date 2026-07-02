@@ -1,0 +1,454 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}{Conjecture}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{question}[theorem]{Question}
+
+\newcommand{\rw}{\operatorname{rw}}
+\newcommand{\Leb}{\operatorname{Leb}}
+\newcommand{\R}{\mathbb{R}}
+\DeclareMathOperator{\vol}{vol}
+
+\title{On the affine plank problem for the triangle:\\
+a unified treatment of the known sharp cases, and the residual obstruction}
+\author{Maximiliano Lucius\thanks{\texttt{maximiliano.lucius@gmail.com}}}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Bang's affine plank conjecture asserts that if a convex body $K\subset\R^d$ is
+covered by planks $P_1,\dots,P_n$, then $\sum_a \rw(P_a)\ge 1$, where
+$\rw(P)=\operatorname{width}(P)/w_K(u_P)$ is the affine-invariant relative width.
+The conjecture is open already in the plane. By Ambrus' reduction it suffices to
+treat simplices. We give a unified treatment of the triangle (planar simplex)
+built on a single device, the \emph{witness measure}, and prove the conjecture
+sharply in two regimes by two genuinely different mechanisms:
+(i) when the planks use only \emph{two} directions, via a coupling with uniform
+marginals (a witness measure with constant $c=1$); and
+(ii) when all planks are \emph{parallel to facets} of the simplex --- in every
+dimension --- via one-dimensional Brunn--Minkowski (a sumset inequality).
+We show the second regime lies exactly where the witness-measure method provably
+fails, so the sumset argument breaks an integrality ceiling combinatorially.
+Finally we quantify the single-measure ceiling ($c^\ast\approx1.60$, hence
+$\ge0.624$ in the plane) and isolate the precise obstruction --- a
+\emph{simplex-restricted} Brunn--Minkowski inequality --- that stands between
+these results and the residual case ($m\ge4$ planks in $\ge4$ directions), which
+we confirm exactly by integer programming. Together with Hunter's three-plank
+theorem, this leaves the triangle conjecture open only in that residual.
+\end{abstract}
+
+\noindent\textbf{Keywords:} plank problem, Bang's conjecture, relative width,
+simplex, Brunn--Minkowski, witness measure.\\
+\textbf{MSC 2020:} 52A40 (primary), 52C17, 52A38.
+
+\paragraph{Status and attribution.}
+\emph{None of the theorems below are new.} The $1/d$ bound is Chambers--Moulli\'e
+(2016, arXiv:1604.00456), who also reach $2/(1+d)$; the two-direction theorem is
+Akopyan--Karasev--Petrov (\emph{J.\ Symplectic Geom.}\ 17(6), 2019, by an
+\emph{elementary} six-case induction); the \textbf{three-plank triangle case is a
+theorem of Hunter} (\emph{Proc.\ AMS} 117(3), 1993): $R-1=(1-T)^2/(2-T)\ge0$, so
+$\sum\rw\ge1$ with equality iff $T=t_1+t_2+t_3=1$; the facet-parallel case is
+folklore (the barycentric $\sum\lambda_i=1$ observation); the reduction to
+simplices is Ambrus (2010). Bang's affine conjecture is \emph{open} in every
+dimension $d\ge2$; the current best planar bound is $\sum\rw\ge 2/(1+\sqrt
+d)\approx 0.828$ (Bakaev--Yehudayoff, arXiv:2602.20290, 2026). For the
+\textbf{triangle}, the conjecture is proven in every case \emph{except} $m\ge4$
+planks using $\ge4$ effective directions; that residual is confirmed exactly by
+integer programming (\S\ref{sec:open}) but not proven. This document is an
+\emph{expository, unified} re-derivation (clean witness-measure and sumset proofs),
+an obstruction analysis, and an exact computational confirmation --- not a research
+advance, and it should not be submitted as novel.
+
+\section{Introduction and setup}
+
+A \emph{plank} in $\R^d$ is a slab $P=\{x:\,\alpha\le\langle u,x\rangle\le\beta\}$
+between two parallel hyperplanes with unit normal $u$ and width
+$w(P)=\beta-\alpha$. For a convex body $K$, the width of $K$ in direction $u$ is
+$w_K(u)=\max_{x\in K}\langle u,x\rangle-\min_{x\in K}\langle u,x\rangle$, and the
+\emph{relative width} of $P$ is
+\[
+   \rw(P)=\frac{w(P)}{w_K(u_P)}\in[0,1],
+\]
+an affine invariant. A finite family covers $K$ if $K\subseteq\bigcup_a P_a$.
+
+\begin{conjecture}[Bang's affine plank conjecture]
+If planks $P_1,\dots,P_n$ cover a convex body $K\subset\R^d$, then
+$\sum_a \rw(P_a)\ge 1$.
+\end{conjecture}
+
+It is sharp (e.g. $d{+}1$ planks parallel to the facets of a simplex) and, by a
+reduction of Ambrus~\cite{ambrus2010}, it suffices to prove it for simplices. We
+focus on the planar simplex --- the triangle --- and write $T$ for it.
+
+\paragraph{Related work.} Bang~\cite{bang1951} posed the affine conjecture; Ball
+\cite{ball1991} settled the centrally symmetric case; the planar conjecture is open
+\cite{verreault2022}. Known triangle cases: two planks and the three-plank triangle
+(Hunter~\cite{hunter1993}), two directions (Akopyan--Karasev--Petrov~\cite{akp2019}).
+General lower bounds: $1/d$ and $2/(1+d)$ (Chambers--Mouill\'e~\cite{chambers2016}),
+and the current planar record $2/(1+\sqrt2)$ (Bakaev--Yehudayoff~\cite{by2026}).
+Gardner~\cite{gardner1988} introduced the relative-width measures underlying \S2.
+
+\paragraph{Contributions.}
+\begin{enumerate}
+\item The \emph{witness-measure method} (\S2) and the classical bound
+$\sum\rw\ge1/d$ with a self-contained Brunn--Minkowski proof (\S3), sharpened in
+the plane to $1\le 2S-\sum\rw^2$.
+\item A \emph{vector model} of simplex coverings (\S4) that removes all
+complement geometry.
+\item The sharp two-direction theorem via uniform-marginal couplings (\S5).
+\item The sharp \emph{facet-parallel} theorem in all dimensions via sumsets
+(\S6), precisely where single measures fail.
+\item A quantified single-measure ceiling and the exact obstruction; Hunter's
+three-plank theorem (\S7); and an exact integer-programming confirmation that the
+only open triangle case is $m\ge4$ planks in $\ge4$ directions (\S8).
+\end{enumerate}
+
+\section{The witness-measure method}
+
+\begin{lemma}\label{lem:witness}
+Let $K$ be covered by planks $P_1,\dots,P_n$. If a Borel probability measure
+$\mu$ on $K$ and a constant $c>0$ satisfy $\mu(P_a)\le c\,\rw(P_a)$ for all $a$,
+then $\sum_a\rw(P_a)\ge 1/c$.
+\end{lemma}
+\begin{proof}
+$1=\mu(K)\le\mu\!\left(\bigcup_a P_a\right)\le\sum_a\mu(P_a)\le c\sum_a\rw(P_a)$.
+\end{proof}
+
+Thus the whole game is to flatten the marginals of $\mu$: a measure whose
+marginal in every direction $u$ has density $\le c/w_K(u)$ certifies the bound
+$1/c$. The area measure gives $c=d$; the sharp constant $c=1$ would need uniform
+marginals in all directions, which (\S7) is impossible for $d\ge2$.
+
+\section{The $1/d$ theorem and the refined planar bound}
+
+\begin{theorem}[Chambers--Mouill\'e~\cite{chambers2016}; self-contained proof]
+\label{thm:oned}
+For any covering of a convex body $K\subset\R^d$ by planks,
+$\sum_a\rw(P_a)\ge 1/d$. In the plane, $\sum\rw\ge\tfrac12$. The constant is
+sharp at the simplex.
+\end{theorem}
+\begin{proof}
+Take $\mu$ the uniform probability measure on $K$. Fix $u$ and normalise
+$\langle u,\cdot\rangle$ to range over $[0,w]$, $w=w_K(u)$. The marginal density
+is $f(t)=V(t)/\vol(K)$ with $V(t)=\vol_{d-1}(K\cap\{\langle u,\cdot\rangle=t\})$.
+By Brunn--Minkowski $g:=V^{1/(d-1)}$ is concave on $[0,w]$.
+
+\emph{Claim: $\max f\le d/w$.} Let $t^\ast$ maximise $g$. Concavity and $g\ge0$
+give $g(t)\ge g(t^\ast)h(t)$ with $h$ the tent ($h(0)=h(w)=0$, $h(t^\ast)=1$,
+piecewise linear). Hence $f=g^{d-1}\ge(\max f)\,h^{d-1}$ and
+$1=\int_0^w f\ge(\max f)\int_0^w h^{d-1}=(\max f)\tfrac{w}{d}$.
+
+Therefore $\mu(P)=\int_\alpha^\beta f\le \tfrac{d}{w_K(u)}(\beta-\alpha)
+=d\,\rw(P)$, and Lemma~\ref{lem:witness} with $c=d$ finishes.
+\end{proof}
+
+\begin{proposition}[Refined planar bound]\label{prop:refined}
+For the area measure on a planar convex body and any plank,
+$\mu(P)\le\rw(P)\,(2-\rw(P))$. Hence for any covering of a planar body,
+\[
+  1\le \sum_a \rw_a(2-\rw_a)=2S-\sum_a\rw_a^2,\qquad S:=\sum_a\rw_a .
+\]
+\end{proposition}
+The proof is the $d=2$ case of Theorem~\ref{thm:oned} together with the fact
+that a unit-mass density on $[0,w]$ with concave square root puts mass at most
+$r(2-r)$ on a sub-interval of relative length $r$. (Verified numerically to
+machine precision over $3\cdot10^5$ planks.)
+
+\begin{remark}[the refined bound does not, by itself, reach $1$]
+If every plank is \emph{coarse} ($\rw_a\ge b$) then $\sum\rw^2\ge bS$ and
+Proposition~\ref{prop:refined} gives $S\ge 1/(2-b)$. One might hope to iterate the
+self-map $b\mapsto1/(2-b)$ (fixed point $1$) from the base $b=\tfrac12$, but the
+presence of \emph{fine} planks ($\rw_a<b$) breaks $\sum\rw^2\ge bS$ — and no lower
+bound $\sum\rw^2\ge f(S)$ can rescue it, since splitting a covering into ever finer
+planks preserves $S$ while driving $\sum\rw^2\to0$. Thus the area/refined route is
+genuinely capped at $S\ge\tfrac12$; the sharp bound is not a second-moment statement.
+\end{remark}
+
+\section{A vector model of simplex coverings}
+
+By affine invariance the triangle equals the standard $2$-simplex
+$\Delta=\{x\in\R^3:x_i\ge0,\ \sum x_i=1\}$. Shifting each normal by a constant
+(harmless on $\sum x_i=1$) and scaling, every plank becomes a pair
+$(\tilde u_a, I_a)$ with $\tilde u_a\in[0,1]^3$, $\min_i\tilde u_{a,i}=0$,
+$\max_i\tilde u_{a,i}=1$, and $I_a\subseteq[0,1]$ an interval with $|I_a|=\rw_a$,
+so that $P_a=\{x\in\Delta:\langle\tilde u_a,x\rangle\in I_a\}$. Writing a point of
+$\Delta$ as a probability vector and $f_a(x)=\langle\tilde u_a,x\rangle=
+\mathbb E_x[\tilde u_a]$, the conjecture becomes:
+\[
+  \text{if } \forall x\in\Delta\ \exists a:\ f_a(x)\in I_a,\quad\text{then}\quad
+  \sum_a |I_a|\ge 1 .
+\]
+The free region is an intersection of pairs of half-spaces; the geometry of
+complements (which defeats naive peeling arguments) disappears. \emph{Facet-%
+parallel} planks are exactly those with $\tilde u_a=e_i$, i.e. constraints on a
+single barycentric coordinate.
+
+\section{Two directions: the sharp bound via couplings}
+
+\begin{theorem}[Akopyan--Karasev--Petrov~\cite{akp2019}; measure-theoretic proof]
+\label{thm:two}
+If a triangle is covered by planks each parallel to one of two fixed directions
+$u,v$, then $\sum\rw\ge1$. Sharp.
+\end{theorem}
+\begin{proof}
+Normalise as in \S4: $u$-planks forbid $f_u\in I_a$, $v$-planks forbid
+$f_v\in J_b$. The map $\Phi=(f_u,f_v):\Delta\to T_{\mathrm{img}}\subset[0,1]^2$
+is an affine bijection onto a triangle $C:=T_{\mathrm{img}}$ with both projections
+equal to $[0,1]$. By Lemma~\ref{lem:nobox} there is a probability measure $\nu$ on
+$\Delta$ with $f_u{}_\#\nu=f_v{}_\#\nu=\Leb_{[0,1]}$ (a coupling on $C$ with both
+marginals uniform). Then for each $u$-plank
+$\nu(P_a)=(f_u{}_\#\nu)(I_a)=|I_a|=\rw_a$, and likewise for $v$-planks; that is,
+$c=1$ \emph{exactly}, and Lemma~\ref{lem:witness} gives $\sum\rw\ge1$. The constant
+is sharp: $\Phi$ maps the three side-parallel planks of \S6 to $c=1$ instances.
+\end{proof}
+
+\begin{lemma}\label{lem:nobox}
+Let $C\subseteq[0,1]^2$ be convex with $\pi_x(C)=\pi_y(C)=[0,1]$. Then $C$ carries
+a probability measure whose two coordinate marginals are both $\Leb_{[0,1]}$.
+\end{lemma}
+\begin{proof}
+By Strassen's marginal theorem~\cite{strassen}, a measure on $C$ with marginals
+$\mu_x,\mu_y$ exists iff $\mu_y(N(A))\ge\mu_x(A)$ for every Borel $A$, where
+$N(A)=\pi_y(C\cap(A\times[0,1]))$. For $\mu_x=\mu_y=\Leb$ this is the marriage
+condition $\Leb(N(A))\ge\Leb(A)$. Since $C$ is convex, each vertical fibre
+$C_x=[\ell(x),r(x)]$ is an interval with $\ell$ convex and $r$ concave, so
+$N([a,b])=[\min_{[a,b]}\ell,\max_{[a,b]}r]$ is an interval and the multifunction
+$x\mapsto C_x$ is closed-graph and interval-valued; hence it suffices to verify the
+condition on intervals $A=[a,b]$ and, by inner regularity, on finite unions
+thereof. For an interval, full projection provides a chord of $C$ joining the two
+sides; parametrising it as the graph of an affine $\varphi$ shows
+$N([a,b])\supseteq\varphi([a,b])$ and, taking the chord of maximal $y$-extent
+together with concavity of $r$ and convexity of $\ell$, gives
+$\Leb(N([a,b]))\ge b-a$, with equality only when $C$ degenerates to a chord. The
+marriage condition for general $A$ (the only point we do not prove from scratch) is
+the standard statement that a convex body with full projections supports a doubly
+uniform coupling; we verified it numerically over $3040$ arbitrary, non-interval
+test sets, with no violation. Strassen's theorem then yields the coupling.
+\end{proof}
+
+The point is that the area measure has a \emph{tent} marginal (peak $2$, giving
+$c=2$), whereas a measure flat in the two directions present gives $c=1$.
+
+\section{Facet-parallel planks: the sharp bound in all dimensions}
+
+\begin{lemma}[1-D Brunn--Minkowski]\label{lem:bm}
+For nonempty compact $A,B\subset\R$, $\Leb(A+B)\ge\Leb(A)+\Leb(B)$.
+\end{lemma}
+\begin{proof}
+$(A+\min B)$ and $(\max A+B)$ lie in $A+B$ and meet only at $\max A+\min B$.
+\end{proof}
+
+\begin{theorem}\label{thm:facet}
+Let the $n$-simplex be covered by planks each parallel to a facet (in
+barycentric coordinates, of the form $\{\lambda_i\in I_i\}$), with arbitrary
+positions and any number of planks per direction. Then $\sum\rw\ge1$. Sharp.
+\end{theorem}
+\begin{proof}
+Let $F_i=[0,1]\setminus I_i$ be the free set of coordinate $i$, so the relative
+width used in direction $i$ is $1-\Leb F_i$ (overlaps only help). A point
+$\lambda$ is uncovered iff $\lambda_i\in F_i$ for all $i$ and $\sum\lambda_i=1$,
+i.e. iff
+\[
+   1\in F_1+F_2+\cdots+F_{n+1}\qquad(\text{Minkowski sum}).
+\]
+Suppose $1\notin\sum_i F_i$. Then $(1-F_1)\cap(F_2+\cdots+F_{n+1})=\varnothing$;
+both sets lie in $[0,n]$, so by Lemma~\ref{lem:bm} (iterated)
+\[
+   \Leb F_1+\sum_{i\ge2}\Leb F_i\le
+   \Leb(1-F_1)+\Leb(F_2+\cdots+F_{n+1})\le n .
+\]
+Thus covering ($1\notin\sum F_i$) forces $\sum_i\Leb F_i\le n$, i.e.
+$\sum\rw=(n{+}1)-\sum_i\Leb F_i\ge1$.
+\end{proof}
+
+\begin{remark}
+This is exactly the regime where the witness-measure method \emph{fails}: no
+measure has all $n{+}1$ barycentric marginals $\le$ uniform (a density $\le1$ on
+$[0,1]$ with integral $1$ is uniform, but $\sum\lambda_i=1$ forces
+$\sum\mathbb E[\lambda_i]=1\ne(n{+}1)/2$). Theorem~\ref{thm:facet} breaks the
+integrality ceiling combinatorially, via the partition of unity $\sum\lambda_i=1$
+and Lemma~\ref{lem:bm}. (Verified: $1485$ random instances, $n=2,3,4$, no
+failure.) This special case is elementary and likely folklore (it is the
+barycentric reading of the partition of unity); we include the sumset proof for its
+brevity and because it isolates exactly the structure that the general case lacks.
+\end{remark}
+
+\section{Three planks on a triangle (Hunter's theorem)}
+The facet-parallel theorem covers any number of planks but only facet directions.
+The complementary classical result fixes the number of planks at three but allows
+\emph{arbitrary} directions.
+
+\begin{theorem}[Hunter~\cite{hunter1993}]\label{thm:hunter}
+If three planks cover a triangle, then $\sum_{i=1}^3\rw(P_i)\ge1$. Writing the
+covering in Hunter's normalisation of the unit equilateral triangle, with
+$T=t_1+t_2+t_3$ the sum of the three edge-segment parameters,
+\[
+   \sum\rw -1 \;=\; \frac{(1-T)^2}{2-T}\;\ge\;0\qquad(T<\tfrac32),
+\]
+so equality holds iff $T=1$; the extremal family is one-parameter, containing the
+three side-parallel planks of relative width $1/3$.
+\end{theorem}
+
+Hunter's proof is a direct analysis of the three planks' intersections with the
+three edges; we do not reproduce it. Two remarks place it relative to \S6 and the
+sequel. First, it is genuinely a three-plank statement: the equality locus is a
+\emph{variety}, not the single facet configuration. Second, it does \emph{not}
+reduce many planks to three --- among random four-plank coverings, the great
+majority have all four planks essential (no three-plank subfamily covers), so
+Theorem~\ref{thm:hunter} cannot be invoked by deletion. The residual gap left after
+Theorems~\ref{thm:two},~\ref{thm:facet} and~\ref{thm:hunter} is therefore
+$m\ge4$ planks in $\ge4$ directions; see \S8.
+
+\section{The single-measure ceiling and the obstruction to the elementary methods}
+
+\begin{proposition}\label{prop:ceiling}
+No single probability measure on $\Delta$ attains $c=1$ against all directions;
+the best single-measure constant for the triangle is $c^\ast\approx1.60$,
+yielding only $\sum\rw\ge1/c^\ast\approx0.624$.
+\end{proposition}
+The impossibility is the marginal computation above; $c^\ast$ is an LP optimum
+over measures (computed). Hence the sharp bound $1$ is not a single-measure
+statement beyond the two regimes of \S5--\S6.
+
+\paragraph{Why the elementary methods do not extend.}
+Hunter's Theorem~\ref{thm:hunter} already settles three planks; the difficulty is
+extending the \emph{methods} of \S5--\S6 past their regimes (to $m\ge4$ in $\ge4$
+directions). The sumset method of \S6 fails as soon as one direction is non-facet.
+For three directions $u,v,w$ the affine maps $f_u,f_v,f_w$ on the $2$-simplex
+satisfy a relation $\alpha f_u+\beta f_v+\gamma f_w=\kappa$. The minimal
+non-facet case is one \emph{tilted} direction $\tilde u_3=(0,t,1)$, where in
+barycentric coordinates $\langle\tilde u_3,\lambda\rangle=
+1-\lambda_1-(1-t)\lambda_2$ gives the \emph{weighted} partition of unity
+$\lambda_1+(1-t)\lambda_2+g=1$. Two obstructions appear:
+\begin{itemize}
+\item[(S)] The weighted sumset yields $\rw_1+(1-t)\rw_2+\rw_3\ge1$ \emph{only for
+covering the box} $[0,1]^2$; the free point may have $\lambda_3=g-t\lambda_2<0$,
+escaping $\Delta$. (Facet constraints are on $\lambda_i$ itself, which keeps the
+free point inside $\Delta$; a tilted constraint is on a mixture, which does not.)
+\item[(C)] A coupling uniform in $(f_u,g)$ gives $\nu(P_2)=c_2\rw_2$ with $c_2>1$
+forced, so $\rw_1+c_2\rw_2+\rw_3\ge1$ is weaker than $\sum\rw\ge1$.
+\end{itemize}
+A structural fact: every tilted direction is a convex combination of two facet
+directions, $\tilde u_3=(1-t)e_3+t(\mathbf 1-e_1)$.
+
+\begin{question}
+Is there a \emph{simplex-restricted} Brunn--Minkowski / sumset inequality that
+produces an uncovered point \emph{inside} $\Delta$ (respecting
+$\lambda_3=g-t\lambda_2\ge0$)? Such an inequality would extend the facet-parallel
+theorem and Hunter's three-plank theorem to $m\ge4$ planks.
+\end{question}
+
+\section{The open residual and a computational confirmation}\label{sec:open}
+After Hunter's three-plank theorem and the facet-parallel and two-direction
+results, the single case of the triangle that remains open is
+\[
+   \textbf{$m\ge4$ planks using $\ge4$ effective directions.}
+\]
+Two corrections to a naive reading are worth recording. First, $m>3$ does
+\emph{not} reduce to $m=3$: among random $m=4$ coverings, $95\%$ have all four
+planks essential (no three-plank sub-family covers), so Hunter's theorem cannot be
+invoked by deletion. Second, the obstruction above is to the \emph{sumset method},
+not to the truth of the bound.
+
+\paragraph{Exact integer-programming confirmation.}
+The covering problem with a fixed set of directions and an arbitrary number of
+planks per direction is a weighted \textsc{set cover}: choose, in each direction's
+normalised range $[0,1]$, a union of bins (the forbidden set), of total measure
+$\sum\rw$, so that every point of $\Delta$ lands in some forbidden bin. Solving the
+resulting integer program exactly (CBC/HiGHS, $K=14$ bins per direction, grid
+$N=38$) over many direction sets with $3,4,5,6$ directions --- random sets, the
+edge-normal set, and edge-normals augmented by generic directions --- yields, in
+\emph{every} instance,
+\[
+   \min\nolimits_{\text{integer}}\ \textstyle\sum\rw \;=\; 1.0000,
+\]
+while the LP relaxation is strictly below $1$ (e.g.\ $0.706$ at the edge normals ---
+the integrality gap of \S7). The integer optimum is realised either by a single
+full-width plank ($\rw=1$, generic directions) or by Hunter's three-way facet split
+(edge normals). This is exact (not random-search) evidence that no covering with
+$\sum\rw<1$ exists; it is \emph{not} a proof, being discretised and over finitely
+many direction sets.
+
+\paragraph{Remaining open problems.}
+\begin{enumerate}
+\item The residual above: $m\ge4$ planks, $\ge4$ directions on the triangle.
+Equivalently, the \emph{cubical theorem}: an affine triangle
+$Q=\operatorname{conv}(q_1,q_2,q_3)\subset[0,1]^m$ with every coordinate ranging
+over $[0,1]$, covered by $m$ coordinate slabs, has $\sum|I_i|\ge1$. The $m=3$ case
+is Hunter; the coordinate-aligned case is \S6.
+\item The general planar convex body with three planks (open; Verreault's survey).
+\item A configuration-independent dual certificate beyond a single measure --- the
+non-symmetry barrier unifying both walls; no current technique (chord
+normalisation~\cite{by2026}, polarisation~\cite{gkp2023}, symplectic~\cite{akp2019},
+colorful Carath\'eodory~\cite{ambrus2023}) crosses it.
+\end{enumerate}
+
+\subsection*{Acknowledgements}
+The numerical confirmations of Appendix~\ref{app:comp} used open-source software
+(\texttt{numpy}, \texttt{scipy}). The author thanks the maintainers of these tools.
+
+\appendix
+\section{Computational verifications}\label{app:comp}
+All experiments are short Python scripts (\texttt{numpy}/\texttt{scipy};
+integer programs via \texttt{scipy.optimize.milp}/HiGHS) on a triangulated grid of
+the simplex. They are confirmations, not proofs; we list them for reproducibility.
+\begin{itemize}
+\item \emph{Refined bound} (Prop.~\ref{prop:refined}): over $3\times10^5$ random
+planks, $\max_P[\mu_{\mathrm{area}}(P)-\rw(2-\rw)]=-0.0000$.
+\item \emph{Single-measure ceiling} (Prop.~\ref{prop:ceiling}): an LP over
+grid measures minimising the worst directional peak gives $c^\ast\approx1.60$.
+\item \emph{Marriage condition} (Lemma~\ref{lem:nobox}): on $3040$ image triangles
+and arbitrary (non-interval) test sets $A$, $\Leb(N(A))\ge\Leb(A)$ holds with no
+violation; the maximal-coupling LP returns mass $1$.
+\item \emph{Facet sumset} (Thm.~\ref{thm:facet}): the lemma $\sum\Leb F_i>n
+\Rightarrow 1\in\sum F_i$ was confirmed on $1485$ instances, $n=2,3,4$.
+\item \emph{Set-cover integer program} (\S\ref{sec:open}): with $K=14$ bins per
+direction, the exact integer minimum of $\sum\rw$ over coverings using $3,4,5,6$
+fixed directions (random sets, the edge normals, and edge normals augmented by
+generic directions) is $1.0000$ in every instance, while the LP relaxation is
+strictly smaller (e.g.\ $0.706$ at the edge normals). This is exact evidence,
+within the discretisation and over finitely many direction sets, that no covering
+with $\sum\rw<1$ exists.
+\end{itemize}
+
+\begin{thebibliography}{99}
+\bibitem{akp2019} A.~Akopyan, R.~Karasev, F.~Petrov,
+\emph{Bang's problem and symplectic invariants},
+J.\ Symplectic Geom.\ \textbf{17} (2019), no.~6, 1579--1611.
+\bibitem{ambrus2010} G.~Ambrus, \emph{Appendix: Plank problems}, manuscript (2010),
+\texttt{users.renyi.hu/\textasciitilde ambrus/appendix.pdf}.
+\bibitem{ambrus2023} G.~Ambrus, \emph{A generalization of Bang's lemma},
+Proc.\ Amer.\ Math.\ Soc.\ \textbf{151} (2023), no.~3, 1277--1284.
+\bibitem{by2026} E.~Bakaev, A.~Yehudayoff, \emph{A note on the affine plank
+conjecture}, arXiv:2602.20290 (2026).
+\bibitem{ball1991} K.~Ball, \emph{The plank problem for symmetric bodies},
+Invent.\ Math.\ \textbf{104} (1991), 535--543.
+\bibitem{bang1951} T.~Bang, \emph{A solution of the ``plank problem''},
+Proc.\ Amer.\ Math.\ Soc.\ \textbf{2} (1951), 990--993.
+\bibitem{chambers2016} G.~R.~Chambers, A.~Mouill\'e, \emph{A note on the
+affine-invariant plank problem}, arXiv:1604.00456 (2016).
+\bibitem{gardner1988} R.~J.~Gardner, \emph{Relative width measures and the plank
+problem}, Pacific J.\ Math.\ \textbf{135} (1988), no.~2, 299--312.
+\bibitem{gkp2023} A.~Glazyrin, R.~Karasev, A.~Polyanskii, \emph{Covering by planks
+and avoiding zeros of polynomials}, Int.\ Math.\ Res.\ Not.\ IMRN (2023),
+no.~13, 11684--11700.
+\bibitem{hunter1993} H.~F.~Hunter, \emph{Some special cases of Bang's inequality},
+Proc.\ Amer.\ Math.\ Soc.\ \textbf{117} (1993), no.~3, 819--821.
+\bibitem{strassen} V.~Strassen, \emph{The existence of probability measures with
+given marginals}, Ann.\ Math.\ Statist.\ \textbf{36} (1965), 423--439.
+\bibitem{verreault2022} W.~Verreault, \emph{Plank theorems and their applications:
+a survey}, arXiv:2203.05540 (2022); Bull.\ Lond.\ Math.\ Soc.\ (2026).
+\end{thebibliography}
+
+\end{document}

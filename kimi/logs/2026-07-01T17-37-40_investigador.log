@@ -1,0 +1,591 @@
+CMD: kimi --input-format text --quiet --yolo --session d191aa20-02c8-4170-843c-b472005e8ab0 --work-dir /home/maxim/PycharmProjects/bang-plank-euler-jacobi/kimi
+
+--- PROMPT (10329 chars) ---
+# Rol: Investigador Matemático
+
+Eres un investigador matemático senior con amplia experiencia en redacción académica.
+
+## Tu tarea
+Escribir, corregir o expandir secciones de un paper de investigación matemática según las instrucciones que recibas.
+
+## Reglas
+- Usa un lenguaje formal, preciso y académico.
+- Mantén notación matemática consistente (definí los símbolos antes de usarlos).
+- Incluye demostraciones, ejemplos o justificaciones cuando correspondan.
+- Si recibís feedback, incorporá las correcciones sin borrar contenido válido.
+- Devolvé **únicamente el texto del paper** (o de la sección solicitada). No agregues saludos, metacomentarios ni explicaciones fuera del cuerpo académico.
+- Respetá el idioma y estilo definidos en el prompt iniciador.
+
+
+=== PROMPT INICIADOR DEL PAPER ===
+# Prompt iniciador del paper
+
+Este prompt es el contrato compartido por el tandem de agentes Kimi:
+
+- **Investigador matematico:** redacta y corrige el paper completo.
+- **Jefe de research:** audita como referee hostil y devuelve tareas accionables hasta aprobar.
+
+El objetivo no es inventar un paper desde cero, sino convertir el corpus del proyecto en un
+manuscrito matematico honesto, autocontenido y listo para envio.
+
+## Proyecto y fuentes
+
+Repositorio raiz:
+
+`/home/maxim/PycharmProjects/bang-plank-euler-jacobi`
+
+Aunque el orquestador corre desde `kimi/`, ambos agentes deben usar rutas absolutas para leer
+el contexto fuera de `kimi/`. Prioridad de lectura:
+
+1. `drafts/affine-plank-triangle.tex` como borrador base si existe.
+2. `notes/46-R2-4-esqueleto-paper.md` como estructura aprobada del paper.
+3. `auditorias/48-ronda4.md` como ultimo dictamen: el paper esta referee-clean y el deliverable
+   seguro esta cumplido.
+4. `notes/36-bang-medianas-PROBADO.md`, `notes/45-R2-2-rigidez-medianas-COMPLETA.md`,
+   `notes/48-R4-4-suficiencia-concurrencia.md`, `notes/47-R3-2-medianas-dim-general.md`.
+5. `notes/30-tier1-reenfoque-hallazgos.md`, `notes/37-familia-marginal-uniforme-transporte.md`,
+   `notes/44-R2-1-bang-Nc-nogo.md`, `notes/43-P2-ambrus-dimension.md`,
+   `notes/43-P3-gardner-suficiencia.md`, `notes/42-refs-papers-resumen.md`.
+6. `AUDITORIA_CLAUDE_30Jn.md` y `auditorias/*.md` para advertencias de alcance y rutas refutadas.
+
+Si una afirmacion de una nota temprana contradice una auditoria posterior, prevalece la auditoria
+posterior. No uses resultados etiquetados como `[OPEN]`, `[EVIDENCE]`, `[CANDIDATE]`,
+`[REFUTADA]` o "grid" como teoremas.
+
+## Tema
+
+Bang's affine plank problem on the triangle, with transport and tiling methods:
+new sharp cases, a tight non-facet median theorem with rigidity, a necessary concurrence
+condition for uniform-marginal transport, and a normalizer obstruction for the Bang
+sign/chord method.
+
+Titulo sugerido:
+
+`Transport and tiling bounds for the affine plank problem on the triangle`
+
+## Objetivo principal
+
+Generar un paper matematico en **ingles**, en formato **LaTeX completo**, basado en los
+resultados firmes del proyecto:
+
+1. Presentar el problema afin de Bang y el estado honesto: abierto para cuerpos no simetricos,
+   abierto ya en el plano para 3 planks; Ball resuelve el caso simetrico; Bakaev-Yehudayoff
+   da la mejor cota general conocida.
+2. Estudiar el triangulo como cuerpo concreto, no como reduccion de la conjetura general.
+3. Probar los teoremas firmes A-G del esqueleto.
+4. Explicar con precision que queda abierto y que rutas fueron descartadas.
+
+## Tesis y alcance obligatorio
+
+El paper debe decir explicitamente:
+
+- No se prueba la conjetura afin de Bang.
+- No se mejora la cota de Bakaev-Yehudayoff.
+- No se usa el triangulo como target de la reduccion de Ambrus; Ambrus produce simplices de
+  dimension `2N-1` para una cobertura por `N` planks, por lo que el triangulo no es target.
+- La contribucion es un conjunto de casos sharp y herramientas para el triangulo como cuerpo
+  concreto.
+- El resultado central es el caso de las tres medianas: `sum rw >= 1`, con igualdad si y solo si
+  cada intervalo es `[1/3, 2/3]`.
+
+## Resultados que SI pueden enunciarse como teoremas
+
+Usar solo estos como resultados propios probados:
+
+1. **Cota de medida unica:** si `K subset R^d` esta cubierto por planks, entonces
+   `sum rw_K(P_i) >= 1/d`; sharp en el simplex.
+2. **Dos direcciones:** en el triangulo, planks en a lo sumo dos direcciones cumplen
+   `sum rw >= 1`; citar Gardner 1988 Theorem 1 para la medida de ancho relativo en dos
+   direcciones.
+3. **Faceta-paralelo:** en el simplex de cualquier dimension, planks paralelos a facetas
+   cumplen `sum rw >= 1`; prueba por sumset/Minkowski 1D, no por una arista.
+4. **Tres facetas mas un plank arbitrario:** en el triangulo, tres familias faceta-paralelas
+   mas un plank arbitrario cumplen `sum rw >= 1`; usar la prueba por fibras de `notes/30`.
+5. **Medianas:** tres planks paralelos a las medianas del triangulo cumplen `sum rw >= 1`;
+   igualdad, con planks esenciales, si y solo si `I_i=[1/3,2/3]` para todo `i`.
+   La cota usa la medida uniforme del perimetro; la rigidez usa particion del perimetro,
+   enumeracion exacta de edge-tilings y el centroide como testigo interior.
+6. **Condicion necesaria de transporte:** para `d+1` formas afines normalizadas en `Delta^d`,
+   si existe una medida con marginales uniformes, entonces los hiperplanos `{u_i=1/2}`
+   concurren en un punto del simplex; algebraicamente `1^T V^{-1} 1 = 2` y
+   `V^{-1}1 >= 0`.
+7. **Perimetro solo en medianas:** para una forma con valores de vertices `{0,tau,1}`,
+   la medida uniforme del perimetro tiene marginal uniforme si y solo si `tau=1/2`.
+8. **No-go del normalizador por Bang:** el argumento de signos de Bang/Verreault que produce
+   `sum width_i/ell_K(u_i) >= 1` esta atado a la cuerda mas larga `ell`; no puede reemplazarse
+   por `N_c=(1-c)ell+c w` con `c>0` dentro de ese metodo. Esto es no-go de metodo, no una
+   refutacion de `S_c >= 1`.
+
+## Resultados que NO deben afirmarse
+
+No afirmar ni insinuar como teorema:
+
+- La conjetura afin de Bang para el triangulo general.
+- El caso de 3 planks tilted del triangulo.
+- Una mejora de Bakaev-Yehudayoff.
+- Suficiencia general de la condicion de concurrencia `1^T V^{-1}1=2`.
+- Que las medianas del simplex regular en toda dimension satisfacen Bang por la misma medida.
+- Que la via toric/Euler-Jacobi resuelve el problema afin.
+- Que Hunter resolvio la desigualdad de 3 planks en el triangulo; Hunter solo da 2 planks y
+  caracterizacion de igualdad en un contexto especifico, segun las auditorias.
+- Cualquier resultado basado solo en grilla, LP discreto o evidencia numerica.
+
+## Estructura deseada del manuscrito
+
+Producir una fuente LaTeX completa estilo `amsart`, con abstract, introduccion, teoremas,
+pruebas y bibliografia.
+
+Estructura recomendada:
+
+1. Abstract.
+2. Introduction: Bang affine plank problem, estado del arte, alcance, contribuciones.
+3. Preliminaries and triangle model: relative width, normalized affine coordinates,
+   planks as slabs `{f in I}`.
+4. Single-measure bound `1/d`.
+5. Sharp cases: two directions and facet-parallel families.
+6. Three facets plus one arbitrary plank.
+7. Median theorem and rigidity.
+8. Uniform-marginal transport and concurrence obstruction.
+9. Normalizer obstruction: chord vs width.
+10. Final remarks and open problems.
+11. References.
+
+## Estilo y rigor
+
+- Idioma del paper: ingles.
+- Estilo: matematico, sobrio, referee-clean. Sin marketing ni lenguaje grandilocuente.
+- Cada theorem/lemma/proposition debe estar probado en el texto o citado con fuente primaria.
+- Usar `Conjecture`, `Problem` o `Remark` para lo abierto.
+- Separar claramente "proved", "open", "evidence" y "method no-go".
+- Mantener notacion consistente: `K`, `Delta`, `P_i`, `u_i`, `I_i`, `rw_K(P)`, `w_K(u)`,
+  `ell_K(u)`, `Leb`, `V`, `p`.
+- Evitar dependencias de scripts salvo el lema de rigidez mediana, que puede declararse
+  computer-assisted con scripts archivados:
+  `experiments/median_rigidity_enumeration.py` y
+  `experiments/median_edgetilings_independent.py`.
+
+## Reglas para el tandem de agentes
+
+### Investigador
+
+- En el primer turno, si `drafts/affine-plank-triangle.tex` existe, usarlo como base y producir
+  una version LaTeX completa actualizada en el borrador del orquestador.
+- Si el borrador actual ya contiene una version del paper, corregirlo incrementalmente segun las
+  tareas del jefe, sin degradar resultados correctos.
+- No incluir comentarios fuera del paper: devolver solo la fuente LaTeX completa.
+- Cuando haya duda entre una afirmacion fuerte y una formulacion conservadora, usar la conservadora.
+
+### Jefe de research
+
+Auditar como referee matematico adversarial. En particular bloquear:
+
+- sobreclaims sobre Bang, B-Y, Ambrus, Hunter o concurrencia;
+- pruebas que usen una nota refutada;
+- argumentos de grilla como prueba;
+- prueba faceta-paralela por "una arista" en vez del argumento sumset/BM-1D;
+- uso de la medida del perimetro fuera del caso `tau=1/2`;
+- bibliografia vaga o citas que no soportan la afirmacion.
+
+El veredicto `APROBADO` solo corresponde si el paper esta completo, autocontenido, sin
+contradicciones de alcance y con todas las afirmaciones fuertes justificadas.
+
+## Referencias minimas esperadas
+
+Incluir al menos:
+
+- T. Bang, original plank problem paper.
+- K. Ball, *The plank problem for symmetric bodies*, Invent. Math. 104 (1991).
+- R. J. Gardner, *Relative width measures and the plank problem*, Pacific J. Math. 135 (1988).
+- E. Bakaev and A. Yehudayoff, *A Note on the Affine Plank Conjecture*, arXiv:2602.20290.
+- G. Ambrus, *Appendix: Plank problems*.
+- Verreault survey, *Plank theorems and their applications: a survey*, arXiv:2203.05540v2.
+
+## Entregable final
+
+El entregable del orquestador es `kimi/paper/draft.md`, pero su contenido debe ser una fuente
+LaTeX completa y coherente del paper. El paper debe poder copiarse a un `.tex` y compilar tras
+ajustar autor/acknowledgements si hiciera falta.
+
+=== BORRADOR ACTUAL ===
+
+
+=== HISTORIAL RECIENTE ===
+
+
+=== TAREAS PENDIENTES DEL JEFE ===
+- Escribí el abstract, la introducción y el modelo/resultado principal.
+
+INSTRUCCIONES PARA ESTE TURNO:
+1. Escribí, corregí o expandí el paper según las tareas pendientes.
+2. Mantené estilo académico, riguroso y notación consistente.
+3. Devolvé únicamente el texto completo del paper actualizado.
+4. No incluyas saludos ni metacomentarios fuera del cuerpo del paper.
+
+
+--- STDOUT ---
+\documentclass[11pt,reqno]{amsart}
+%==============================================================
+%  Transport and tiling bounds for the affine plank problem on the triangle:
+%  new sharp cases, a rigidity theorem, and a normalizer obstruction.
+%
+%  ACADEMIC-CORRECTNESS POLICY (binding): every Theorem/Proposition/Lemma is
+%  either cited (with attribution) or proved in full here. Not-yet-established
+%  statements live in Conjecture/Problem/Remark and are never used as proved.
+%  SCOPE (honest): this studies the triangle as a CONCRETE body plus method.
+%  It is NOT an attack on the general conjecture via Ambrus (whose reduction
+%  targets simplices of dimension 2N-1; the triangle is never a target).
+%==============================================================
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[margin=1.1in]{geometry}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue]{hyperref}
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{problem}[theorem]{Problem}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newcommand{\rw}{\operatorname{rw}}
+\newcommand{\Leb}{\operatorname{Leb}}
+\newcommand{\R}{\mathbb{R}}
+\DeclareMathOperator{\wid}{w}
+\DeclareMathOperator{\vol}{vol}
+
+\title{Transport and tiling bounds for the affine plank problem on the triangle}
+\author{}
+\date{Draft --- \today}
+
+\begin{document}
+\begin{abstract}
+Bang's affine (relative-width) plank conjecture asserts that if a convex body $K$
+is covered by planks $P_1,\dots,P_n$ then $\sum_i \rw_K(P_i)\ge 1$, where
+$\rw_K(P)=\wid(P)/\wid_K(u_P)$ is the width of $P$ relative to the width of $K$ in
+$P$'s direction. It is open for non-symmetric bodies, and open already for three
+planks in the plane. We study the triangle as a concrete test body. We give (i) a
+short single-measure proof of $\sum\rw\ge 1/d$, sharp at the simplex; (ii) sharp
+$\sum\rw\ge 1$ for two directions and for facet-parallel families (all dimensions);
+(iii) an elementary fibre proof of the ``three facets $+$ one arbitrary plank'' case; and,
+as our main result, (iv) the first \emph{tight non-facet} case with full rigidity:
+three planks parallel to the medians of a triangle satisfy $\sum\rw\ge1$ with
+equality if and only if each is the central third of its median. We isolate the
+transport method behind (i)--(iv) as a \emph{uniform-marginal witness measure} and
+give a dimension-agnostic necessary condition for its existence (concurrence of the
+mid-level lines). Finally we prove a structural obstruction: the sign-argument of
+Bang, which yields the chord-normalized bound $\sum \wid(P_i)/\ell_K(u_i)\ge1$,
+cannot be pushed past the longest chord; no normalizer strictly between chord and
+width is reachable by that argument. We claim no proof of the conjecture.
+\end{abstract}
+\maketitle
+
+\section{Introduction}\label{sec:intro}
+
+A \emph{plank} of width $w$ is the region between two parallel hyperplanes at
+distance $w$. For a convex body $K\subset\R^d$ and a plank $P$ with unit normal $u$,
+the \emph{relative width} of $P$ is $\rw_K(P)=\wid(P)/\wid_K(u)$, where
+$\wid_K(u)=\max_{x\in K}\langle u,x\rangle-\min_{x\in K}\langle u,x\rangle$. Bang's
+affine plank conjecture~\cite{Bang51,Ambrus} states:
+\begin{conjecture}[Affine plank problem; Bang 1951]\label{conj:bang}
+If $K$ is covered by planks $P_1,\dots,P_n$, then $\sum_{i=1}^n \rw_K(P_i)\ge 1$.
+\end{conjecture}
+Ball~\cite{Ball91} proved Conjecture~\ref{conj:bang} for centrally symmetric $K$.
+For general bodies it is open, and, as emphasised by Bakaev--Yehudayoff~\cite{BY26},
+it is open \emph{already in the plane} --- only the two-plank case is settled there.
+The best general lower bound is
+$\sum\rw\ge 2/(1+\sqrt d)$~\cite{BY26}; on the equilateral triangle their method
+gives $\sum\rw\ge 4\sqrt3-6\approx0.928$.
+
+\smallskip
+\noindent\textbf{Scope.}\ This paper studies the triangle as a concrete body and
+develops the associated \emph{transport} (witness-measure) and \emph{tiling}
+methods. It is \emph{not} an attack on Conjecture~\ref{conj:bang} through the Ambrus
+reduction: that reduction sends a covering by $N$ planks to a simplex of dimension
+$2N-1$, so the triangle (the $2$-simplex) is never a target
+(Remark~\ref{rem:ambrus}). Our results are new sharp cases for a fixed body, a
+rigidity theorem, a dimension-agnostic structural characterization, and an
+obstruction; we prove nothing about the general conjecture.
+
+\begin{remark}\label{rem:ambrus}
+Ambrus's reduction~\cite{Ambrus} sends a covering by $N$ planks to a covering of a
+simplex of dimension $2N-1$ (two points per plank). The target simplices thus have
+odd dimension growing with $N$; the $2$-simplex (triangle) is never among them. So
+proving the conjecture for the triangle does \emph{not} imply the planar case, and
+our results are about the triangle as a concrete body, not a reduction of
+Conjecture~\ref{conj:bang}.
+\end{remark}
+
+\subsection*{The triangle model}
+By affine invariance take $\Delta=\{x\in\R^3:x_i\ge0,\ x_1+x_2+x_3=1\}$. A
+normalized plank is $P=\{x\in\Delta: f(x)\in I\}$ with $f:\Delta\to[0,1]$ affine
+onto $[0,1]$ and $I\subset[0,1]$ an interval; then $\rw_\Delta(P)=|I|$. Covering
+means $\Delta\subset\bigcup_i P_i$.
+
+\subsection*{Results}
+Theorem~\ref{thm:oned} (\S\ref{sec:measure}), Theorems~\ref{thm:twodir}
+and~\ref{thm:facet} (\S\ref{sec:sharp}), Theorem~\ref{thm:3plus1}
+(\S\ref{sec:3plus1}), and the centerpiece Theorem~\ref{thm:median} with rigidity
+(\S\ref{sec:median}). Proposition~\ref{prop:concur} (\S\ref{sec:concur}) is the
+dimension-agnostic necessary condition; Theorem~\ref{thm:nogo} (\S\ref{sec:nogo})
+is the normalizer obstruction.
+
+\section{The single-measure bound $\sum\rw\ge 1/d$}\label{sec:measure}
+\begin{theorem}\label{thm:oned}
+If $K\subset\R^d$ is covered by planks $P_1,\dots,P_n$, then
+$\sum_i\rw_K(P_i)\ge 1/d$. The constant $1/d$ is sharp for the simplex.
+\end{theorem}
+\begin{proof}
+Let $\mu$ be the uniform probability measure on $K$. Fix $u$, normalize
+$\langle u,\cdot\rangle\in[0,w]$, $w=\wid_K(u)$. The marginal density is
+$f(t)=V(t)/\vol(K)$ with $V(t)=\vol_{d-1}(K\cap\{\langle u,\cdot\rangle=t\})$; by
+Brunn--Minkowski $g:=V^{1/(d-1)}$ is concave on $[0,w]$. If $g$ peaks at $t^\ast$
+with value $g^\ast$, then $g\ge g^\ast h$ for the tent $h$ ($h(0)=h(w)=0$,
+$h(t^\ast)=1$), so $f=g^{d-1}\ge(\max f)\,h^{d-1}$ and
+$1=\int f\ge(\max f)\int_0^w h^{d-1}=(\max f)\,w/d$, giving $\max f\le d/w$. Hence
+$\mu(P)=\int_I f\le d\,\rw_K(P)$ for each plank, and
+$1=\mu(K)\le\sum_i\mu(P_i)\le d\sum_i\rw_K(P_i)$. Equality in the lemma forces
+$V\propto h^{d-1}$ (conical sections), realized by the simplex.
+\end{proof}
+\begin{remark}
+The bound cannot exceed $1/d$ by a single measure: uniform marginals in all
+directions would force $\mathbb E[x_k]=1/2$ against $\sum x_k=1$. This is Gardner's
+obstruction~\cite{Gardner88}: for the triangle there is no relative-width measure
+for the three side-directions.
+\end{remark}
+
+\section{Sharp cases: two directions and facet-parallel families}\label{sec:sharp}
+\begin{theorem}\label{thm:twodir}
+If every plank covering the triangle is parallel to one of two fixed directions,
+then $\sum\rw\ge1$, and this is sharp.
+\end{theorem}
+\begin{proof}
+Let $f_u,f_v:\Delta\to[0,1]$ be the two affine coordinates; $\Phi=(f_u,f_v)$ is an
+affine bijection onto a triangle $T\subset[0,1]^2$ with full projections. By
+Gardner~\cite{Gardner88} (existence of a relative-width measure for two directions)
+there is a probability measure $\nu$ on $\Delta$ with $f_{u\#}\nu=f_{v\#}\nu=\Leb[0,1]$.
+Then $\nu(P)=|I|=\rw(P)$ for each plank, and
+$1=\nu(\Delta)\le\sum\nu(P_i)=\sum\rw(P_i)$.
+\end{proof}
+\begin{theorem}\label{thm:facet}
+Planks parallel to the facets of a simplex $\Delta^d$, in any number, that cover
+$\Delta^d$ satisfy $\sum\rw\ge1$, and this is sharp.
+\end{theorem}
+\begin{proof}
+Write $\Delta^d=\{\lambda\in[0,1]^{d+1}:\sum_k\lambda_k=1\}$ in barycentric
+coordinates; a plank parallel to facet $k$ is a coordinate slab
+$\{\lambda_k\in I\}$. Grouping the planks by facet, let
+$U_k=\bigcup_{c(i)=k}I_i\subset[0,1]$ be the forbidden set on facet $k$, so
+$\sum_k|U_k|\le\sum_i|I_i|=:R$, and set $C_k=[0,1]\setminus U_k$. A point
+$\lambda\in\Delta^d$ is uncovered iff $\lambda_k\in C_k$ for every $k$; since
+$C_k\subset[0,1]$, an uncovered point exists \emph{iff}
+$1\in C_1+\dots+C_{d+1}$ (Minkowski sum).
+
+Assume $R<1$; we produce an uncovered point. Each $C_k$ is nonempty compact
+($|C_k|=1-|U_k|\ge1-R>0$). Put $D=C_1+\dots+C_d$. By the one-dimensional
+Brunn--Minkowski inequality $|A+B|\ge|A|+|B|$ (for nonempty compact $A,B\subset\R$,
+iterated), $|D|\ge\sum_{k=1}^d|C_k|=d-\sum_{k=1}^d|U_k|$; as $D\subseteq[0,d]$,
+$|[0,1]\setminus D|\le|[0,d]\setminus D|\le\sum_{k=1}^d|U_k|$, whence
+$|D\cap[0,1]|\ge1-\sum_{k=1}^d|U_k|$. Also $(1-C_{d+1})\cap[0,1]$ has measure
+$|C_{d+1}|=1-|U_{d+1}|$. Both sets lie in $[0,1]$ and their measures sum to
+$2-\sum_k|U_k|\ge2-R>1$, so they intersect: there is $t\in D$ with $1-t\in C_{d+1}$.
+Then $t+(1-t)=1\in C_1+\dots+C_{d+1}$, i.e.\ an uncovered $\lambda$ exists.
+Contrapositively, covering forces $R\ge1$. Sharpness: the facet tiling
+$I_k=[0,\tfrac1{d+1}]$ gives $\sum\rw=1$.
+\end{proof}
+\begin{remark}
+The edge-by-edge argument does \emph{not} prove this: on an edge only two
+barycentric coordinates vary, so no single edge can force $\sum_k|U_k|\ge1$ across
+all $d+1$ facets. The Minkowski-sum reduction above is the correct route; note that
+no witness \emph{measure} can prove it either, since facet directions violate the
+concurrence condition of Proposition~\ref{prop:concur}.
+\end{remark}
+
+\section{Three facets plus one arbitrary plank}\label{sec:3plus1}
+\begin{theorem}\label{thm:3plus1}
+Let $P_i=\{\lambda_i\in I_i\}$ ($i=1,2,3$) be facet-parallel with $a_i=|I_i|$, and
+let $Q=\{f\in J\}$, $t=|J|$, with $f:\Delta\to[0,1]$ affine normalized. If
+$\Delta\subset P_1\cup P_2\cup P_3\cup Q$ then $a_1+a_2+a_3+t\ge1$.
+\end{theorem}
+\begin{proof}
+Choose an active edge of $f$; relabelling, $f(v_j)=0$, $f(v_k)=1$, and let $v_i$ be
+the opposite vertex, $\theta=f(v_i)$. For $s\in[0,1]$ consider the fibre
+$F_s=\{\lambda_i=s\}$, parametrized by $u=\lambda_k\in[0,1-s]$, so
+$\lambda_j=1-s-u$ and $f|_{F_s}(u)=\theta s+u$. On $F_s$: $P_i\cap F_s=F_s$ if
+$s\in I_i$ (else $\varnothing$); $P_j\cap F_s$, $P_k\cap F_s$, $Q\cap F_s$ have
+lengths $\le a_j,a_k,t$. Put $B=a_j+a_k+t$. If $s\notin I_i$ and $F_s$ is covered,
+its length $1-s\le B$. If $B\ge1$ we are done; else $[0,1-B)\subset I_i$, so
+$a_i\ge1-B$. In both cases $a_1+a_2+a_3+t=a_i+B\ge1$.
+\end{proof}
+
+\section{The median theorem and its rigidity}\label{sec:median}
+Let $m_1,m_2,m_3$ be the medians of $\Delta$ as normalized affine forms: with
+$A,B,C$ the vertices,
+\[ m_1=(\tfrac12,0,1),\quad m_2=(0,1,\tfrac12),\quad m_3=(1,\tfrac12,0), \]
+(vertex values). One has $m_1+m_2+m_3\equiv\tfrac32$. A \emph{median plank} is
+$P_i=\{m_i\in I_i\}$, $I_i=[l_i,h_i]$, $r_i=|I_i|>0$.
+\begin{theorem}\label{thm:median}
+If three median planks cover $\Delta$, then $r_1+r_2+r_3\ge1$, with equality if and
+only if $I_1=I_2=I_3=[\tfrac13,\tfrac23]$.
+\end{theorem}
+This is the first tight \emph{non-facet} case of the three-plank problem with full
+rigidity.
+\begin{proof}[Proof of the bound]
+Let $\mu$ be the perimeter measure: uniform in the parameter on each of the three
+edges, mass $\tfrac13$ each. A direct computation shows each pushforward
+$m_{i\#}\mu=\Leb[0,1]$. Indeed for $m_1$: on $AB$, $m_1$ ranges over $[0,\tfrac12]$
+with Jacobian $2$ (density $\tfrac13\cdot2$); on $CA$, over $[\tfrac12,1]$ likewise;
+on $BC$, over $[0,1]$ with Jacobian $1$ (density $\tfrac13$); the total density is
+$1$ on $[0,1]$. Hence $\mu(P_i)=\Leb(I_i)=r_i$ (or $\le r_i$ if $I_i\not\subset[0,1]$),
+and $1=\mu(\Delta)\le\sum\mu(P_i)\le\sum r_i$.
+\end{proof}
+\begin{proof}[Proof of rigidity]
+Equality in $1\le\sum\mu(P_i)$ forces (i) $I_i\subset[0,1]$ and (ii) the $P_i$ to
+partition $\mu$ a.e.; since $\mu$ lives on the edges, \emph{on each edge the three
+traces tile $[0,1]$}. We claim there are exactly three such edge-tilings, and only
+one covers the interior.
+
+\emph{Three edge-tilings.} On each edge each median is affine, so the three traces
+are explicit intervals depending piecewise-linearly on $(l_i,h_i)$ through
+$a_i=|I_i\cap[0,\tfrac12]|$ and $b_i=|I_i\cap[\tfrac12,1]|$. Classifying each $I_i$ by
+crossing type (contained in $[0,\tfrac12]$, crossing $\tfrac12$, or contained in
+$[\tfrac12,1]$) and each edge by the left-to-right order of its traces, the abutting
+(tiling) conditions become a finite family of linear systems in $(l_i,h_i)$.
+
+\begin{lemma}[computer-assisted]\label{lem:three}
+The edge-tiling conditions have exactly three solutions with $0\le l_i<h_i\le1$:
+$[\tfrac13,\tfrac23]^3$, $[0,\tfrac13]^3$, and $[\tfrac23,1]^3$.
+\end{lemma}
+The enumeration is exhaustive ($27$ crossing patterns $\times$ all trace orders) and
+each system is solved exactly over $\mathbb Q$; it is reproducible from the archived
+script \texttt{experiments/median\_rigidity\_enumeration.py} (SymPy), and independently
+confirmed by a distinct direct search
+(\texttt{experiments/median\_edgetilings\_independent.py}). For the generic crossing
+type the argument is elementary and self-contained: the abutting equations are
+$l_2=1-2l_1$, $l_1=1-2l_3$, $l_3=1-2l_2$, forcing $l_i=\tfrac13$, and the analogous
+system for the $h_i$ forcing $h_i=\tfrac23$.
+
+\emph{Interior witness.} The centroid $G$ has $m(G)=(\tfrac12,\tfrac12,\tfrac12)$.
+Since $\tfrac12\notin[0,\tfrac13]\cup[\tfrac23,1]$, the tilings $[0,\tfrac13]^3$ and
+$[\tfrac23,1]^3$ leave $G$ uncovered; they tile the boundary but are not coverings
+of $\Delta$. The tiling $[\tfrac13,\tfrac23]^3$ covers $\Delta$ and has
+$\sum r_i=1$. Hence the unique covering with $\sum r_i=1$ is $[\tfrac13,\tfrac23]^3$.
+\end{proof}
+
+\section{A dimension-agnostic necessary condition for transport}\label{sec:concur}
+The proofs of Theorems~\ref{thm:twodir} and~\ref{thm:median} share one device: a
+probability measure whose pushforward under each direction is uniform. Which
+direction-tuples admit one?
+\begin{proposition}\label{prop:concur}
+Let $u_1,\dots,u_{d+1}$ be normalized affine forms on $\Delta^d$ with vertex-value
+matrix $V$ invertible. If a probability measure $\mu$ on $\Delta^d$ has
+$u_{i\#}\mu=\Leb[0,1]$ for all $i$, then its barycenter $p\in\Delta^d$ satisfies
+$Vp=\tfrac12\mathbf 1$; equivalently the mid-level hyperplanes $\{u_i=\tfrac12\}$
+concur at $p$, which requires $\mathbf 1^\top V^{-1}\mathbf 1=2$ and
+$V^{-1}\mathbf 1\ge0$.
+\end{proposition}
+\begin{proof}
+$\tfrac12=\mathbb E_\mu[u_i]=\sum_j V_{ij}\mathbb E_\mu[x_j]=(Vp)_i$, and
+$p\in\Delta^d$ gives $\mathbf 1^\top p=1$, $p\ge0$; substitute $p=\tfrac12V^{-1}\mathbf1$.
+\end{proof}
+The three medians satisfy this with $p$ the centroid; the three facets do not
+($\mathbf 1^\top V^{-1}\mathbf 1=3\ne2$), recovering Gardner's obstruction. The
+concurrence family is two-dimensional (parametrized by $p$): a normalized direction
+has vertex values $\{0,\tau,1\}$, and $Vp=\tfrac12\mathbf1$ ties each $\tau_i$ to $p$.
+The medians are the case $p=$ centroid, forcing $\tau_i=\tfrac12$. Among these, the
+explicit perimeter measure singles out the medians:
+\begin{proposition}\label{prop:tauhalf}
+For a direction $u$ with vertex values $\{0,\tau,1\}$, the perimeter measure $\mu$
+(uniform on each edge, mass $\tfrac13$) satisfies $u_\#\mu=\Leb[0,1]$ if and only if
+$\tau=\tfrac12$.
+\end{proposition}
+\begin{proof}
+On the three edges $u$ is affine between the pairs $\{0,\tau\},\{\tau,1\},\{0,1\}$,
+so $u_\#\mu$ has density $\tfrac1{3\tau}+\tfrac13$ on $[0,\tau]$ and
+$\tfrac1{3(1-\tau)}+\tfrac13$ on $[\tau,1]$. Both equal $1$ iff $\tau=\tfrac12$.
+\end{proof}
+This explains why the median case (Theorem~\ref{thm:median}) admits the clean
+witness measure while a general concurrent triple ($\tau_i\ne\tfrac12$) does not; the
+existence of a witness measure there is the finite-direction question left open
+by~\cite{Gardner88} (Problem~\ref{prob:suff}).
+
+\smallskip
+The concurrence condition is dimension-agnostic: the cyclic medians of $\Delta^d$
+($m_i(e_i)=\tfrac12$, $m_i(e_{i+1})=0$, $m_i(e_{i-1})=1$, else $\tfrac12$) have
+row-sums $\tfrac{d+1}2$, hence concur at the centroid in every dimension. Whether a
+witness measure then exists for $d\ge3$ is open (the perimeter measure is special to
+$d=2$); this is a higher-dimensional instance of the finite-direction question left open
+by Gardner~\cite{Gardner88}.
+
+\section{A normalizer obstruction}\label{sec:nogo}
+For a direction $u$ let $\ell_K(u)$ be the length of the longest chord of $K$
+parallel to $u$; always $\ell_K(u)\le\wid_K(u)$. Bang's chord bound
+$\sum_i\wid(P_i)/\ell_K(u_i)\ge1$ (see e.g.\ Verreault~\cite[Thm.~2.4]{Verreault})
+follows from Bang's sign argument via the chord lemma. Consider interpolating the
+normalizer,
+$N_c=(1-c)\ell+c\,\wid$, $c\in[0,1]$: $N_c=\ell$ at $c=0$ (chord bound) and
+$N_c=\wid$ at $c=1$ (Conjecture~\ref{conj:bang}).
+\begin{theorem}\label{thm:nogo}
+Bang's sign argument proves $\sum_i\wid(P_i)/N(u_i)\ge1$ with $N=\ell$ and with no
+larger direction-normalizer. In particular it cannot establish
+$\sum_i\wid(P_i)/N_c(u_i)\ge1$ for any $c>0$.
+\end{theorem}
+\begin{proof}
+The argument places a Bang-system witness $x_0+\sum_j\pm u_j$ in $K$ using the chord
+lemma: for $u$ with $\|u\|=a/2$ and $m$ the midpoint of a longest chord parallel to
+$u$ of length $\ell$, $(K-u)\cap(K+u)$ contains the homothet of $K$ with center $m$
+and ratio $(\ell-a)/\ell$~\cite[Lem.~2.3]{Verreault}. Iterating over directions,
+the common intersection is nonempty once $\sum_j\wid(P_j)/\ell_j<1$, forcing
+$\sum\wid(P_j)/\ell_j\ge1$. The ratio $(\ell-a)/\ell$ is tight: for a segment
+$K=[y,z]$ of length $\ell$, $(K-u)\cap(K+u)$ has length exactly $\ell-a$. Since the
+movement budget in direction $u$ is thus exactly the half of the longest chord, and
+$N_c(u)\ge\ell(u)$ for $c\ge0$, no normalizer larger than $\ell$ is attainable by
+this argument.
+\end{proof}
+\begin{remark}
+Theorem~\ref{thm:nogo} does \emph{not} show $\sum\wid(P_i)/N_c(u_i)\ge1$ is false for
+$c>0$; it shows the sign-argument route cannot prove it. Beating $2/(1+\sqrt d)$ by
+this normalizer therefore requires a witness that is not a Bang-system point, i.e.\
+one exploiting the coupling of the covering. This is consistent with the
+sharpness of~\cite{BY26} for the cube.
+\end{remark}
+
+\section{Open problems}\label{sec:open}
+\begin{problem}
+The three-plank case for three genuinely tilted directions on the triangle
+(equivalently Conjecture~\ref{conj:bang} for the triangle).
+\end{problem}
+\begin{problem}\label{prob:suff}
+Existence of a uniform-marginal witness measure for a concurrent direction-tuple
+(Proposition~\ref{prop:concur}); this would upgrade the necessary condition to a
+characterization and prove $\sum\rw\ge1$ for the whole (two-dimensional) concurrence
+family. By Proposition~\ref{prop:tauhalf} the perimeter measure resolves only the
+median case $\tau_i=\tfrac12$.
+\end{problem}
+\begin{problem}
+Whether $\sum\wid(P_i)/N_c(u_i)\ge1$ holds for some $c>0$ (a coupling certificate),
+which would improve the general bound past $2/(1+\sqrt d)$.
+\end{problem}
+
+\begin{thebibliography}{9}
+\bibitem{Ambrus} G.\ Ambrus, \emph{Appendix: Plank problems}, manuscript, 2010.
+\bibitem{Ball91} K.\ Ball, \emph{The plank problem for symmetric bodies},
+Invent.\ Math.\ \textbf{104} (1991), 535--543.
+\bibitem{Bang51} T.\ Bang, \emph{A solution of the ``plank problem''},
+Proc.\ Amer.\ Math.\ Soc.\ \textbf{2} (1951), 990--993.
+\bibitem{BY26} E.\ Bakaev, A.\ Yehudayoff, \emph{A note on the affine plank
+conjecture}, arXiv:2602.20290, 2026.
+\bibitem{Gardner88} R.\ J.\ Gardner, \emph{Relative width measures and the plank
+problem}, Pacific J.\ Math.\ \textbf{135} (1988), no.\ 2, 299--312.
+\bibitem{Verreault} W.\ Verreault, \emph{Plank theorems and their applications: a
+survey}, arXiv:2203.05540v2, 2025.
+\end{thebibliography}
+\end{document}
+
+
+--- STDERR ---
+
+To resume this session: kimi -r d191aa20-02c8-4170-843c-b472005e8ab0
+
+
+RETURN CODE: 0

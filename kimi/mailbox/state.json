@@ -1,0 +1,15 @@
+{
+  "loop": 1,
+  "turno": "jefe",
+  "tareas": [
+    "Escribí el abstract, la introducción y el modelo/resultado principal."
+  ],
+  "veredicto": null,
+  "historial": [
+    {
+      "loop": 1,
+      "turno": "investigador",
+      "resumen": "Actualizó borrador (20100 caracteres)."
+    }
+  ]
+}

@@ -1,0 +1,546 @@
+\documentclass[11pt,reqno]{amsart}
+
+%==============================================================
+%  An algebraic--variational framework for the affine plank problem
+%  Working manuscript. Genre: framework + research programme.
+%
+%  ACADEMIC-CORRECTNESS POLICY (binding):
+%  Every environment named "Theorem", "Proposition", "Lemma", or
+%  "Corollary" is EITHER (a) a result from the cited literature,
+%  restated with attribution, OR (b) an elementary statement proved
+%  in full here. Every not-yet-established statement is placed in a
+%  "Conjecture", "Problem", or "Programme" environment and is never
+%  used as if proved. See Section 1.3 (Status of results).
+%==============================================================
+
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[margin=1.1in]{geometry}
+\usepackage{mathtools}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue]{hyperref}
+\usepackage[protrusion=true,expansion=false]{microtype}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{problem}[theorem]{Problem}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\inner}[2]{\langle #1, #2\rangle}
+\newcommand{\norm}[1]{\lVert #1\rVert}
+\newcommand{\abs}[1]{\lvert #1\rvert}
+\newcommand{\relw}{\operatorname{rw}}
+\newcommand{\wid}{\operatorname{w}}
+\newcommand{\sgn}{\operatorname{sgn}}
+\newcommand{\diag}{\operatorname{diag}}
+\newcommand{\Jac}{\operatorname{J}}
+\DeclareMathOperator{\spann}{span}
+
+\begin{document}
+
+\title[An algebraic--variational framework for the affine plank problem]
+{An algebraic--variational framework for the affine plank problem}
+
+\author{}
+\address{}
+\email{}
+
+\date{Working draft, \today}
+
+\subjclass[2020]{Primary 52A40, 52C17; Secondary 46B07, 14M25, 90C26.}
+\keywords{plank problem, relative width, affine plank conjecture, polarization
+constants, Euler--Jacobi vanishing theorem, Bernstein--Kushnirenko bound,
+critical points.}
+
+\begin{abstract}
+Bang's affine (relative--width) plank conjecture asserts that if a convex body
+$K\subset\R^d$ is covered by finitely many planks, then the sum of the widths of
+the planks, each measured relative to the width of $K$ in the corresponding
+direction, is at least $1$. The conjecture is sharp, is known for centrally
+symmetric bodies by a theorem of Ball, and is otherwise open---open even in the
+plane and even for three planks. The best current lower bound for the total
+relative width of a covering of a general body is $2/(1+\sqrt d)$, due to Bakaev
+and Yehudayoff. We isolate a methodological gap: the critical--point and
+Euler--Jacobi vanishing technique that Mart\'inez and Ortega--Moreno recently
+used to settle the real linear polarization problem has not been brought to bear
+on planks. This paper sets up a precise framework for doing so. We recall the
+engine in the polarization setting, record the elementary dictionary between
+relative widths and gauge functionals, observe that in the centrally symmetric
+(Hilbertian) case the relative--width statement is exactly of polarization type
+and is therefore already accessible to the engine, and formulate the three
+analytic obstructions---reality of the critical locus, a Bernstein--Kushnirenko
+count of that locus, and a toric Euler--Jacobi vanishing identity---as explicit
+conjectures whose resolution would transport the method to the non--symmetric
+case. We are careful throughout to separate what is proved from what is proposed.
+\end{abstract}
+
+\maketitle
+
+\section{Introduction}\label{sec:intro}
+
+\subsection{The plank problem and its affine refinement}
+A \emph{plank} of width $w\ge 0$ in $\R^d$ is the closed region between two
+parallel hyperplanes at Euclidean distance $w$; equivalently, for a unit vector
+$u\in S^{d-1}$ and reals $a\le b$ with $b-a=w$,
+\[
+P=\{x\in\R^d:\ a\le \inner{x}{u}\le b\}.
+\]
+For a convex body $C\subset\R^d$ (a compact convex set with nonempty interior),
+the \emph{width of $C$ in the direction $u$} is
+\[
+\wid(C;u)=\max_{x\in C}\inner{x}{u}-\min_{x\in C}\inner{x}{u},
+\]
+and the \emph{minimal width} of $C$ is $\wid(C)=\min_{u\in S^{d-1}}\wid(C;u)$.
+
+In 1932 Tarski asked whether a convex body covered by planks must have the sum of
+the plank widths at least $\wid(C)$; he settled only the disk
+\cite{Tarski1932}. Bang proved Tarski's conjecture in general
+\cite{Bang1951}: if $C\subseteq P_1\cup\dots\cup P_n$ then
+$\sum_i \wid(P_i)\ge \wid(C)$. At the end of \cite{Bang1951} Bang proposed a
+stronger, affinely invariant version, introducing the term \emph{relative width}.
+
+\begin{definition}\label{def:relw}
+Let $P$ be a plank with unit normal $u$ and width $\wid(P)$. The \emph{relative
+width} of $P$ with respect to a convex body $C$ is
+\[
+\relw_C(P)\ :=\ \frac{\wid(P)}{\wid(C;u)}\,.
+\]
+\end{definition}
+
+\begin{conjecture}[Bang's affine plank conjecture {\cite{Bang1951}}]
+\label{conj:bang}
+If a convex body $C\subset\R^d$ ($d\ge2$) is covered by planks
+$P_1,\dots,P_n$, then
+\[
+\sum_{i=1}^{n}\relw_C(P_i)\ \ge\ 1 .
+\]
+\end{conjecture}
+
+The quantity $\sum_i\relw_C(P_i)$ is invariant under invertible affine maps of
+$\R^d$, which is the sense in which Conjecture~\ref{conj:bang} refines Tarski's
+absolute--width problem. The bound is sharp: $d$ parallel slabs of equal relative
+width $1/d$ stacked across $C$ already attain equality in many configurations.
+
+\subsection{What is known}\label{subsec:known}
+We summarize the state of the art; precise quotations and a verification log are
+collected in the companion notes accompanying this manuscript.
+
+\begin{itemize}
+\item \textbf{Symmetric case (solved).} Ball \cite{Ball1991} proved
+Conjecture~\ref{conj:bang} for centrally symmetric bodies. In functional--analytic
+form: if the unit ball of a Banach space is covered by a countable family of
+planks, the sum of their half--widths is at least $1$; dually, for a symmetric
+convex body $C$ and $n$ hyperplanes there is a translate of a copy of $C$ scaled
+by at least $1/(n+1)$ lying inside $C$ and avoiding all the hyperplanes. The proof
+extends Bang's Lemma and turns on the optimization of a suitable quadratic form
+over the sign vectors $\{-1,1\}^n$ of a symmetric matrix.
+
+\item \textbf{General case (open).} For arbitrary convex bodies
+Conjecture~\ref{conj:bang} is open. It is open already in the plane, and is not
+known even for three planks; Bang himself verified only the case of two planks
+\cite{Bang1951,KupavskiiPach2017,Verreault2026,BakaevYehudayoff2026}. The known
+lower bounds for the total relative width of a covering of a general body in
+$\R^d$ have improved from $1/d$ (John's theorem together with Bang's theorem; see
+\cite{BezdekLitvak2009,ChambersMouille2016}) to $2/(1+d)$
+\cite{ChambersMouille2016} and, most recently, to $2/(1+\sqrt d)$
+\cite{BakaevYehudayoff2026}, the current record. Chambers and Mouille
+\cite{ChambersMouille2016}
+also prove the unconditional bound $\sum_i\relw_C(P_i)\ge 1/\dim\pi_V(C)$, where
+$V$ is the span of the plank normals and $\pi_V$ is orthogonal projection onto
+$V$, and they prove the sharp bound $1$ \emph{conditionally}, under the hypothesis
+that $C$ minus the union of the first $m$ planks remains convex for every $m$.
+\end{itemize}
+
+\subsection{The polarization connection and a methodological gap}
+\label{subsec:polar}
+The plank problem is tightly linked to lower bounds for products of linear
+functionals. For a Banach space $X$, the $n$th linear polarization constant
+$c_n(X)$ is the least $C$ with $\norm{f_1}\cdots\norm{f_n}\le C\,\norm{f_1\cdots
+f_n}$ for all $f_1,\dots,f_n\in X^{*}$; Ball's symmetric plank theorem yields the
+general real bound $c_n(X)\le n^{n}$
+\cite{BenitezSarantopoulosTonge1998,ReveszSarantopoulos2004}. Over a real Hilbert
+space the sharp conjecture $c_n\le n^{n/2}$ stood for decades and was recently
+established. Mart\'inez and Ortega--Moreno \cite{MartinezOrtegaMoreno2026} solved
+the real polarization problem by a variational analysis of the critical locus of
+a product of linear forms on the sphere, combined with the classical
+\emph{Euler--Jacobi vanishing theorem}. Galicer, Ortega--Moreno and Pinasco
+\cite{GalicerOrtegaPinasco2026} extended the argument to a weighted ``strong''
+inequality and, as a corollary, to a centred plank theorem in Hilbert space.
+
+These developments introduce into the plank/polarization circle a genuinely
+algebraic tool---counting the solutions of a polynomial critical system and
+forcing a good one through a vanishing identity. To the best of our knowledge,
+\emph{this tool has not been applied to the affine plank problem}. The purpose of
+the present paper is to set up, precisely and honestly, a framework that would do
+so, and to delineate exactly which analytic facts must be established for the
+transfer to succeed.
+
+\subsection{Status of results}\label{subsec:status}
+In keeping with the affine, sharp, and still--open nature of
+Conjecture~\ref{conj:bang}, we are explicit about what this manuscript does and
+does not prove.
+\begin{itemize}
+\item Section~\ref{sec:engine} \emph{recalls}, with attribution, the
+critical--point/Euler--Jacobi engine of
+\cite{MartinezOrtegaMoreno2026,GalicerOrtegaPinasco2026}. Nothing there is claimed
+as new.
+\item Section~\ref{sec:dictionary} proves elementary, self--contained facts: the
+affine invariance of the total relative width
+(Proposition~\ref{prop:affineinv}), the gauge reformulation
+(Proposition~\ref{prop:gauge}), and the observation that in the centrally
+symmetric case the relevant statement is of polarization type and hence already
+within reach of the engine (Proposition~\ref{prop:symmetric}). These are correct
+and complete.
+\item Section~\ref{sec:programme} states the three transfer obstructions as
+\emph{conjectures and problems}. They are \emph{not} theorems, are clearly labeled
+as such, and are never used as if proved.
+\end{itemize}
+No new lower bound for the general case, and in particular no improvement of
+$2/(1+\sqrt d)$, is claimed here. The contribution of this paper is a framework
+and a programme, together with the elementary results that make the programme
+precise.
+
+\section{The critical--point/Euler--Jacobi engine, recalled}\label{sec:engine}
+
+We recall the mechanism of \cite{MartinezOrtegaMoreno2026} in the streamlined form
+of \cite{GalicerOrtegaPinasco2026}. Nothing in this section is original; we
+include it because the framework of Section~\ref{sec:programme} is a structural
+analogy with it.
+
+Let $v_1,\dots,v_n$ be a basis of $\R^n$ and let $k_1,\dots,k_n\in\N$,
+$s=\sum_j k_j$, $\alpha_j=k_j/s$. Consider
+\[
+P(x)=\prod_{j=1}^{n}\inner{v_j}{x}^{k_j}, \qquad x\in S^{n-1},
+\]
+and write $y_j=\inner{v_j}{x}$. With $w_1,\dots,w_n$ the dual basis and
+$z_j=\inner{w_j}{x}$ one has $x=\sum_j z_j v_j$ and $z=Ay$, where $A=G^{-1}$ and
+$G=(\inner{v_i}{v_j})_{i,j}$ is the Gram matrix.
+
+\begin{lemma}[Critical system; \cite{MartinezOrtegaMoreno2026,GalicerOrtegaPinasco2026}]
+\label{lem:critsystem}
+At a critical point of $\log\abs{P}$ on the sphere with $P\neq0$ one has
+$\sum_j k_j v_j/y_j=s\,x$ and $y_j z_j=\alpha_j$. Equivalently, the critical
+points are the solutions of the quadratic system $h(y)=0$, where
+\[
+h_j(y)=y_j (Ay)_j-\alpha_j,\qquad j=1,\dots,n .
+\]
+\end{lemma}
+
+\begin{lemma}[Reality and count;
+{\cite[Lem.~3--4]{GalicerOrtegaPinasco2026}},
+{\cite{MartinezOrtegaMoreno2026}}]\label{lem:realcount}
+Every solution $y\in\C^n$ of $h(y)=0$ is real; in each open sign orthant of
+$\R^n$ there is exactly one solution; hence $h$ has exactly $2^n$ solutions, all
+real and simple. At a solution,
+$\Jac h(y)=\diag(y)\big(A+\diag(\alpha_j/y_j^2)\big)$, which is invertible.
+\end{lemma}
+
+\begin{theorem}[Polarization via Euler--Jacobi;
+{\cite{MartinezOrtegaMoreno2026,GalicerOrtegaPinasco2026}}]\label{thm:euler}
+With the notation above there is a unit vector $u\in S^{n-1}$ with
+$\sum_j k_j^2/\inner{v_j}{u}^2\le s^2$, equivalently
+$\sum_j \alpha_j^2/\inner{v_j}{u}^2\le 1$.
+\end{theorem}
+
+\begin{proof}[Sketch, after {\cite{GalicerOrtegaPinasco2026}}]
+The system $h=0$ is a zero--dimensional complete intersection of $n$ quadrics with
+$2^n=\prod_j\deg h_j$ simple solutions (Lemma~\ref{lem:realcount}), so B\'ezout's
+bound is attained and the Euler--Jacobi vanishing theorem applies: for every
+polynomial $g$ with $\deg g\le n-1$,
+\[
+\sum_{h(y)=0}\frac{g(y)}{\det \Jac h(y)}=0 .
+\]
+Choosing $g(y)=Q(y)\big(s^2-\sum_j k_j^2/y_j^2\big)$ with $Q(y)=\prod_j y_j$, and
+using $\det \Jac h(y)=Q(y)\det\!\big(A+\diag(\alpha_j/y_j^2)\big)$ with the second
+factor positive at every solution, the identity becomes a sum of the quantities
+$s^2-\sum_j k_j^2/y_j^2$ weighted by positive numbers. Hence some solution has
+$\sum_j k_j^2/y_j^2\le s^2$; its normalization is the desired $u$. Rational and
+real weights follow by approximation; see
+\cite{GalicerOrtegaPinasco2026}.
+\end{proof}
+
+\begin{remark}\label{rem:threepillars}
+Theorem~\ref{thm:euler} rests on three pillars: \emph{(P1) reality} of the
+critical locus, \emph{(P2) an exact count} of that locus matching the product of
+the degrees, and \emph{(P3) a vanishing identity} forcing a witness with the
+desired sign. The metric data enter only through the positive--definite matrix
+$A=G^{-1}$. The framework of Section~\ref{sec:programme} asks what survives when
+the round sphere is replaced by the boundary of a general convex body and $A$ by
+the second--order data of that body.
+\end{remark}
+
+\section{Elementary reformulations}\label{sec:dictionary}
+
+This section is self--contained and its results are proved in full.
+
+\subsection{Affine invariance}
+\begin{proposition}\label{prop:affineinv}
+Let $T:\R^d\to\R^d$ be an invertible affine map. If planks $P_1,\dots,P_n$ cover a
+convex body $C$, then $T(P_1),\dots,T(P_n)$ are planks covering $T(C)$ and
+\[
+\sum_{i=1}^n\relw_{T(C)}(T(P_i))=\sum_{i=1}^n\relw_{C}(P_i).
+\]
+\end{proposition}
+
+\begin{proof}
+Write $T(x)=Lx+b$ with $L$ invertible. The image of a plank with normal $u$ and
+width $w$ is the region between the images of its two boundary hyperplanes; these
+remain parallel, so $T(P_i)$ is a plank, with some normal $u_i'$ and width
+$w_i'$. For any direction, affine images of the two supporting hyperplanes of
+$C$ that realize $\wid(C;u)$ are supporting hyperplanes of $T(C)$ parallel to the
+images of the bounding hyperplanes of $P_i$. Both $\wid(T(P_i))$ and
+$\wid(T(C);u_i')$ are the distances between the corresponding pairs of parallel
+hyperplanes, measured along the same transversal; their ratio is therefore
+unchanged because it is computed within a single one--dimensional quotient
+$\R^d/(\text{common hyperplane direction})$ on which $T$ acts by a single affine
+isomorphism. Hence $\relw_{T(C)}(T(P_i))=\relw_{C}(P_i)$ for each $i$, and the
+covering $T(C)\subseteq\bigcup_i T(P_i)$ is immediate from
+$C\subseteq\bigcup_i P_i$.
+\end{proof}
+
+Proposition~\ref{prop:affineinv} is the reason Conjecture~\ref{conj:bang} is
+called \emph{affine}: one may normalize $C$ by any affine map (for example into
+John position) without changing the quantity under study.
+
+\subsection{Gauge reformulation}
+For a convex body $C$ with $0$ in its interior, let
+$\norm{x}_C=\inf\{t>0: x\in tC\}$ be its gauge (Minkowski functional) and
+$h_C(u)=\max_{x\in C}\inner{x}{u}$ its support function. For a plank $P$ with unit
+normal $u$ given by $a\le\inner{\cdot}{u}\le b$, one has
+$\wid(P)=b-a$ and $\wid(C;u)=h_C(u)+h_C(-u)$.
+
+\begin{proposition}\label{prop:gauge}
+With $C$, $P_i$ (normals $u_i$, levels $a_i\le b_i$) as above,
+\[
+\relw_C(P_i)=\frac{b_i-a_i}{h_C(u_i)+h_C(-u_i)} .
+\]
+In particular, if $C$ is centrally symmetric about $0$ then
+$h_C(u)+h_C(-u)=2h_C(u)=2\norm{u}_{C^{\circ}}$, where $C^\circ$ is the polar body,
+and $\relw_C(P_i)=(b_i-a_i)/\big(2\norm{u_i}_{C^\circ}\big)$.
+\end{proposition}
+
+\begin{proof}
+The first identity is the definition together with
+$\wid(C;u)=h_C(u)+h_C(-u)$. If $C=-C$ then $h_C(-u)=h_C(u)$, and
+$h_C=\norm{\cdot}_{C^\circ}$ by the definition of the polar body $C^\circ=\{u:
+\inner{x}{u}\le1\ \forall x\in C\}$.
+\end{proof}
+
+\subsection{The symmetric case is of polarization type}
+The next proposition records that, for symmetric bodies, the relative--width
+statement is exactly the kind of inequality the engine of
+Section~\ref{sec:engine} produces. It is a reading of known results, included to
+mark the boundary of what is already accessible.
+
+\begin{proposition}\label{prop:symmetric}
+Let $H$ be a real Hilbert space (so $C=B_H$ is the symmetric Euclidean ball).
+A family of planks with unit normals $u_i$ and half--widths $t_i\ge 0$ fails to
+cover $B_H$ as soon as $\sum_i t_i<1$. Equivalently, in the dual formulation of
+\cite{Ball1991,GalicerOrtegaPinasco2026}: given unit vectors $v_1,\dots,v_n\in H$
+and weights $p_i>0$ with $\sum_i p_i=1$, there is a unit vector $u$ with
+$\abs{\inner{v_i}{u}}\ge p_i$ for all $i$; in particular the planks
+$\{x:\abs{\inner{v_i}{x}}<p_i\}$ do not cover the unit sphere.
+\end{proposition}
+
+\begin{proof}
+This is the centred Hilbert plank statement. The displayed dual form is
+\cite[Cor.~6]{GalicerOrtegaPinasco2026}, itself a consequence of
+Theorem~\ref{thm:euler} via the weighted arithmetic--geometric mean inequality;
+the covering statement is the contrapositive. The symmetric body case of
+Conjecture~\ref{conj:bang} in full generality (countable coverings, sharp constant)
+is Ball's theorem \cite{Ball1991}.
+\end{proof}
+
+\begin{remark}
+Proposition~\ref{prop:symmetric} delineates the frontier precisely: for symmetric
+$C$ the engine already applies (through the Gram matrix $A=G^{-1}$ of the
+normals, exactly as in Section~\ref{sec:engine}). The open content of
+Conjecture~\ref{conj:bang} is entirely in the \emph{non--symmetric} case, where
+$h_C(u)+h_C(-u)$ is genuinely asymmetric and no inner--product structure is given.
+\end{remark}
+
+\section{A programme for the non--symmetric case}\label{sec:programme}
+
+We now state, as conjectures and problems, the analytic facts whose proof would
+transport the engine of Section~\ref{sec:engine} to general bodies. We stress that
+this section contains \emph{no theorems}: the statements below are open and are
+offered as a research programme.
+
+\subsection{The proposed critical system}
+Fix a smooth, strictly convex body $C$ with $0$ in its interior and a covering by
+planks with normals $u_1,\dots,u_n$. Guided by Section~\ref{sec:engine}, one seeks
+an objective $\Phi$ on $\partial C$ (or on a suitable gauge sphere) whose critical
+points encode the total relative width, with the role of the Gram matrix played by
+the second fundamental form / support--function Hessian of $C$. Making this precise
+is the first task.
+
+\begin{problem}\label{prob:objective}
+Construct an objective functional $\Phi$, polynomial or rational in suitable
+coordinates adapted to $\partial C$, whose stationarity conditions on
+$\partial C$ form a zero--dimensional polynomial system $H_C(y)=0$ encoding the
+quantities $\relw_C(P_i)$, and which reduces to the system $h$ of
+Lemma~\ref{lem:critsystem} when $C$ is an ellipsoid.
+\end{problem}
+
+\subsection{The three obstructions}
+Assume Problem~\ref{prob:objective} is solved, producing a system $H_C$ with
+second--order data encoded by a positive--definite matrix field $A_C$ (the inverse
+support--Hessian).
+
+\begin{conjecture}[P1: reality]\label{conj:reality}
+For smooth, strictly convex $C$ every complex solution of $H_C(y)=0$ is real.
+\end{conjecture}
+
+The motivation is that the reality argument of
+\cite[Lem.~3]{GalicerOrtegaPinasco2026} uses only positive--definiteness of $A$
+through an imaginary--part energy identity; for a smooth strictly convex body the
+support--Hessian is positive definite, so the argument is expected to persist,
+possibly after a limiting passage to handle bodies that are not strictly convex
+(such as polytopes).
+
+\begin{conjecture}[P2: BKK count]\label{conj:count}
+The system $H_C(y)=0$ is a zero-dimensional complete intersection. Its number of
+solutions equals the Bernstein--Kushnirenko (BKK) mixed volume of the Newton
+polytopes of its components; all solutions are simple; and they are in bijection
+with the normal-fan cells of $C$ cut out by the plank directions.
+\end{conjecture}
+
+For the round sphere the Newton polytopes are those of the quadrics $h_j$ and the
+BKK number specializes to the B\'ezout number $2^n$ of Lemma~\ref{lem:realcount};
+Conjecture~\ref{conj:count} asks for the analogue when the body is not an
+ellipsoid, where the mixed volume is in general smaller and structured.
+
+\begin{conjecture}[P3: toric Euler--Jacobi vanishing]\label{conj:vanishing}
+There is a test functional $g_C$, of degree below the relevant BKK threshold, for
+which the toric (global residue) form of the Euler--Jacobi vanishing theorem
+yields
+\[
+\sum_{H_C(y)=0}\frac{g_C(y)}{\det \Jac H_C(y)}=0,
+\]
+and $g_C$ can be chosen so that this identity forces the existence of a critical
+point witnessing $\sum_i\relw_C(P_i)\ge 1$.
+\end{conjecture}
+
+\medskip
+\noindent\textbf{Intended architecture (conditional, not a theorem).}
+\emph{If} Problem~\ref{prob:objective} is solved and
+Conjectures~\ref{conj:reality}--\ref{conj:vanishing} hold for a class
+$\mathcal{K}$ of bodies, \emph{then} Conjecture~\ref{conj:bang} would follow for
+every $C\in\mathcal{K}$. We state this only to display the intended logical
+architecture; it is contingent on three open conjectures and is deliberately
+\emph{not} formulated as a theorem.
+\medskip
+
+\subsection{Test classes and falsifiers}
+The programme is to be validated or refuted on the smallest non--trivial classes
+before any attempt at generality.
+
+\begin{problem}[Symmetric recovery]\label{prob:M1}
+Carry out Problem~\ref{prob:objective} and
+Conjectures~\ref{conj:reality}--\ref{conj:vanishing} for centrally symmetric
+$C$, thereby \emph{reproving} Ball's theorem \cite{Ball1991} by the
+critical--point/Euler--Jacobi method. (By Proposition~\ref{prop:symmetric} the
+required inputs are already available; the content is to phrase Ball's quadratic
+optimization as a special case of the engine.)
+\end{problem}
+
+\begin{problem}[Simplices]\label{prob:M2}
+Establish the sharp bound $\sum_i\relw_C(P_i)\ge1$ for the simplex, the most
+tractable non--symmetric body. If a reduction of Conjecture~\ref{conj:bang} to
+simplices in the literature is correct, a positive answer here would settle the
+conjecture in a structured case for the first time by these methods.
+\end{problem}
+
+\begin{problem}[Planar three--plank case]\label{prob:M3b}
+Decide Conjecture~\ref{conj:bang} for $d=2$ and $n=3$, where the critical system
+is of small size, by the present method. This case is currently open
+\cite{Verreault2026,KupavskiiPach2017}.
+\end{problem}
+
+A negative outcome on Problem~\ref{prob:M1} (the engine failing to recover even
+the symmetric, already--known case) would be decisive evidence against the
+algebraic route and would redirect the programme toward purely variational, non
+algebraic, formulations.
+
+\section*{Acknowledgements}
+(To be added.)
+
+\begin{thebibliography}{99}
+
+\bibitem{BakaevYehudayoff2026}
+E.~Bakaev and A.~Yehudayoff,
+\emph{A note on the affine plank conjecture},
+preprint, arXiv:2602.20290, 2026.
+
+\bibitem{Ball1991}
+K.~M.~Ball,
+\emph{The plank problem for symmetric bodies},
+Invent. Math. \textbf{104} (1991), 535--543.
+
+\bibitem{Ball2001}
+K.~M.~Ball,
+\emph{The complex plank problem},
+Bull. London Math. Soc. \textbf{33} (2001), 433--442.
+
+\bibitem{Bang1951}
+T.~Bang,
+\emph{A solution of the ``plank problem''},
+Proc. Amer. Math. Soc. \textbf{2} (1951), 990--993.
+
+\bibitem{BenitezSarantopoulosTonge1998}
+C.~Ben\'itez, Y.~Sarantopoulos and A.~Tonge,
+\emph{Lower bounds for norms of products of polynomials},
+Math. Proc. Cambridge Philos. Soc. \textbf{124} (1998), 395--408.
+
+\bibitem{BezdekLitvak2009}
+K.~Bezdek and A.~E.~Litvak,
+\emph{Covering convex bodies by cylinders and lattice points by flats},
+J. Geom. Anal. \textbf{19} (2009), 233--243.
+
+\bibitem{ChambersMouille2016}
+G.~R.~Chambers and S.~Mouille,
+\emph{A note on the affine--invariant plank problem},
+preprint, arXiv:1604.00456, 2016.
+
+\bibitem{GalicerOrtegaPinasco2026}
+D.~Galicer, O.~Ortega--Moreno and D.~Pinasco,
+\emph{Strong polarization and entropy},
+preprint, arXiv:2606.02567, 2026.
+
+\bibitem{KupavskiiPach2017}
+A.~Kupavskii and J.~Pach,
+\emph{From Tarski's plank problem to simultaneous approximation},
+Amer. Math. Monthly \textbf{124} (2017), no.~6, 494--505.
+
+\bibitem{MartinezOrtegaMoreno2026}
+A.~D.~Mart\'inez and O.~Ortega--Moreno,
+\emph{A solution to the polarization problem},
+preprint, 2026.
+
+\bibitem{ReveszSarantopoulos2004}
+S.~G.~R\'ev\'esz and Y.~Sarantopoulos,
+\emph{Plank problems, polarization and Chebyshev constants},
+J. Korean Math. Soc. \textbf{41} (2004), no.~1, 157--174.
+
+\bibitem{Tarski1932}
+A.~Tarski,
+\emph{Remarks on the degree of equivalence of polygons} (Polish),
+Parametr \textbf{2} (1932), 310--314.
+
+\bibitem{Verreault2026}
+W.~Verreault,
+\emph{Plank theorems and their applications: a survey},
+Bull. London Math. Soc. (2026); preprint arXiv:2203.05540.
+
+\end{thebibliography}
+
+\end{document}
