@@ -1,39 +1,57 @@
-# bang-plank — Affine plank problem on the triangle
+# bang-plank — The affine plank problem on the triangle
 
-Investigación sobre la **conjetura afín de planks de Bang** (1951): si un cuerpo convexo
-`K` está cubierto por planks, `Σ rw_K(P_i) ≥ 1`. Abierta en general; abierta ya para 3
-planks en el plano (Bakaev–Yehudayoff 2026).
+Research project on **Bang's affine plank conjecture** (1951): if a convex body
+`K` is covered by planks, then `Σ rw_K(P_i) ≥ 1`. Open in general; open already
+for 3 planks in the plane (Bakaev–Yehudayoff 2026).
 
-## Manuscrito vigente
+## Current manuscript
 
-**`drafts/affine-plank-triangle.tex`** — *Transport and tiling bounds for the affine plank
-problem on the triangle* (único manuscrito vivo; ver `drafts/BUILD.md`). Resultados
-principales: teorema de medianas con rigidez completa, teorema del perímetro ponderado
-(familia cíclica 2-paramétrica de ternas concurrentes), caracterización de concurrencia,
-obstrucción del normalizador.
+**`drafts/affine-plank-triangle.tex`** — *Transport and tiling bounds for the
+affine plank problem on the triangle* (the only live manuscript; see
+`drafts/BUILD.md`). Main results:
 
-## Estructura
+- **Median theorem with full rigidity**: three median planks satisfy `Σrw ≥ 1`,
+  with equality iff each is the central third of its median.
+- **Weighted-perimeter theorem**: an explicit uniform-marginal witness measure
+  (edge masses `1−2p_j`) proving the sharp bound for a two-parameter family of
+  generic concurrent direction triples.
+- **Tightness and rigidity of the whole cyclic family**: the bound is attained
+  at every member by an explicit covering, unique for its directions.
+- **Three-direction characterization**: on the triangle, a uniform-marginal
+  witness measure exists iff the three mid-level lines concur — settling
+  Gardner's (1988) existence question for three directions on the triangle, and
+  reducing the open case of the conjecture on the triangle exactly to
+  non-concurrent triples.
+- **A normalizer obstruction**: the chord-lemma step in Bang's sign argument is
+  sharp, so that argument cannot reach any normalizer beyond the longest chord.
 
-| Directorio | Contenido |
+## Repository layout
+
+| Directory | Contents |
 |---|---|
-| `drafts/` | Manuscrito vigente + `ancillary/` (scripts para arXiv) + `obsolete/` (era tórica, refutada — no citar) |
-| `notes/` | Notas de investigación numeradas (el registro primario del trabajo) |
-| `auditorias/` | Dictámenes del jefe de research + órdenes de trabajo por ronda (`00-ordenes-de-trabajo.md` es el documento vivo) |
-| `experiments/` | Scripts load-bearing (verificaciones exactas con `sympy`/`fractions`; ver notas que los citan) |
-| `paper-ready/` | Material de rondas tempranas (two-walls, M4) |
-| `kimi/` | Infraestructura del orquestador investigador/jefe |
+| `drafts/` | Current manuscript + `ancillary/` (verification scripts for arXiv) + `obsolete/` (an abandoned earlier approach — do not cite) |
+| `notes/` | Numbered research notes — the primary record of the work (in Spanish) |
+| `auditorias/` | Audit reports and per-round work orders by the research lead (in Spanish; `00-ordenes-de-trabajo.md` is the living document) |
+| `experiments/` | Load-bearing scripts (exact verification with `sympy`/`fractions`; see the notes that cite them) |
+| `paper-ready/` | Material from early rounds |
+| `kimi/` | Investigator/lead orchestrator infrastructure |
 
-`refs/` (PDFs de terceros: Bakaev–Yehudayoff, Ball, Ambrus, Gardner, Verreault) está
-**excluida del repo** por copyright; las citas exactas están en la bibliografía del `.tex`
-y en `notes/42`.
+`refs/` (third-party PDFs: Bakaev–Yehudayoff, Ball, Ambrus, Gardner, Verreault)
+is **excluded from the repository** for copyright reasons; exact citations are
+in the manuscript's bibliography and in `notes/42`.
 
-## Reglas de rigor del proyecto
+The manuscript, the ancillary files and the repository documentation are in
+English. The research notes and audit records (`notes/`, `auditorias/`) are
+working documents kept in Spanish.
 
-- Aritmética exacta (`fractions`/`sympy`); una grilla nunca es prueba.
-- Etiquetas estrictas `[PROVED] / [EVIDENCE] / [OPEN]` en cada afirmación.
-- Todo enunciado del manuscrito está probado en el texto o citado con atribución.
+## Rigor rules of the project
 
-## Compilar el paper
+- Exact arithmetic (`fractions`/`sympy`); a numeric grid is never a proof.
+- Strict labels `[PROVED] / [EVIDENCE] / [OPEN]` on every claim.
+- Every statement in the manuscript is either proved in the text or cited with
+  attribution.
+
+## Building the paper
 
 ```bash
 cd drafts/

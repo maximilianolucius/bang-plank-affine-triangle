@@ -1,50 +1,50 @@
-# Orquestador de paper matemático con dos agentes Kimi
+# Math-paper orchestrator with two Kimi agents
 
-Automatiza la comunicación entre dos roles:
-- **Investigador matemático**: escribe y corrige el paper.
-- **Jefe de research**: audita el borrador y genera sub-tareas concretas.
+Automates the communication between two roles:
+- **Mathematical investigator**: writes and revises the paper.
+- **Research lead**: audits the draft and generates concrete sub-tasks.
 
-El orquestador alterna entre ambos, guarda todo el estado en disco y se detiene cuando el jefe aprueba o cuando se alcanzan **40 loops**.
+The orchestrator alternates between the two, persists all state to disk, and stops when the lead approves or when **40 loops** are reached.
 
 ---
 
-## Estructura
+## Layout
 
 ```
 kimi/
-├── PROMPT_INICIADOR.md          # ← Editá esto primero
-├── config.json                  # ← Config (loops, modelo, sesiones, dry-run)
-├── orchestrator.py              # ← Script principal
+├── PROMPT_INICIADOR.md          # ← Edit this first (seed prompt)
+├── config.json                  # ← Config (loops, model, sessions, dry-run)
+├── orchestrator.py              # ← Main script
 ├── roles/
-│   ├── investigador.md          # System prompt del investigador
-│   └── jefe_research.md         # System prompt del jefe/auditor
+│   ├── investigador.md          # Investigator system prompt
+│   └── jefe_research.md         # Lead/auditor system prompt
 ├── mailbox/
-│   ├── state.json               # Estado del loop
-│   ├── investigador_response.md # Última respuesta del investigador
-│   └── jefe_response.md         # Última respuesta del jefe
+│   ├── state.json               # Loop state
+│   ├── investigador_response.md # Latest investigator response
+│   └── jefe_response.md         # Latest lead response
 ├── paper/
-│   └── draft.md                 # Borrador acumulado del paper
-└── logs/                        # Logs de cada llamada a Kimi
+│   └── draft.md                 # Accumulated paper draft
+└── logs/                        # Logs of every Kimi call
 ```
 
 ---
 
-## Cómo usar
+## Usage
 
-### 1. Escribí el prompt iniciador
+### 1. Write the seed prompt
 
-Abrí `PROMPT_INICIADOR.md` y completá:
-- Tema y título provisional
-- Objetivo principal
-- Audiencia y nivel de rigor
-- Estructura deseada
-- Restricciones y preferencias
+Open `PROMPT_INICIADOR.md` and fill in:
+- Topic and working title
+- Main objective
+- Audience and rigor level
+- Desired structure
+- Constraints and preferences
 
-> Este es **el único archivo que tenés que editar** para arrancar un paper nuevo.
+> This is **the only file you need to edit** to start a new paper.
 
-### 2. (Opcional) Ajustá la configuración
+### 2. (Optional) Adjust the configuration
 
-En `config.json`:
+In `config.json`:
 
 ```json
 {
@@ -62,89 +62,89 @@ En `config.json`:
 }
 ```
 
-- `max_loops`: cantidad máxima de ciclos investigador→jefe.
-- `model`: modelo de Kimi (ej. `kimi-k2-0711-preview`). `null` usa el default.
-- `work_dir`: directorio de trabajo que ven los agentes. Por defecto es `kimi/` para evitar escanear todo el proyecto.
-- `use_sessions`: si es `true`, cada rol usa una sesión persistente de Kimi (`--session`), por lo que conserva su propio historial interno.
-- `session_investigador` / `session_jefe`: IDs de sesión. Si son `null`, el orquestador los genera automáticamente y los guarda en `config.json`.
-- `dry_run`: si es `true`, simula las respuestas sin llamar a la API (útil para testear el flujo).
+- `max_loops`: maximum number of investigator→lead cycles.
+- `model`: Kimi model (e.g. `kimi-k2-0711-preview`). `null` uses the default.
+- `work_dir`: working directory the agents see. Defaults to `kimi/` so the whole project is not scanned.
+- `use_sessions`: if `true`, each role uses a persistent Kimi session (`--session`), keeping its own internal history.
+- `session_investigador` / `session_jefe`: session IDs. If `null`, the orchestrator generates them automatically and stores them in `config.json`.
+- `dry_run`: if `true`, simulates responses without calling the API (useful for testing the flow).
 
-### 3. Ejecutá el orquestador
+### 3. Run the orchestrator
 
 ```bash
-cd /home/maxim/PycharmProjects/bang-plank-euler-jacobi/kimi
+cd kimi
 python3 orchestrator.py
 ```
 
-### 4. Revisá los resultados
+### 4. Inspect the results
 
-- Borrador: `paper/draft.md`
-- Estado del loop: `mailbox/state.json`
+- Draft: `paper/draft.md`
+- Loop state: `mailbox/state.json`
 - Logs: `logs/`
 
 ---
 
-## Cómo funciona el loop
+## How the loop works
 
 ```
 Loop 1:
-  1. Investigador escribe/corrige el paper (guarda en paper/draft.md)
-  2. Jefe audita y devuelve ANALISIS / TAREAS / VEREDICTO
-     - Si VEREDICTO == APROBADO → fin
-     - Si VEREDICTO == REVISAR  → loop 2 comienza con las nuevas tareas
+  1. Investigator writes/revises the paper (saved to paper/draft.md)
+  2. Lead audits and returns ANALYSIS / TASKS / VERDICT
+     - If VERDICT == APPROVED → done
+     - If VERDICT == REVISE   → loop 2 starts with the new tasks
 ```
 
-Cada loop implica **dos llamadas a Kimi** (investigador + jefe), así que 40 loops = hasta 80 llamadas.
+Each loop makes **two Kimi calls** (investigator + lead), so 40 loops = up to 80 calls.
 
 ---
 
-## Conservación del contexto (importante)
+## Context preservation (important)
 
-El sistema usa **dos mecanismos simultáneos** para que los agentes no pierdan el hilo:
+The system uses **two simultaneous mechanisms** so the agents do not lose the thread:
 
-1. **Sesiones persistentes por rol**  
-   Cada agente tiene su propio ID de sesión de Kimi (`--session`). Eso significa que, además del prompt actual, Kimi mantiene el historial interno de cada conversación. El investigador recuerda lo que escribió antes; el jefe recuerda lo que pidió antes.
+1. **Persistent per-role sessions**
+   Each agent has its own Kimi session ID (`--session`), so besides the current prompt, Kimi keeps the internal history of each conversation. The investigator remembers what it wrote; the lead remembers what it asked for.
 
-2. **Contexto explícito en cada prompt**  
-   El orquestador siempre incluye en el prompt:
-   - el prompt iniciador completo,
-   - el borrador actual (`paper/draft.md`),
-   - las tareas pendientes del jefe,
-   - los últimos 6 turnos de historial.
+2. **Explicit context in every prompt**
+   The orchestrator always includes in the prompt:
+   - the full seed prompt,
+   - the current draft (`paper/draft.md`),
+   - the lead's pending tasks,
+   - the last 6 turns of history.
 
-   Esto garantiza que, incluso si una sesión se reinicia o hay un fallo, el agente reciba todo lo necesario para continuar coherentemente.
+   This guarantees that, even if a session resets or a call fails, the agent receives everything needed to continue coherently.
 
-Si querés forzar un "reset" de contexto, borrá `config.json` (se regenerará) o cambiá los IDs de sesión manualmente.
+To force a context "reset", delete `config.json` (it will be regenerated) or change the session IDs manually.
 
 ---
 
-## Reanudar un paper
+## Resuming a paper
 
-El orquestador lee `mailbox/state.json` al arrancar. Si querés retomar desde donde quedó, simplemente volvé a ejecutar:
+The orchestrator reads `mailbox/state.json` on startup. To resume where it left off, just run again:
 
 ```bash
 python3 orchestrator.py
 ```
 
-Si querés reiniciar de cero, borrá el estado y el borrador:
+To restart from scratch, delete the state and the draft:
 
 ```bash
 rm mailbox/state.json paper/draft.md mailbox/*.md
 ```
 
-Y si querés nuevas sesiones:
+And for fresh sessions:
 
 ```bash
 rm config.json
 ```
 
-(el orquestador lo regenerará con IDs nuevos).
+(the orchestrator regenerates it with new IDs).
 
 ---
 
-## Notas
+## Notes
 
-- El orquestador usa `kimi --quiet --yolo --input-format text` para correr sin interacción humana.
-- Los prompts de los roles están en `roles/`: podés ajustar el tono, el rigor o el formato de salida.
-- El jefe debe devolver exactamente `VEREDICTO: APROBADO` o `VEREDICTO: REVISAR`; el parser lo detecta automáticamente.
-- Si ves un error `429 rate limit reached`, es porque llegaste al límite de uso de Kimi. Esperá a que se refresque la cuota o usá `dry_run: true` para testear el flujo sin consumir API.
+- The orchestrator runs `kimi --quiet --yolo --input-format text` for non-interactive operation.
+- The role prompts live in `roles/`: tone, rigor and output format can be adjusted there.
+- The lead must return exactly `VEREDICTO: APROBADO` or `VEREDICTO: REVISAR`; the parser detects it automatically.
+- A `429 rate limit reached` error means the Kimi usage quota is exhausted. Wait for the quota to refresh or use `dry_run: true` to test the flow without consuming API.

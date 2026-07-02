@@ -1,39 +1,49 @@
-# Build & status — UN SOLO MANUSCRITO VIVO
+# Build & status — ONE LIVE MANUSCRIPT
 
-## Manuscrito vigente: `affine-plank-triangle.tex`
+## Current manuscript: `affine-plank-triangle.tex`
 
-- **Título:** *Transport and tiling bounds for the affine plank problem on the triangle*.
-- **Estado (2026-07-02):** compila limpio con `pdflatex` local (2 pasadas): **0 errores,
-  0 referencias sin resolver, 5 páginas** → `affine-plank-triangle.pdf`.
-- **Contenido probado (todo verificado, ver `notes/46` y auditorías `43/44-46/47/48`):**
-  Thm `1/d` (Brunn–Minkowski); 2 direcciones (cita Gardner Thm 1); faceta-paralelo
-  (Minkowski-sum/BM-1D, prueba corregida en R4-1); 3 facetas + 1 arbitrario (fibras);
-  **medianas: `Σrw≥1` + rigidez completa** (centerpiece; lema computer-assisted con scripts
-  archivados); caracterización de concurrencia (dim-agnóstica) + `perímetro ⟺ τ=½`;
-  no-go del normalizador `N_c` (obstrucción al argumento de Bang).
-- **Alcance honesto:** el triángulo como cuerpo concreto; NO la conjetura vía Ambrus
-  (Remark 1.3: la reducción produce símplices de dim `2N−1`, nunca el triángulo).
+- **Title:** *Transport and tiling bounds for the affine plank problem on the triangle*.
+- **Status (2026-07-02, post-R6):** compiles clean with local `pdflatex` (2 passes):
+  **0 errors, 0 unresolved references, 11 pages** → `affine-plank-triangle.pdf`.
+- **Proved content (all verified; audit records `43/44-46/47/48/50/52`):**
+  the `1/d` theorem with *method* sharpness correctly stated (fix R6-1a); two
+  non-parallel directions (cites [Gardner88, Thm 1], parallel case dispatched — R6-1b);
+  facet-parallel families (Minkowski-sum/BM-1D); 3 facets + 1 arbitrary plank (fibres);
+  **medians: `Σrw ≥ 1` + full rigidity** (Lemma 5.2 now with a **human proof in
+  Appendix A**, the `τ=½` case of Prop. A.1 — R6-2a); concurrence characterization +
+  **iff corollary for cyclic triples** (R6-1f); **Thm 6.3 weighted perimeter**
+  (two-parameter family); **Thm 6.6 NEW (R6-4): tightness and rigidity of the WHOLE
+  cyclic family** — explicit tight covering `I_i` with masses `α,β,γ` and uniqueness,
+  medians = centroid case; **Thm 6.8 NEW (R6-5): three-direction characterization**
+  (witness measure exists iff the mid-level lines concur; settles Gardner's question
+  for N=3 on the triangle); normalizer no-go (now a Proposition — R6-1d).
+- **Appendix A:** complete classification of edge tilings for arbitrary cyclic triples
+  (Prop. A.1, 7 classes modulo symmetry, full human proof).
+- **Honest scope:** the triangle as a concrete body; NOT the conjecture via the Ambrus
+  reduction (Remark 1.3). Priority claims carry "to our knowledge" + support (R6-1c).
 
-## Cómo compilar
+## How to build
 ```bash
 cd drafts/
 pdflatex -interaction=nonstopmode affine-plank-triangle.tex
-pdflatex -interaction=nonstopmode affine-plank-triangle.tex   # 2ª pasada (refs)
+pdflatex -interaction=nonstopmode affine-plank-triangle.tex   # 2nd pass (refs)
 ```
 
-## Ancillary files (para arXiv, ver `auditorias/49 §R5-1`)
-El Lema computer-assisted (rigidez de medianas) cita scripts **archivados** en
-`experiments/`; al someter, incluir como ancillary:
-`median_rigidity_enumeration.py`, `median_edgetilings_independent.py`,
-`median_rigidity_centroid.py`, `bang_Nc_nogo_chord.py`. Copias en `drafts/ancillary/`.
+## Ancillary files (for arXiv)
+`drafts/ancillary/` (copies from `experiments/`): 6 scripts + README. Cited by the text
+(Lemma 5.2, Thm 6.6, Prop. A.1, Prop. 7.1).
 
-## Pendiente antes de someter
-- Bloque autor/afiliación/email (decisión del investigador; placeholder marcado en el .tex).
+## Pending before submission
+- Author/affiliation/email block (investigator's decision; placeholder marked in the .tex).
+- R6-3/R7-0: external re-audit of the 11-page version — Thm 6.3, Thm 6.6, Thm 6.8 and
+  Appendix A have no external audit yet.
 
-## Obsoletos
-`drafts/obsolete/` contiene los manuscritos de la **era tórica** (`paper.tex`, `paper.pdf`,
-`bang-plank-paper.tex`), refutada y abandonada (`notes/15/22/23`; auditoría externa
-coincidente: `auditorias/49`). **No auditar ni citar** — ver `obsolete/README-OBSOLETE.md`.
+## Obsolete
+`drafts/obsolete/` contains the manuscripts of the **toric era** (`paper.tex`,
+`paper.pdf`, `bang-plank-paper.tex`), refuted and abandoned (`notes/15/22/23`; a
+concurring external audit is recorded in `auditorias/49`). **Do not audit or cite** —
+see `obsolete/README-OBSOLETE.md`.
 
-(Nota: los ficheros `hamilton-jacobi-*` en `drafts/` son de OTRO trabajo, no de este proyecto
-de planks; no forman parte de este manuscrito.)
+(Note: the `hamilton-jacobi-*` files formerly kept in `drafts/` belong to a DIFFERENT
+project, not to this plank project; they are not part of this manuscript and are
+excluded from the repository.)

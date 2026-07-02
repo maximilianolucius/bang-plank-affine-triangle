@@ -1,10 +1,10 @@
-# PDFs de terceros (copyright) — ver README
+# Third-party PDFs (copyright) — see README
 refs/
 
-# Trabajo ajeno a este proyecto (declarado en drafts/BUILD.md)
+# Unrelated work (declared in drafts/BUILD.md)
 drafts/hamilton-jacobi-*
 
-# Artefactos de LaTeX
+# LaTeX build artifacts
 drafts/*.aux
 drafts/*.log
 drafts/*.out

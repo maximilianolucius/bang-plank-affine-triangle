@@ -51,13 +51,18 @@ $\sum\rw\ge 1$ for two directions and for facet-parallel families (all dimension
 as our main results, (iv) what is, to our knowledge, the first \emph{tight
 non-facet} case with full rigidity:
 three planks parallel to the medians of a triangle satisfy $\sum\rw\ge1$ with
-equality if and only if each is the central third of its median; and (v) a
+equality if and only if each is the central third of its median; (v) a
 \emph{weighted-perimeter theorem} extending the bound to a two-parameter family of
 generic concurrent direction triples, via an explicit witness measure with edge
-masses $1-2p_j$. We isolate the transport method behind (i)--(v) as a
+masses $1-2p_j$; and (vi) tightness and rigidity across that entire family: the
+bound is attained at every member by an explicit covering, unique for its
+directions --- a two-parameter family of sharp configurations. We isolate the
+transport method behind (i)--(vi) as a
 \emph{uniform-marginal witness measure} and give a dimension-agnostic necessary
-condition for its existence (concurrence of the mid-level lines); for cyclic triples
-the condition is also sufficient, giving a complete characterization. Finally we
+condition for its existence (concurrence of the mid-level lines); on the
+triangle the condition is also sufficient, giving a complete characterization
+for three directions: a witness measure exists if and only if the mid-level
+lines concur. Finally we
 record a structural obstruction: the chord-lemma step in the sign argument of Bang,
 which yields the chord-normalized bound $\sum \wid(P_i)/\ell_K(u_i)\ge1$, is sharp,
 so that argument cannot be pushed past the longest chord: no normalizer strictly
@@ -113,13 +118,18 @@ not increase $|I|$.
 Theorem~\ref{thm:oned} (\S\ref{sec:measure}), Theorems~\ref{thm:twodir}
 and~\ref{thm:facet} (\S\ref{sec:sharp}), Theorem~\ref{thm:3plus1}
 (\S\ref{sec:3plus1}), and the centerpieces: Theorem~\ref{thm:median} with rigidity
-(\S\ref{sec:median}) and the weighted-perimeter Theorem~\ref{thm:wper}
+(\S\ref{sec:median}); the weighted-perimeter Theorem~\ref{thm:wper}
 (\S\ref{sec:concur}), which extends the sharp bound from the medians to a
-two-parameter family of generic concurrent triples.
+two-parameter family of generic concurrent triples; and
+Theorem~\ref{thm:tight}, which shows the bound is attained at every member of
+that family by an explicit unique tight covering.
 Proposition~\ref{prop:concur} (\S\ref{sec:concur}) is the dimension-agnostic
-necessary condition, and Corollary~\ref{cor:iff} the resulting characterization for
-cyclic triples; Proposition~\ref{thm:nogo} (\S\ref{sec:nogo}) is the normalizer
-obstruction.
+necessary condition, Corollary~\ref{cor:iff} the resulting characterization for
+cyclic triples, and Theorem~\ref{thm:char} the full three-direction
+characterization on the triangle; Proposition~\ref{thm:nogo} (\S\ref{sec:nogo})
+is the normalizer obstruction. Appendix~\ref{app:tilings} classifies the
+boundary tilings of cyclic triples (Proposition~\ref{prop:tilings}), the
+combinatorial engine behind both rigidity results.
 
 \section{The single-measure bound $\sum\rw\ge 1/d$}\label{sec:measure}
 \begin{theorem}\label{thm:oned}
@@ -371,10 +381,205 @@ $p_j<\tfrac12$. Theorem~\ref{thm:wper} then supplies $\mu_p$.
 \begin{remark}
 The \emph{anti-cyclic} pattern (all $0$- and $1$-roles exchanged) reduces to the
 cyclic one by a reflection of $\Delta$ (a transposition of two vertices), which
-maps the medial triangle to itself; Theorem~\ref{thm:wper} and
-Corollary~\ref{cor:iff} hold for it verbatim. Non-cyclic (mixed) role assignments,
-and the rigidity of the equality case for $p$ off the centroid, remain open
-(Problem~\ref{prob:suff}).
+maps the medial triangle to itself; Theorem~\ref{thm:wper},
+Corollary~\ref{cor:iff} and Theorem~\ref{thm:tight} below hold for it verbatim.
+All remaining role assignments are classified by Theorem~\ref{thm:char} below.
+\end{remark}
+
+The bound of Theorem~\ref{thm:wper} is in fact \emph{attained} at every member
+of the family, and the tight covering is unique --- a two-parameter family of
+sharp configurations extending the median rigidity of \S\ref{sec:median}.
+
+\begin{theorem}[tightness and rigidity of the cyclic family]\label{thm:tight}
+Let $p$ and $u_1,u_2,u_3$ be as in Theorem~\ref{thm:wper}. Write
+$\alpha=1-2p_A$, $\beta=1-2p_B$, $\gamma=1-2p_C$ (the edge masses of $\mu_p$;
+$\alpha,\beta,\gamma>0$, $\alpha+\beta+\gamma=1$) and
+$S=\alpha\beta+\beta\gamma+\gamma\alpha$. Then the planks $P_i=\{u_i\in I_i\}$
+with
+\[
+I_1=\Bigl[\tfrac{\alpha\gamma}S,\,1-\tfrac{\alpha\beta}S\Bigr],\qquad
+I_2=\Bigl[\tfrac{\beta\gamma}S,\,1-\tfrac{\alpha\gamma}S\Bigr],\qquad
+I_3=\Bigl[\tfrac{\alpha\beta}S,\,1-\tfrac{\beta\gamma}S\Bigr]
+\]
+cover $\Delta$, with $\sum\rw
+=\tfrac{\beta\gamma}S+\tfrac{\alpha\beta}S+\tfrac{\alpha\gamma}S=1$. Moreover
+this is the unique covering of $\Delta$ with $\sum\rw=1$ by three planks of
+positive width, one in each of the directions $u_1,u_2,u_3$. At $p$ the centroid
+($\alpha=\beta=\gamma=\tfrac13$) it is $[\tfrac13,\tfrac23]^3$, recovering
+Theorem~\ref{thm:median}.
+\end{theorem}
+
+\begin{proof}
+Write $l=(l_1,l_2,l_3)=(\alpha\gamma,\beta\gamma,\alpha\beta)/S$ and
+$h=(h_1,h_2,h_3)=\mathbf1-(\alpha\beta,\alpha\gamma,\beta\gamma)/S$, and note
+$\tau_1=\frac{\gamma}{1-\alpha}$, $\tau_2=\frac{\beta}{1-\gamma}$,
+$\tau_3=\frac{\alpha}{1-\beta}$ from the formulas of Theorem~\ref{thm:wper}. A
+direct substitution shows $(l,h)=(\lambda,\rho)$, the first solution of
+Proposition~\ref{prop:tilings}; in particular $l_i<\tau_i<h_i$, and the traces
+of $P_1,P_2,P_3$ tile all three edges, so $\partial\Delta\subset\bigcup P_i$.
+
+\emph{Step 1: an affine identity.} Let $a_1=\alpha(1-\alpha)$,
+$a_2=\gamma(1-\gamma)$, $a_3=\beta(1-\beta)$ and
+$\Lambda=a_1u_1+a_2u_2+a_3u_3$. At the vertices:
+$\Lambda(A)=a_1\tau_1+a_3=\alpha\gamma+\beta(\alpha+\gamma)=S$,
+$\Lambda(B)=a_2+a_3\tau_3=\gamma(\alpha+\beta)+\alpha\beta=S$,
+$\Lambda(C)=a_1+a_2\tau_2=\alpha(\beta+\gamma)+\beta\gamma=S$. An affine
+function agreeing at three affinely independent points is constant:
+$\Lambda\equiv S$ on the plane of $\Delta$. Moreover
+$\sum_ia_i=1-(\alpha^2+\beta^2+\gamma^2)=2S$, and expanding (using
+$1-\alpha=\beta+\gamma$ etc.)
+\[
+\textstyle\sum_i a_il_i
+=\frac{\alpha^2\gamma(\beta+\gamma)+\beta\gamma^2(\alpha+\beta)
++\alpha\beta^2(\gamma+\alpha)}{S}
+=\frac{(\alpha^2\beta^2+\beta^2\gamma^2+\gamma^2\alpha^2)+\alpha\beta\gamma}{S}
+=\frac{S^2-\alpha\beta\gamma}{S},
+\]
+since $S^2=\sum\alpha^2\beta^2+2\alpha\beta\gamma$; the same expansion gives
+$\sum_ia_i(1-h_i)=\frac{S^2-\alpha\beta\gamma}S$, whence
+$\sum_ia_ih_i=2S-\frac{S^2-\alpha\beta\gamma}S=S+\frac{\alpha\beta\gamma}S$.
+Thus
+\begin{equation}\label{eq:margin}
+\textstyle\sum_i a_il_i=S-\frac{\alpha\beta\gamma}S<S<
+S+\frac{\alpha\beta\gamma}S=\sum_i a_ih_i .
+\end{equation}
+
+\emph{Step 2: the planks cover $\Delta$.} Suppose not; the uncovered set $U$ is
+relatively open (planks are closed) and misses $\partial\Delta$, and it
+decomposes as $U=\bigcup_\sigma P_\sigma$ over the eight sign patterns
+$\sigma\in\{\mathrm{lo},\mathrm{hi}\}^3$, where $P_\sigma=H_\sigma\cap
+\operatorname{int}\Delta$ and $H_\sigma$ is the open convex set
+$\{u_i<l_i\ (\sigma_i=\mathrm{lo}),\ u_i>h_i\ (\sigma_i=\mathrm{hi})\}$; write
+$c_i$ for the active bound ($l_i$ or $h_i$). We show each $P_\sigma$ is empty.
+
+First, $\overline{P_\sigma}\cap\partial\Delta$ is finite: such a point $x$
+satisfies the closed pattern constraints, and is covered by some $P_j$ (the
+boundary is tiled), forcing $u_j(x)=c_j$; each $u_j$ is nonconstant on each
+edge (its vertex values there are distinct), so $x$ lies in a set of at most
+nine points. Next, $H_\sigma\subseteq\overline\Delta$ whenever
+$P_\sigma\ne\varnothing$: otherwise pick $y\in H_\sigma\setminus\overline\Delta$
+and a disk $B\subset P_\sigma$; for each $z\in B$ the segment $[z,y]\subset
+H_\sigma$ crosses $\partial\Delta$ at a point of
+$\overline{P_\sigma}\cap\partial\Delta$, and segments through the fixed $y$
+meeting a common crossing point have collinear $z$, so a disk of $z$'s produces
+infinitely many crossing points --- contradicting finiteness. In particular
+$H_\sigma$ is bounded.
+
+No two of the lines $\ell_i=\{u_i=c_i\}$ are parallel: $u_i\parallel u_j$ would
+force $\tau_1(1-\tau_2)=1$, $\tau_2(1-\tau_3)=1$ or $\tau_3(1-\tau_1)=1$,
+impossible for $\tau\in(0,1)^3$. If the three lines are concurrent, $H_\sigma$
+is an intersection of three open half-planes whose boundaries pass through one
+point, hence empty or an unbounded open cone; boundedness gives
+$H_\sigma=\varnothing$. Otherwise $H_\sigma$, if nonempty, is the open triangle
+with vertices $v_{ij}=\ell_i\cap\ell_j\in\overline{H_\sigma}
+\subseteq\overline\Delta$, and each $v_{ij}$ satisfies the closed constraint in
+the third index $k$. Since $\Lambda\equiv S$,
+$u_k(v_{ij})=(S-a_ic_i-a_jc_j)/a_k$, so that constraint reads $S\le\sum_ma_mc_m$
+if $\sigma_k=\mathrm{lo}$, and $S\ge\sum_ma_mc_m$ if $\sigma_k=\mathrm{hi}$. For
+a \emph{mixed} pattern both directions occur, forcing $S=\sum_ma_mc_m$; but then
+$u_k(v_{ij})=c_k$, i.e.\ the three lines concur --- excluded. For
+$\sigma=(\mathrm{lo},\mathrm{lo},\mathrm{lo})$ we get $S\le\sum a_il_i$, and for
+$\sigma=(\mathrm{hi},\mathrm{hi},\mathrm{hi})$, $S\ge\sum a_ih_i$ --- both
+contradict \eqref{eq:margin}. Hence $U=\varnothing$: the planks cover, and
+$\sum\rw=1$.
+
+\emph{Step 3: uniqueness.} Let $(I_i')$ be any covering with all
+$r_i'=|I_i'|>0$ and $\sum r_i'=1$. Since $u_{i\#}\mu_p=\Leb[0,1]$
+(Theorem~\ref{thm:wper}), $\mu_p(P_i')=r_i'$, and
+$1=\mu_p(\Delta)\le\sum\mu_p(P_i')=1$ forces the planks to partition $\mu_p$
+a.e.; as $\mu_p$ has positive uniform density on each edge, the traces tile all
+three edges. By Proposition~\ref{prop:tilings}, $(I_i')$ is $(\,[\lambda_i,
+\rho_i]\,)=(I_i)$, $(\,[0,\lambda_i]\,)$ or $(\,[\rho_i,1]\,)$. The last two do
+not cover $\Delta$: set $\delta=\frac{\alpha\beta\gamma}{2S^2}$ and let
+$x^\ast$ be the unique point of the plane with $u_i(x^\ast)=\lambda_i+\delta$
+for all $i$ (consistent with $\Lambda\equiv S$ by \eqref{eq:margin} and
+$\sum a_i=2S$; unique since $V$ is invertible). Its barycentric coordinates are
+\[
+x^\ast=\tfrac1{2S^2}\Bigl(\alpha\beta(1-\alpha)(1+\alpha-\beta),\;
+\beta\gamma(1-\beta)(\alpha+2\beta),\;
+\alpha\gamma(\alpha+\beta)(2-2\alpha-\beta)\Bigr),
+\]
+all positive, so $x^\ast\in\operatorname{int}\Delta$ and
+$u_i(x^\ast)>\lambda_i$ for every $i$: $x^\ast$ is uncovered by
+$(\,[0,\lambda_i]\,)$. Symmetrically the point $y^\ast$ with
+$u_i(y^\ast)=\rho_i-\delta$, with coordinates
+$\frac1{2S^2}\bigl(\alpha\gamma(1-\alpha)(2\alpha+\beta),\,
+\alpha\beta(1-\beta)(1+\beta-\alpha),\,
+\beta\gamma(\alpha+\beta)(2-\alpha-2\beta)\bigr)$, is uncovered by
+$(\,[\rho_i,1]\,)$. Hence $(I_i')=(I_i)$.
+\end{proof}
+
+\begin{remark}
+At the centroid, $\delta=\tfrac16$ and both witnesses degenerate to the point
+with $u_i\equiv\tfrac12$ --- the centroid itself, recovering the interior
+witness used in the proof of Theorem~\ref{thm:median}. The identities of Step~1
+and the positivity of the witness coordinates, as well as exact coverage checks
+at several family points, are verified symbolically in the archived ancillary
+script \texttt{cyclic\_family\_tight\_rigidity.py}.
+\end{remark}
+
+Finally, the restriction to cyclic role assignments can be removed altogether.
+The plank problem is invariant under the \emph{flip} of a normalized direction,
+$u\mapsto1-u$, $I\mapsto1-I$ (the planks, their widths, and uniformity of
+marginals are unchanged, and each mid-level line is fixed). Call the edge
+joining the $0$- and $1$-vertices of a direction its \emph{full edge}. Flips
+reduce every role assignment to one of three shapes, and the existence question
+is settled in each:
+
+\begin{theorem}[three-direction characterization]\label{thm:char}
+Let $u_1,u_2,u_3$ be normalized directions on $\Delta$, pairwise non-parallel.
+A probability measure $\mu$ on $\Delta$ with $u_{i\#}\mu=\Leb[0,1]$ for
+$i=1,2,3$ exists if and only if the three mid-level lines $\{u_i=\tfrac12\}$
+have a common point $p$. In that case $\sum\rw\ge1$ for every covering of
+$\Delta$ by planks parallel to these directions, and exactly one of the
+following holds:
+\begin{itemize}
+\item[(a)] the full edges are pairwise distinct: up to flips the triple is
+cyclic, $p$ lies in the open medial triangle, and Theorems~\ref{thm:wper}
+and~\ref{thm:tight} apply verbatim (explicit witness $\mu_p$; unique tight
+covering);
+\item[(b)] all three directions have the same full edge $e$: then $p$ is the
+midpoint of $e$, the uniform measure on $e$ is a witness, and the bound follows
+from covering $e$ alone (the trivial one-dimensional case recorded in
+Theorem~\ref{thm:oned}).
+\end{itemize}
+\end{theorem}
+
+\begin{proof}
+\emph{Necessity.} If $\mu$ exists, its barycenter $p\in\Delta$ satisfies
+$u_i(p)=\mathbb E_\mu[u_i]=\tfrac12$ for every $i$ (no invertibility of $V$ is
+needed), so the mid-lines concur at $p$.
+
+\emph{Classification.} (1) If the three full edges are distinct, flipping each
+direction so that its $(0,1)$-pair is oriented cyclically makes the triple
+cyclic; by Corollary~\ref{cor:iff}, concurrence then places $p$ in the open
+medial triangle and yields $\mu_p$, and Theorem~\ref{thm:tight} the unique
+tight covering. (2) Suppose exactly two directions, say $u_i$ and $u_j$, share
+their full edge $e$, and let $x_v$ be the barycentric coordinate of the vertex
+$v$ opposite $e$. After a flip, $u_i$ and $u_j$ agree on $e$, so
+$u_i-u_j=(\tau_i-\tau_j)x_v$ with $\tau_i\ne\tau_j$ (equality would make them
+parallel). Hence $\{u_i=\tfrac12\}\cap\{u_j=\tfrac12\}\subset\{x_v=0\}$, the
+line through $e$, on which both mid-lines pass only through the midpoint of
+$e$; but the third direction is not full on $e$, its values at the endpoints of
+$e$ being $\{0,\tau_k\}$ or $\{\tau_k,1\}$, so its value at the midpoint is
+$\tfrac{\tau_k}2$ or $\tfrac{1+\tau_k}2$, never $\tfrac12$. Thus the mid-lines
+of such a triple \emph{never} concur; consistently, no witness measure exists
+($\mathbb E_\mu[u_i]=\mathbb E_\mu[u_j]=\tfrac12$ would force
+$\mathbb E_\mu[x_v]=0$, hence $\operatorname{supp}\mu\subset e$, on which $u_k$
+is not onto $[0,1]$). This shape contributes to neither side of the
+equivalence. (3) If all three directions share the full edge $e$, then after
+flips each restricts to $e$ as the identity parameter, so all mid-lines pass
+through the midpoint of $e$ (concurrence always holds), and the uniform
+probability measure on $e$ has all three pushforwards equal to $\Leb[0,1]$.
+For the bound, a covering of $\Delta$ covers $e$, on which the $i$-th plank
+traces an interval of length $r_i$; hence $\sum r_i\ge1$.
+\end{proof}
+
+\begin{remark}
+Theorem~\ref{thm:char} answers the existence question of~\cite{Gardner88}
+completely for three directions on the triangle. In particular the open case of
+Conjecture~\ref{conj:bang} on the triangle is reduced to \emph{non-concurrent}
+triples, for which no single witness measure can exist.
 \end{remark}
 
 \smallskip
@@ -425,14 +630,17 @@ sharpness of~\cite{BY26} for the cube.
 \section{Open problems}
 \begin{problem}
 The three-plank case for three genuinely tilted directions on the triangle
-(equivalently Conjecture~\ref{conj:bang} for the triangle).
+(equivalently Conjecture~\ref{conj:bang} for the triangle). By
+Theorem~\ref{thm:char} the remaining case is that of \emph{non-concurrent}
+triples, where no single witness measure exists.
 \end{problem}
 \begin{problem}\label{prob:suff}
-Corollary~\ref{cor:iff} characterizes the cyclic (and anti-cyclic) role
-assignments. For the remaining \emph{mixed} role assignments of a concurrent
-triple, decide whether a uniform-marginal witness measure exists; and determine the
-equality (rigidity) case of Theorem~\ref{thm:wper} for $p$ off the centroid ---
-does $\sum\rw=1$ force a tiling, and is it ever attained?
+Theorem~\ref{thm:char} settles the existence of uniform-marginal witness
+measures for three directions on the triangle. For $d\ge3$ the concurrence
+condition of Proposition~\ref{prop:concur} remains necessary; is it sufficient
+for $d+1$ directions on $\Delta^d$? The first test case is the cyclic medians
+of $\Delta^d$, which concur at the centroid in every dimension
+(\S\ref{sec:concur}).
 \end{problem}
 \begin{problem}
 Whether $\sum\wid(P_i)/N_c(u_i)\ge1$ holds for some $c>0$ (a coupling certificate),

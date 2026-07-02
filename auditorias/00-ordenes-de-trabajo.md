@@ -220,3 +220,26 @@ R7-3 titular "Gardner 3 direcciones en el triángulo" (condicional a R6-5) · R7
 estabilidad cuantitativa de la rigidez · R7-5 figuras TikZ + mapa de estatus.
 Advertencia vigente: R7-2 se presenta como caracterización del método, NO como mejora de
 cota (cerca de facetas `D≈3/2 ⟹ 1/D≈2/3 < 0.928`).
+
+## Estado (2026-07-02, noche) — RONDA 6 CERRADA: dos teoremas nuevos, todo confirmado
+- **R6-4 → Thm 6.6 [PROVED, verificado]:** la igualdad `Σr=1` SÍ se alcanza en TODA la
+  familia cíclica — cobertura tight explícita (`I` con endpoints `αγ/S` etc., margen
+  exacto `αβγ`) y **única**. Desenlace contrario a mi apuesta: la grilla de `notes/38`
+  mintió otra vez (endpoints `k/29` fuera de grilla). Lección endurecida: la grilla no
+  orienta; lo exacto decide.
+- **R6-5 → Thm 6.8 [PROVED, verificado]:** caracterización completa para 3 direcciones no
+  paralelas dos a dos: medida testigo ⟺ mid-lines concurren (tricotomía por arista llena
+  módulo flips; 216/216 exacto). Cierra Gardner N=3 en el triángulo; Bang-triángulo
+  reducido EXACTAMENTE a ternas no concurrentes.
+- **R6-1/R6-2:** los 6 fixes de doña Rosa aplicados y verificados; Lemma 5.2 ahora es el
+  caso `τ=½` de la **Prop. A.1 probada a mano** (Apéndice A, revisado línea a línea:
+  7 órbitas, todo correcto). 11 pp, compila limpio. Cor 6.4: interioridad automática.
+- **Pendiente:** R6-3 (doña Rosa) NO ejecutada aún — ahora hay 4 piezas sin auditoría
+  externa (Thm 6.3/6.6/6.8, Apéndice A). Pasa a R7-0.
+
+**Auditoría + ÓRDENES RONDA 7 REVISADAS: `auditorias/52-ronda6-cierre.md`.**
+Prioridad: **R7-0** re-entrega a doña Rosa (con mapa objeción→resolución) · **R7-1**
+esqueleto `d≥3` (ya) · **R7-2 reenfocado**: defecto de transporte `D(u)` con foco en el
+módulo de continuidad cerca de la superficie de concurrencia (primeras cotas `>0.928` en
+territorio no concurrente = el objetivo real) · R7-4 estabilidad de TODA la familia ·
+R7-5 figuras · R7-3 decisión editorial de título.
