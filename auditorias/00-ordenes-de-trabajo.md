@@ -389,7 +389,98 @@ R11-1 hueco por ARRIBA cerca de facetas (lazo deformado + UB variacional → ¿m
 en 3/2?) · R11-2 sandwich exacto (matched pair vía holgura complementaria; si no cierra en
 esqueleto ⟹ primera instancia probada de óptimo no-esquelético) · R11-3 integración del
 paquete R10 CONDICIONADA al dictamen de Rosa (+abstract ≤200) · R11-4/5 fondo.
-Regla superior: dictamen de Rosa pausa todo. REPO: 2 rondas sin commit (R9, R10).
+Regla superior: dictamen de Rosa pausa todo. REPO: commiteado hasta R10 (`a93cf9a`).
+
+## Estado (2026-07-03) — 5ª PASADA DE ROSA: "Major revision con potencial real" — PIVOTE VALIDADO
+- De "Reject" (p4) a "major revision con potencial de publicación" (p5): **la columna
+  vertebral `D_K` funcionó** — su queja estructural respondida sin partir el paper. Sus
+  problemas restantes: "formales/expositivos, no conceptuales" (su frase).
+- **Sus 2 objeciones técnicas, verificadas:** (1) Pocket Lemma — **mislectura suya**: el
+  `.tex` YA tiene `P̄∩∂Δ` (clausura); blindaje de una palabra, no se cede. (2) `27/29 →
+  29/31` — **real y gratis** (recíproco exacto; verificado `46225>46128`); se adopta.
+- Sus ideas de valor (covering constant `C(u)` y gap, estabilidad inversa —corolario de 1
+  línea de nuestra cota de momentos—, figura dual, phase diagram, vectores B–E) aceptadas
+  con filtro. **El vector disruptivo `C(u)=1 ∀ terna` ES nuestro objetivo primario** y pasa
+  a flagship.
+
+**Dictamen + ÓRDENES RONDA 12: `auditorias/60-dictamen-rosa5-y-ordenes-ronda12.md`.**
+
+## Estado (2026-07-03) — RONDA 12 CERRADA: Thm 6.13 (cobertura canónica) + pasada 6 lista
+- **Thm 6.13 [PROVED, verificado a fondo]:** TODA terna cíclica lleva una cobertura canónica
+  con `Σr = 1+(Π−Q)²/((1+Π)(1+Q))` — exceso = penalización de concurrencia exacta.
+  Verificado a mano: dependencia `Σcᵢuᵢ≡1` en los 3 vértices; identidades de margen;
+  fórmula del exceso (rederivada simbólica); **`Π=Q ⟺ concurrencia`** (equivale a
+  `e₁−e₂+2e₃=1` — criterio nuevo limpio); `δ_c=|Π−Q|/(2(2+Π+Q))` cerrada (sandwich `1/450`,
+  penalización `1/12656` ✓). Remark honesto ("certifies only C≤1, trivial; value is
+  structural").
+- **Parte A completa** (29/31, Pocket blindado, abstract 3 mensajes, minimax duality,
+  tablas, R10 íntegro; UNA tabla de numeración) — pasada 6 congelada = vivo (diff 0),
+  31 pp limpio. **Parte B completa** (C_K + gap, estabilidad inversa, Figs 4–5) — con
+  higiene ejemplar: dato falso de caption detectado por el investigador y reemplazado por
+  el exacto (`1432/23961`).
+- **C1:** oráculo exacto corrido — ninguna cobertura `Σr<1` (protocolo anti-sensación no
+  disparado); `C₃(sandwich) ∈ [111/112, 1]`; edge-reduction con límite honesto; híbrido =
+  programa.
+
+**Auditoría + ÓRDENES RONDA 13: `auditorias/61-ronda12-cierre.md`.**
+
+## Estado (2026-07-03) — RONDA 13 CERRADA: régimen extremo TEOREMA, crux del balanceado aislado
+- **Teorema del régimen extremo [PROVED, verificado]:** `w₀(τ)>0` explícito; toda cobertura
+  de 3 planks con `max r_i ≥ 1−w₀` cumple `Σr≥1` (igualdad solo trivial). **Primera vez que
+  el caso 2-planks resuelto se usa como herramienta.** Márgenes estrictos verificados a mano
+  (`g₂−τ₁=(1−τ₁)(1−τ₃)>0`). **Corolario: todo contraejemplo a `C₃=1` es BALANCEADO.**
+- **Insuficiencia del acople ingenuo [PROVED]:** `r₂+r₃=(1875/1094)l<2l` en el sandwich
+  (script) — la posición (caso B) es esencial, no las anchuras.
+- **Obstrucción de órdenes (nueva, la clave):** la ruta "estabilidad de teselación" pierde —
+  presupuesto de solape del transporte = 1er orden (`D−1≥1/224`), penalización canónica =
+  2º orden (`1/12656`). (El chat dijo `1/2`; garble — la nota tiene `1/224` correcto, 3ª vez
+  que el chat corrompe un número; ficheros siempre OK.)
+- **R13-2 facetas máximo local [EVIDENCE certificada]:** 3 UB de lazo `<3/2` (`135/91`,
+  `190/127`, `1225/817`), déficit ~ε² (verificado). Sandwich `D∈(225/224,112/111]` sin cambio.
+- **Crux del balanceado aislado:** la dependencia `Σc_iu_i≡1` regala un bound PONDERADO
+  (`Σc_ir_i`), pero `Σr≥1` es SIN PESO; el hueco = acoplamiento de posición.
+
+**Auditoría + ÓRDENES RONDA 14: `auditorias/62-ronda13-cierre.md`.**
+
+## Estado (2026-07-03) — RONDA 14: HITO — C₃(sandwich)=1, primera terna no concurrente con Bang(3)
+- **R14-2 TEOREMA [PROVED]:** facetas = máximo local estricto de D;
+  `(3/2)/(1+ε) ≤ D(tilt ε) ≤ (3/2)(1−ε)/(1−ε+ε²) < 3/2`, `UB=3/2−(3/2)ε²+O(ε³)`. Verificado
+  a mano (reproduce `135/91,190/127,1225/817`) + script.
+- **R14-1 [PROVED, computer-assisted] — HITO:** `C₃(sandwich τ=(13/25,½,½)) = 1`, primera
+  terna NO CONCURRENTE con Bang(3) probado (primera grieta en el problema abierto). B&B
+  exacto: **soundness de las 4 podas verificada línea a línea ANTES del resultado** (P1 minΣr;
+  P2 extremo→R13; P3 config agrandada superconjunto; P4 vacío→Thm3.1; + lógica de
+  contradicción); **esperé el run: `QUEUE EMPTY`, 1,625,301 cajas, 683s.**
+- **CORRECCIÓN DE PROCESO:** el investigador reportó el veredicto con el run AÚN CORRIENDO
+  (lo verifiqué: proceso vivo, cola sin vaciar). Salió bien, pero un claim de prueba se emite
+  DESPUÉS de vaciar la cola. Regla reforzada.
+- **Caveats:** (1) re-verificación independiente PENDIENTE y bloqueante para el paper; (2) es
+  UNA terna, no la familia; (3) decisión de presentación computer-assisted (usuario).
+
+**Auditoría + ÓRDENES RONDA 15: `auditorias/63-ronda14-cierre-HITO.md`.**
+R15-1 BLOQUEANTE: re-verificación independiente del B&B (LP-por-tipo u otra implementación) ·
+R15-2 FLAGSHIP: thin-plank lemma → B&B parametrizado en τ → `C₃=1` para toda la familia ·
+R15-3 sandwich D exacto · R15-4 dictamen pasada 6 · R15-5 fondo.
+Pendiente usuario: bloque de autor; presentación computer-assisted; repo sin commit desde R10.
+R14-1 FLAGSHIP: balanceado por **LP-exacto-por-tipo** (celdas puras lineales + mixtas PL;
+minimizar `Σr` por tipo combinatorio; empezar por el sandwich → si `min=1` es la 1ª terna no
+concurrente con Bang(3) probado) · R14-2 facetas máximo local de EVIDENCE a TEOREMA
+(`UB(ε)=3/2−cε²` simbólico, casi seguro) · R14-3 sandwich `D` exacto/valor intermedio ·
+R14-4 dictamen pasada 6 · R14-5 fondo.
+Pendiente usuario: bloque de autor; repo sin commit desde R10 (a acumular R11–13).
+R13-0 entregar pasada 6 (usuario) · **R13-1 FLAGSHIP: `C₃=1` para ternas cíclicas por DOS
+REGÍMENES** (extremo: reducir a 2 planks —el caso RESUELTO, primera vez como herramienta—;
+balanceado: dependencia+Pocket+LP de aristas; fallback acotado: sandwich decidido = primera
+terna no concurrente con Bang probado) · R13-2 carryover (UB facetas, sandwich D exacto —
+alimenta `C₃≥1/D`) · R13-3 dictamen pasada 6 al llegar · R13-4 fondo.
+Pendiente usuario: bloque de autor; repo sin commitear desde R10.
+Absorbe R11 (research → C2). Parte A: fixes p5 + integración R10 (numeración descongelada,
+UNA tabla) → pasada 6. Parte B: `C_K(u)` y gap `G(u)` · estabilidad inversa · figura dual ·
+phase diagram [EVIDENCE]. Parte C: **C1 FLAGSHIP = programa `C(u)`** (formalizar; experimentos
+exactos en ternas no concurrentes con protocolo anti-sensación si apareciera `Σr<1`; ataque
+estructural vía dependencia afín general + Pocket Lemma; caso frontera-no-cubierta probado;
+certificado híbrido como programa) · C2 carryover R11 · C3 fondo.
+Prioridad: A1+A8 → editorial+B1-B3 → pasada 6 → C1 (C2 paralelo) → C3.
 Parte A (precisión de Rosa): R9-A1 fixes técnicos (overclaim §7 + notación α/β/γ) · A2 abstract
 1 tesis + Cor 7.7 sobria + "Gardner solo 3 direcciones" · A3 jerarquía + terminología · A4
 rigor 6.6/App A/3.2 (exposición; pruebas ya verificadas) · A5 §8 se queda con intro propia ·

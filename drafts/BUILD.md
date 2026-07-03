@@ -4,9 +4,29 @@
 
 - **Title:** *Transport and tiling bounds for the affine plank problem on the triangle*
   (R7-3 decision 2026-07-02: KEEP; unchanged in R9).
-- **Status (2026-07-03, post-R9 restructure + duality):** compiles clean with local
-  `pdflatex` (2 passes): **0 errors, 0 unresolved references, 0 overfull, 24 pages**
+- **Status (2026-07-03, post-R12 = pass-6 revision):** compiles clean with local
+  `pdflatex` (2 passes): **0 errors, 0 unresolved references, 0 overfull, 31 pages**
   → `affine-plank-triangle.pdf`.
+- **R12 (auditorias/60; Rosa pass 5 = "major revision with real potential"):**
+  ALL accepted pass-5 fixes (29/31 exact reciprocal in Thm 7.15/Cor 7.17 with
+  46225>46128; abstract = 3 messages; B-Y sober at end of intro; "the transport
+  method certifies the sharp constant 1"; "minimax duality" + explicit
+  non-attainment; Pocket Lemma "closure" prose shield — her objection was a
+  misreading, politely noted; trichotomy mini-table; Appendix A 7-case table);
+  **R10 package integrated** (Lem 7.10 counting lemma at general level,
+  **Thm 7.11 delta=delta_c**, Rem 7.20 three gap certificates + strict sandwich,
+  Prop 7.4 delta-max uniqueness, Prop 7.21 lsc + Rem 7.22 parallel path,
+  Prob 10.4 = sup D question); **Rosa's cheap value adopted** (Def 2.3
+  covering constant C_K + gap table in §10; Prop 7.16 inverse stability;
+  Fig 4 dual-certificate; Fig 5 phase diagram [EVIDENCE] with verified caption
+  numbers); **NEW Thm 6.13 (canonical covering)**: every cyclic triple carries
+  the explicit covering ([lam_i,rho_i]) with excess exactly
+  (P-Q)^2/((1+P)(1+Q)); P=Q <=> concurrence; delta closed form
+  |P-Q|/(2(2+P+Q)) for all cyclic triples. §10 rewritten as the
+  covering-constant program (Prob 10.1, Lem 10.2 edge reduction, honest hybrid
+  status; exact experiments found NO covering with Sigma r < 1).
+  Frozen: `entregas/affine-plank-triangle-2026-07-03-pasada6.{pdf,tex}`;
+  hand-off + full numbering map: `notes/55-R12-entrega-dona-rosa-pasada6.md`.
 - **R9 (auditorias/56) executed — single paper, `D_K(u)` as backbone:**
   - **Structure:** Def/Prop of the defect moved to §2 and generalized to arbitrary
     convex bodies (Def 2.1, Prop 2.2); Thm 2.3 = the 1/d bound recast as "the uniform
@@ -65,8 +85,9 @@ pdflatex -interaction=nonstopmode affine-plank-triangle.tex   # 2nd pass (refs)
 ```
 
 ## Ancillary files (for arXiv)
-`drafts/ancillary/` (copies from `experiments/`): **9 scripts** + README with the
-R9 verification-protocol table (script → verifies → accompanies). New in R9:
+`drafts/ancillary/` (copies from `experiments/`): **15 scripts** + README with the
+verification-protocol table (script → verifies → accompanies; R10/R12 additions
+cited by Appendix B since pass 6). New in R9:
 `defect_duality.py` (8 exact check blocks, "ALL OK": facet dual certificate,
 wedge algebra + sandwich dependency, no-external-concurrence counting, centroid
 bound, `Δ^d` facet-cycle marginals d=2..7, B-Y region algebra). Documented
@@ -97,16 +118,54 @@ Rosa is reading pass 5; all round-10 material lives in `notes/54-*` +
   approach 3/2 from below without crossing.
 - Post-verdict .tex integration plan is listed at the end of both notes.
 
+## Round 13 (2026-07-03, auditorias/61) — NUMBERING FREEZE again (Rosa reads pass 6): zero .tex changes
+All in `notes/56-R13-*` + experiments (synced to ancillary, marked):
+- **EXTREME-REGIME THEOREM [PROVED]** for C_3 on cyclic triples: explicit
+  w0(tau) > 0 such that any 3-plank covering with max r_i >= 1 - w0 has
+  Sigma r >= 1 (equality only trivial). First use of the closed 2-plank case
+  (Gardner witness ON the corner piece) as a tool. Corollary: any hypothetical
+  counterexample to C_3 = 1 is BALANCED (all r_i < 1 - w0).
+- **Naive per-piece coupling refuted [PROVED]**: at the sandwich the two
+  Gardner piece-bounds admit r2+r3 = (1875/1094) l < l+s — position coupling
+  (Case B gaps) is essential.
+- **Order-mismatch obstruction documented**: tiling-stability route can't
+  close the balanced regime (overlap budget ~ D-1 first order vs canonical
+  penalty (P-Q)^2 second order).
+- **Facets local max [certified evidence]**: adapted symmetric loops give
+  D(tilt eps) <= 135/91, 190/127, 1225/817 (< 3/2) for eps = 1/10, 1/20, 1/50;
+  deficit ~ eps^2. Sandwich unchanged: D in (225/224, 112/111], LB nudged to
+  1.0044834 (q=75 dual); pw-skeleton does not beat uniform.
+- Balanced regime and sandwich fallback: OPEN (blockers documented).
+
+## Round 14 (2026-07-03, auditorias/62) — NUMBERING FREEZE (Rosa reads pass 6): zero .tex changes
+All in `notes/57-R14-*` + experiments (synced to ancillary, marked):
+- **R14-2 THEOREM [PROVED, symbolic]**: facets are a STRICT LOCAL MAX of D on
+  the symmetric tilt path: (3/2)/(1+eps) <= D(tilt eps) <=
+  (3/2)(1-eps)/(1-eps+eps^2) < 3/2 for eps in (0,1/2); optimal loop
+  x* = (1-2eps)/(3(1-eps)); UB = 3/2 - (3/2)eps^2 + O(eps^3); reproduces the
+  three R13 certified points exactly (tilt_local_max.py, ALL OK).
+- **R14-1 (flagship)**: exact B&B for the balanced regime at the sandwich
+  implemented and validated (c3_balanced_bb.py): complete exact failure test
+  (1-D edge + positive-area cell by exact clipping), prunes by Sigma r /
+  extreme theorem (w0 = 2/25, computed in script) / empty plank (2-plank
+  Thm 3.1 as a tool, 2nd use). Two 6-min runs documented (~1M boxes each);
+  bottleneck identified and fixed (P4); LONG RUN (55 min) in progress with
+  checkpoint — if the tree empties: C_3(sandwich) = 1 (computer-assisted,
+  exact) = first non-concurrent triple with Bang(3) proved.
+- **Thin-plank band identified** as the next analytic lemma (mirror of the
+  extreme regime; P4 covers exactly-empty, the 0 < r_i << 1 band is R15).
+- R14-3: 'sandwich strictly intermediate / non-skeletal optimum' conjecture
+  formalized with a complementary-slackness proof route (queued).
+
 ## Pending before submission
-- **Rosa's pass-5 verdict: everything pauses and audits that first** (chief's
-  standing rule). Then: integrate round-10 results (rewrites Rem 7.10/7.17 +
-  Problem 10.3; new trailing statements in §7; Appendix B rows) and R10-3
-  abstract trim (≤200 words), batched with the verdict.
+- R13-0/R14: chief hands the frozen pass-6 package (31 pp) to dona Rosa.
 - Author/affiliation/email block — REAL human identity, cannot be decided by the
   investigator; placeholder marked in the .tex.
-- `sup D = 3/2?` (Problem 10.3, second half) — OPEN; hunting map documented in
-  `notes/54-R10-1`.
-- B4 full sublevel set; R8-8/R10-5 coupling moonshot: untouched.
+- C1 case (b): the hybrid certificate (boundary measure + sumset/tiling
+  obstruction) — the program of §10, open.
+- C2 (carryover): fine UB near facets (local max 3/2?); exact sandwich.
+- `sup D = 3/2?` (Prob 10.4) — OPEN. C3 (closed form D(tau) by regions;
+  D_boundary = D transition): background. Coupling moonshot: untouched.
 
 ## Obsolete
 `drafts/obsolete/` contains the manuscripts of the **toric era** (`paper.tex`,

@@ -23,3 +23,7 @@ __pycache__/
 
 # stray root-level LaTeX run (no input file)
 texput.log
+
+# transient B&B run logs / checkpoints (regenerable from the exact scripts)
+experiments/*.log
+experiments/bb_frontier.txt
