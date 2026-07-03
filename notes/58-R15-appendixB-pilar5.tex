@@ -1,0 +1,102 @@
+% R15-3 -- Appendix B rewrite (Pillar 5): scoped computer-assisted category +
+% reproducibility protocol with SHA hashes.  Ready to integrate when the
+% numbering freeze lifts.  Numbers/hashes are the verified R15 artifacts.
+
+% --- replaces the opening sentence of Appendix B ---
+% OLD: "This paper is not computer-assisted: every theorem is proved in full ..."
+% NEW:
+This paper is proved by hand throughout, \emph{with a single exception}:
+Theorem~\ref{thm:sandwich-bang} (the covering-constant identity
+$C_\Delta(\tau_0)=1$ at $\tau_0=(\tfrac{13}{25},\tfrac12,\tfrac12)$) reduces, by
+the human Lemmas~\ref{lem:extreme}--\ref{lem:termarg}, to the emptiness of an
+explicit finite bisection tree $T(\tau_0)$, which is checked by an exact
+rational computation. That computation is \emph{exact} (only
+\texttt{fractions.Fraction}; no floating point, no $\varepsilon$; independent of
+hardware and rounding) but not human-scale ($\approx1.6\times10^6$ nodes); we
+therefore label Theorem~\ref{thm:sandwich-bang} \textbf{[computer-assisted]}.
+Its validity does not rest on trusting the search: it rests on an independent
+\emph{certificate checker} (below) that shares no code with the searcher and
+re-derives every box and every pruning step. All other theorems, propositions,
+and lemmas are proved in full in the text or in Appendix~\ref{app:tilings}. The
+ancillary scripts elsewhere in this appendix remain \emph{secondary}
+verification of hand proofs.
+
+\subsection*{The certified computation (search / certificate / checker)}
+
+Following the search-versus-verification separation of de Bruijn, the
+emptiness of $T(\tau_0)$ is established in three artifacts:
+\begin{itemize}
+\item \textbf{Searcher} \texttt{c3\_balanced\_bb.py}: grows $T(\tau_0)$ by
+depth-first bisection, pruning by P1--P4 (Lemma~\ref{lem:prunes}); it may use
+any heuristics (it does not affect soundness). Emits a \emph{certificate}.
+\item \textbf{Certificate} \texttt{c3\_sandwich\_certificate.txt}: a
+deterministic preorder serialization of $T(\tau_0)$ storing only the tree shape
+--- for each internal node the split coordinate and the exact rational split
+point, and for each leaf the pruning rule and its exact witness (the index for
+P2/P4, the uncovered edge for P3, or the positive-area sign cell for P3). It
+does \emph{not} store the boxes.
+\item \textbf{Checker} \texttt{bb\_certificate\_check.py} ($\approx$ one page,
+imports nothing from the searcher): reconstructs every box from the tree shape
+alone (so an arithmetic error in the searcher would surface here), and verifies
+(i) \emph{tiling} --- the leaves partition $[0,1]^6$: the stream is the preorder
+of a binary tree whose root is the cube and each internal node splits one
+coordinate at a strictly interior point, the whole stream is consumed, and the
+reconstruction stack ends empty (with the binary-tree identity
+$\#\text{leaves}=\#\text{internal}+1$); and (ii) \emph{prunes} --- each leaf is
+re-validated against its recorded rule and witness by an independent
+re-implementation of the triangle geometry, of $w_0(\tau)$, of exact polygon
+clipping, and of the four prune predicates. It prints \texttt{CERTIFICATE VALID}
+only if all checks pass.
+\end{itemize}
+
+\subsection*{Reproducibility record (Pillar 5)}
+
+\begin{center}\small
+\begin{tabular}{@{}lll@{}}
+\hline
+artifact & SHA-256 (first 16 hex) & role\\
+\hline
+\texttt{c3\_balanced\_bb.py}       & \texttt{b2468aa9acc91f4f} & searcher
+(emits certificate)\\
+\texttt{c3\_sandwich\_certificate.txt} & \texttt{ead66ff2cfd547f8} & the tree
+$T(\tau_0)$ ($12{,}062{,}803$ B)\\
+\texttt{bb\_certificate\_check.py} & \texttt{90a25ce8ea059abe} & independent
+checker\\
+\hline
+\end{tabular}
+\end{center}
+
+\noindent\textbf{Input:} $\tau_0=(\tfrac{13}{25},\tfrac12,\tfrac12)$; threshold
+$w_0(\tau_0)=\tfrac2{25}$ (recomputed independently by the checker and matched
+against the certificate header). \textbf{Output:} $T(\tau_0)$ has $812{,}650$
+internal nodes and $812{,}651$ leaves, all pruned; the checker reports
+\texttt{CERTIFICATE VALID}. Leaves by rule:
+\[
+\underbrace{286{,}024}_{\mathrm{P1}\ (\sum r>1)}\quad
+\underbrace{53{,}907}_{\mathrm{P2}\ (\text{extreme})}\quad
+\underbrace{428{,}672}_{\mathrm{P3,\ edge}}\quad
+\underbrace{2{,}354}_{\mathrm{P3,\ cell}}\quad
+\underbrace{41{,}694}_{\mathrm{P4}\ (\text{empty})}.
+\]
+\textbf{Dependency:} the certified computation discharges \emph{only} case
+(iii) (proper balanced coverings) of Theorem~\ref{thm:sandwich-bang}; cases (i)
+and (ii) are the human Lemmas~\ref{lem:extreme} and~\ref{thm:twodir}. Within the
+tree, the P2 leaves invoke Lemma~\ref{lem:extreme} and the P4 leaves invoke
+Theorem~\ref{thm:twodir} (both proved by hand), so the genuinely computational
+content is the P1 and P3 leaves ($717{,}050$ in all); of the P3 leaves, all but
+$2{,}354$ are discharged by a one-dimensional edge computation
+(Lemma~\ref{lem:edgered}), only $2{,}354$ needing the two-dimensional
+positive-area cell test.
+
+\subsection*{Independent corroboration (second tree)}
+
+Beyond the certificate/checker, the emptiness was reproduced by a second search
+on the \emph{relabelled} triple $(\tfrac12,\tfrac12,\tfrac{13}{25})$ (a cyclic
+relabelling of $\tau_0$, the same covering problem) with a non-dyadic split
+ratio $\tfrac5{11}$: this produces a \emph{different} tree ($1{,}040{,}919$
+nodes versus $1{,}625{,}301$; different per-rule counts) with the same
+\texttt{QUEUE EMPTY} verdict. Two structurally different trees agreeing is
+corroboration; the authority for the theorem is nonetheless the independent
+checker, which alone does not share the search logic (a common-mode bug in the
+prune code would survive the two-tree test but not the checker's independent
+re-implementation).

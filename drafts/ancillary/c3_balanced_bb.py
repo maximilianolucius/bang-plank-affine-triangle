@@ -34,6 +34,7 @@ import time
 from fractions import Fraction as F
 
 TAU = (F(13, 25), F(1, 2), F(1, 2))
+SPLIT_FRAC = F(1, 2)
 V = [(TAU[0], F(0), F(1)), (F(0), F(1), TAU[1]), (F(1), TAU[2], F(0))]
 
 # ---------------------------------------------------------------- w0(tau)
@@ -157,6 +158,100 @@ def config_fails(lh_plus):
             return True
     return False
 
+def config_fail_witness(lh_plus):
+    """Return the witness for P3: ('E', edge_index) if an edge is uncovered
+    by the enlarged traces, else ('C', sigma) for a positive-area sign cell,
+    else None (config covers)."""
+    E = [(0, 1), (1, 2), (2, 0)]
+    for ei, (a, b) in enumerate(E):
+        # replicate edges_fail per-edge to identify which edge
+        segs = []
+        for i in range(3):
+            if lh_plus[i] is None:
+                continue
+            va, vb = V[i][a], V[i][b]
+            lo, hi = lh_plus[i]
+            if va == vb:
+                if lo <= va <= hi:
+                    segs.append((F(0), F(1)))
+                continue
+            t0, t1 = (lo - va)/(vb - va), (hi - va)/(vb - va)
+            lo2, hi2 = min(t0, t1), max(t0, t1)
+            lo2, hi2 = max(lo2, F(0)), min(hi2, F(1))
+            if lo2 <= hi2:
+                segs.append((lo2, hi2))
+        segs.sort()
+        reach = F(0); ok = True
+        for lo2, hi2 in segs:
+            if lo2 > reach:
+                ok = False; break
+            reach = max(reach, hi2)
+        if not ok or reach < 1:
+            return ('E', ei)
+    for sigma in ((0,0,0),(0,0,1),(0,1,0),(0,1,1),
+                  (1,0,0),(1,0,1),(1,1,0),(1,1,1)):
+        if cell_positive_area(lh_plus, sigma):
+            return ('C', sigma)
+    return None
+
+def emit_certificate(path, max_seconds=100000):
+    """Deterministic preorder dump of the FULL search tree.  Stores only the
+    tree shape (split coordinate + split point) and, per leaf, the prune rule
+    and its exact witness -- NOT the boxes (the checker reconstructs boxes
+    from the tree, so an independent box arithmetic re-derivation is forced).
+    Preorder, left = [lo, mid] first: push right then left."""
+    import time as _t
+    root = tuple((F(0), F(1)) for _ in range(6))
+    stack = [root]
+    t0 = _t.time()
+    n_leaf = n_split = 0
+    with open(path, 'w') as f:
+        f.write(f"# C3 balanced-regime emptiness certificate\n")
+        f.write(f"TAU {TAU[0]} {TAU[1]} {TAU[2]}\n")
+        f.write(f"W0 {W0}\nBAL {BAL}\n")
+        f.write(f"SPLITFRAC {SPLIT_FRAC}\n")
+        f.write("BEGIN\n")
+        while stack:
+            if _t.time() - t0 > max_seconds:
+                raise RuntimeError("emit timed out -- tree not empty?")
+            box = stack.pop()
+            smin = sum(max(F(0), box[2*i+1][0] - box[2*i][1]) for i in range(3))
+            if smin > 1:
+                f.write("L1\n"); n_leaf += 1; continue
+            ext = [i for i in range(3)
+                   if box[2*i+1][0] - box[2*i][1] >= BAL]
+            if ext:
+                f.write(f"L2 {ext[0]}\n"); n_leaf += 1; continue
+            lh_plus = []; empty_i = None
+            for i in range(3):
+                lo, hi = box[2*i][0], box[2*i+1][1]
+                if lo > hi and empty_i is None:
+                    empty_i = i
+                lh_plus.append((lo, hi) if lo <= hi else None)
+            if empty_i is not None:
+                f.write(f"L4 {empty_i}\n"); n_leaf += 1; continue
+            w = config_fail_witness(lh_plus)
+            if w is not None:
+                if w[0] == 'E':
+                    f.write(f"L3E {w[1]}\n")
+                else:
+                    f.write(f"L3C {w[1][0]}{w[1][1]}{w[1][2]}\n")
+                n_leaf += 1; continue
+            # split widest coordinate
+            widths = [box[k][1] - box[k][0] for k in range(6)]
+            k = max(range(6), key=lambda j: widths[j])
+            if widths[k] == 0:
+                raise RuntimeError(f"zero-width surviving box: {box}")
+            mid = box[k][0] + SPLIT_FRAC*(box[k][1] - box[k][0])
+            f.write(f"S {k} {mid}\n"); n_split += 1
+            b1 = list(box); b1[k] = (box[k][0], mid)   # left  = [lo, mid]
+            b2 = list(box); b2[k] = (mid, box[k][1])   # right = [mid, hi]
+            stack.append(tuple(b2))                     # push right first
+            stack.append(tuple(b1))                     # left popped next
+        f.write("END\n")
+    print(f"certificate written: {n_split} splits, {n_leaf} leaves -> {path}")
+    return n_split, n_leaf
+
 # ---------------------------------------------------------------- B&B
 def run(max_seconds=360, max_boxes=2_000_000, checkpoint=None, split_mode='widest'):
     # box = tuple of 6 (lo,hi): order (l1,h1,l2,h2,l3,h3)
@@ -214,7 +309,7 @@ def run(max_seconds=360, max_boxes=2_000_000, checkpoint=None, split_mode='wides
             print("  !! zero-width surviving box:", box, flush=True)
             frontier = stack + [box]
             break
-        mid = (box[k][0] + box[k][1])/2
+        mid = box[k][0] + SPLIT_FRAC*(box[k][1] - box[k][0])
         b1 = list(box); b1[k] = (box[k][0], mid)
         b2 = list(box); b2[k] = (mid, box[k][1])
         stack.append((tuple(b1), depth + 1)); stack.append((tuple(b2), depth + 1))

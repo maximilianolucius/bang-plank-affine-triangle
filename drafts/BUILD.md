@@ -4,9 +4,21 @@
 
 - **Title:** *Transport and tiling bounds for the affine plank problem on the triangle*
   (R7-3 decision 2026-07-02: KEEP; unchanged in R9).
-- **Status (2026-07-03, post-R12 = pass-6 revision):** compiles clean with local
-  `pdflatex` (2 passes): **0 errors, 0 unresolved references, 0 overfull, 31 pages**
-  → `affine-plank-triangle.pdf`.
+- **Status (2026-07-03, pass 7 = pass 6 + C3 milestone, integrated):** compiles
+  clean (2 passes): **0 errors, 0 undefined, 0 overfull, 34 pages**. Author set
+  (Maximiliano Lucius). Frozen: `entregas/affine-plank-triangle-2026-07-03-pasada7.{pdf,tex}`.
+  Hand-off `notes/59-R16-handoff-pasada7.md`. Awaiting chief audit -> user sends to Rosa.
+- **PASS 7 INTEGRATION (auditorias/67):** C3 milestone in the live .tex. NEW in
+  section 10: Lem 10.3 (two-plank tool), **Thm 10.4 (extreme regime, by hand,**
+  **added to body -- was only in notes/56)**, Lem 10.5-10.7, **Thm 10.8
+  C_Delta(tau0)=1 tagged [partially computer-assisted]** with explicit
+  human/machine boundary (Rem 10.9) + equality (trivial only). Appendix B
+  re-scoped (single computer-assisted lemma; certified-computation subsection
+  with 3 SHAs + two-tree corroboration; caveat: authority = checker). Abstract
+  <=200 words with a half-sentence milestone mention; intro one scoped
+  paragraph. Certificate + checker + r15_equality + c3_extreme_regime +
+  c3_balanced_bb in ancillary/ (certificate 12MB, regeneration note in README).
+  CERTIFICATE VALID re-confirmed on the shipped ancillary certificate.
 - **R12 (auditorias/60; Rosa pass 5 = "major revision with real potential"):**
   ALL accepted pass-5 fixes (29/31 exact reciprocal in Thm 7.15/Cor 7.17 with
   46225>46128; abstract = 3 messages; B-Y sober at end of intro; "the transport
@@ -157,8 +169,39 @@ All in `notes/57-R14-*` + experiments (synced to ancillary, marked):
 - R14-3: 'sandwich strictly intermediate / non-skeletal optimum' conjecture
   formalized with a complementary-slackness proof route (queued).
 
+## Round 15 (2026-07-03, auditorias/65) — NUMBERING FREEZE (Rosa reads pass 6): zero .tex changes
+All in `notes/58-R15-*` + experiments (synced to ancillary):
+- **CERTIFICATE VALID [BLOCKER CLEARED]**: the 6-pillar certification package
+  for C_3(sandwich)=1. Searcher emits a deterministic certificate (tree shape +
+  per-leaf rule/witness, NO boxes); `bb_certificate_check.py` (independent, no
+  shared code) reconstructs every box, verifies tiling of [0,1]^6 (binary-tree
+  identity: 812650 internal + 812651 leaves), re-validates all leaves
+  (P1=286024 P2=53907 P3edge=428672 P3cell=2354 P4=41694) and the SHA, prints
+  CERTIFICATE VALID. Cert SHA ead66ff2..., 12 MB.
+- **Equality classified [PROVED]**: C_3(sandwich)=1 attained ONLY trivially
+  (one full plank, two empty). Balanced 3-plank coverings are strict (Sigma r>1
+  from the B&B); proper tight 2-plank coverings don't exist (min widths 31/25,
+  31/25, 5/4 > 1, exact via r15_equality.py + Gardner).
+- **Soundness lemmas written** as ready-to-integrate LaTeX
+  (`notes/58-R15-lemas-soundness.tex`): extreme regime, reduction-to-tree, P1-P4
+  soundness, complete non-covering test, termination-as-proof, main theorem with
+  explicit human/machine boundary + equality. Appendix B rewrite (scoped
+  computer-assisted category + Pillar-5 SHA protocol + two-tree corroboration) in
+  `notes/58-R15-appendixB-pilar5.tex`.
+- **Sandwich symmetry: none (verified negative)** — u2,u3 flip-symmetric but u1
+  (tau1=13/25) breaks it; no tree-halving for tau0. 3-fold symmetry lives in the
+  tilt family tau=(t,t,t).
+- **De-computerization baseline**: genuine machine core = P1+P3 = 717050 leaves
+  (P2/P4 already analytic via R13/Thm 3.1); only 2354 P3 leaves need the 2-D cell
+  test, the rest close by 1-D edge coverage. Thin-plank lemma = next shrink lead
+  (non-blocking research).
+
 ## Pending before submission
-- R13-0/R14: chief hands the frozen pass-6 package (31 pp) to dona Rosa.
+- R13-0/R14/R15: chief hands the frozen pass-6 package (31 pp) to dona Rosa;
+  R15 audit by chief before pass 7.
+- Integration (after pass-6 verdict + freeze lift): drop the R15 LaTeX
+  fragments into Section 10 + Appendix B; the [computer-assisted] tag on the
+  sandwich theorem; single numbering-table update.
 - Author/affiliation/email block — REAL human identity, cannot be decided by the
   investigator; placeholder marked in the .tex.
 - C1 case (b): the hybrid certificate (boundary measure + sumset/tiling

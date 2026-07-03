@@ -461,7 +461,80 @@ Regla superior: dictamen de Rosa pausa todo. REPO: commiteado hasta R10 (`a93cf9
 R15-1 BLOQUEANTE: re-verificación independiente del B&B (LP-por-tipo u otra implementación) ·
 R15-2 FLAGSHIP: thin-plank lemma → B&B parametrizado en τ → `C₃=1` para toda la familia ·
 R15-3 sandwich D exacto · R15-4 dictamen pasada 6 · R15-5 fondo.
-Pendiente usuario: bloque de autor; presentación computer-assisted; repo sin commit desde R10.
+
+## Estado (2026-07-03) — commit d2c238a (rondas 11–14 pusheadas, hito con timestamp público)
+## ESTÁNDAR COMPUTER-ASSISTED fijado: `auditorias/64-estandar-computer-assisted.md`
+Decisión del usuario: presentar `C₃(sandwich)=1` computer-assisted CON rigor académico.
+Seis pilares (a prueba de Rosa): (1) reducción humana a problema finito + 4 lemas de
+soundness + lema de terminación, todo a mano en el paper; (2) **separar búsqueda de
+verificación** — el buscador emite certificado (hojas+regla+testigo), un **verificador
+independiente sin búsqueda** re-checkea que las hojas CUBREN `[0,1]⁶` (no se pierde caso) y
+cada poda es válida (criterio de de Bruijn); (3) aritmética exacta ℚ ⟹ independiente del
+hardware (enunciarlo); (4) re-verificación por camino B (LP-por-tipo); (5) protocolo Apéndice
+B con hashes SHA; (6) alcance honesto (UNA terna, no la familia; etiqueta computer-assisted).
+**Refina R15-1** en deliverables: emitir certificado; escribir `bb_certificate_check.py`
+(independiente, ~1pág); camino B; redactar los lemas en el `.tex`; hashes. **El claim se
+emite tras `CERTIFICATE VALID` del verificador, no tras `QUEUE EMPTY` del buscador.**
+(Nota: `bb_verify*.log` ya aparecen en experiments/ — encaminar a este formato.)
+Pendiente usuario: bloque de autor; entregar pasada 6 a Rosa.
+
+## Estado (2026-07-03, noche) — RONDA 15 CONSOLIDADA: doble árbol confirmado, decisiones tomadas
+- **Corrección de proceso EJEMPLAR del investigador:** detectó que su primer "run de
+  verificación" era bit-idéntico (parche round-robin sin enganchar = la misma corrida) y lo
+  DESCARTÓ. Regla nueva: una re-verificación debe dar árbol DISTINTO con MISMO veredicto.
+- **Verificación real terminada:** terna rotada `(½,½,13/25)` + split 5/11 → árbol distinto
+  (1,040,919 cajas, podas distintas), mismo `QUEUE EMPTY`. Corroboración fuerte. Caveat:
+  mismo código de podas ⟹ el checker independiente (auditorias/64) sigue siendo el
+  artefacto definitivo para el paper.
+- **Aclaración de dirección:** la prueba YA es aritmética exacta (ℚ puro, cero floats);
+  "computer-assisted" viene del TAMAÑO (~10⁶ hojas). La reducción es analítica (thin-plank,
+  simetría τ₂↔τ₃, acoplamiento) — meta: núcleo imprimible o cero, SIN bloquear la
+  presentación.
+- **Decisiones del usuario:** (1) presentación computer-assisted con categoría explícita
+  (Apéndice B scoped, etiqueta tipográfica, decírselo a Rosa); (2) clasificar la igualdad
+  (tight de 2 planks en `(u₂,u₃)`) antes de integrar; (3) tras auditar R15 → pasada 7.
+
+**ÓRDENES RONDA 15 CONSOLIDADAS: `auditorias/65-ronda15-consolidada.md`.**
+
+## Estado (2026-07-03) — RONDA 15 CERRADA: CERTIFICATE VALID reproducido por el auditor
+- **Checker ejecutado POR EL AUDITOR** (22s): 812,650+812,651 nodos (identidad binaria ✓,
+  cuadra con splits/cajas de R14), teselación de `[0,1]⁶` ✓, cada hoja re-validada,
+  `P3edge=428672 + P3cell=2354 = 431026` ✓, SHAs verificados (`b2468aa9/ead66ff2/90a25ce8`).
+  Certificado astuto: solo forma del árbol ⟹ el checker reconstruye las cajas solo.
+- **Controles negativos DEL AUDITOR** (no los reportados): regla mutada / árbol truncado /
+  W0 alterado — los tres rechazados. Menor: parser con excepción en vez de assertion (pulido).
+- **Igualdad [PROVED]:** mínimos propios 2-plank `31/25, 31/25, 5/4 > 1` ⟹ `C₃(sandwich)=1`
+  alcanzado SOLO trivialmente. Caracterización completa.
+- **R15-2:** simetría del sandwich NO existe (negativo honesto); baseline de
+  des-computerización: núcleo máquina = 717,050 hojas, y SOLO 2,354 necesitan test 2-D —
+  la frontera hace >99% del trabajo ⟹ lead para el boundary/thin-plank lemma.
+- **Documentación lista** en notes/58-* (5 lemas + teorema "partially computer-assisted" +
+  Apéndice B re-scoped con SHAs); `.tex` congelado intacto.
+- **EL HITO ESTÁ SUBMISSION-READY** — bloqueado solo por el dictamen de la pasada 6.
+
+**Auditoría: `auditorias/66-ronda15-cierre.md`.** Cola: dictamen p6 → integrar (UNA tabla) →
+auditoría de integración → pasada 7. Fondo: boundary lemma (lead 2,354 celdas), sandwich D,
+vectores C, moonshot. Usuario: bloque de autor; commit/push del paquete R15 a pedido.
+
+## Estado (2026-07-03) — LA PASADA 6 NUNCA SE ENVIÓ; congelación LEVANTADA; se construye la pasada 7
+- El usuario iba a enviar directo la 7. ⟹ no hay lectura externa en curso; la congelación de
+  numeración era autoimpuesta y SE LEVANTA. No se envía la 6 suelta: se fusiona todo en la 7.
+- **DIRECTIVA DE INTEGRACIÓN: `auditorias/67-integracion-pasada7.md`.** El investigador
+  integra el paquete C₃ (`notes/58-*`, ya auditado) al `.tex` vivo: I1 lemas+teorema
+  `[partially computer-assisted]` en §10; I2 Apéndice B re-scoped + SHAs; I3 ancillary
+  (certificado, checker, equality); I4 abstract/intro mención honesta scoped (≤200 palabras,
+  NO extrapolar a la familia); I5 compilar + tabla numeración ÚLTIMA + copia pasada 7; I6
+  hand-off con declaración abierta computer-assisted + mapa objeciones p5 + foco (soundness +
+  checker); I7 bloque de autor (DECISIÓN USUARIO — recomiendo llenarlo antes de enviar).
+- **Secuencia de envío:** integración → **mi auditoría de la pasada 7** (incl. re-correr el
+  checker sobre la copia congelada) → bloque de autor resuelto → **el usuario envía a Rosa.**
+- Fondo sin cambios (boundary lemma, sandwich D, vectores C, moonshot, parser assertions).
+R15-1 certificado + `bb_certificate_check.py` (checker sin búsqueda, código NO compartido;
+autoridad = `CERTIFICATE VALID`) + igualdad · R15-2 encoger la máquina (thin-plank, simetría;
+métrica = hojas restantes) + B&B parametrizado · R15-3 documentación completa TRAS
+`CERTIFICATE VALID` (Apéndice B, 4+2 lemas al `.tex`, hashes; congelación vigente hasta el
+dictamen p6) · R15-4 secuencia: dictamen p6 → integrar → **pasada 7** (con mi auditoría
+previa) · R15-5 fondo.
 R14-1 FLAGSHIP: balanceado por **LP-exacto-por-tipo** (celdas puras lineales + mixtas PL;
 minimizar `Σr` por tipo combinatorio; empezar por el sandwich → si `min=1` es la 1ª terna no
 concurrente con Bang(3) probado) · R14-2 facetas máximo local de EVIDENCE a TEOREMA

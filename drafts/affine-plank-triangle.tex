@@ -33,10 +33,8 @@
 \DeclareMathOperator{\vol}{vol}
 
 \title{Transport and tiling bounds for the affine plank problem on the triangle}
-% AUTHOR BLOCK — decision pending (see 03-work-plan.md §5); fill before submission.
-\author{[Author names]}
-\address{[Affiliation]}
-\email{[email]}
+\author{Maximiliano Lucius}
+\email{maximiliano.lucius@gmail.com}
 \subjclass[2020]{52C17 (52A40, 52A10)}
 \keywords{Plank problem, relative width, affine plank conjecture, covering,
 rigidity, witness measure}
@@ -45,26 +43,23 @@ rigidity, witness measure}
 \begin{document}
 \begin{abstract}
 Bang's affine plank conjecture asserts that planks covering a convex body have
-relative widths summing to at least $1$; it is open already in the plane.
-First, for a convex body $K$ and \emph{directions} given by affine maps
-$u_i:K\to[0,1]$ we introduce the \emph{transport defect}
-$D_K(u_1,\dots,u_n)$ --- the least $D$ such that some probability measure on
-$K$ has all its $u_i$-marginals bounded by $D\cdot\mathrm{Leb}$ --- so that
-every covering of $K$ by planks parallel to these directions satisfies
-$\sum\rw\ge1/D_K(u)$, and we prove a minimax duality for $D_K$ whose feasible
-points are exact certificates on both sides. Second, on the triangle we
-determine exactly when the transport method certifies the sharp constant $1$:
-for three pairwise non-parallel directions, $D=1$ --- a witness measure with
-uniform marginals exists --- if and only if the mid-level lines of the
-directions are concurrent. Third, for every concurrent triple we exhibit the
-witness measure and the tight covering with $\sum\rw=1$, and prove the
-covering is unique --- a two-parameter family of rigid sharp configurations
-extending the median case. Calibrations of the method's reach (the uniform
-measure gives $D\le d$ on every $d$-dimensional body; the facet directions of
-the $d$-simplex have $D=(d+1)/2$ exactly) complete the picture. All theorems
-bound coverings by planks in specified direction families on a fixed body, or
-characterize witness measures; none resolves the conjecture for the triangle,
-let alone the plane.
+relative widths summing to at least $1$; it is open already in the plane. For a
+convex body $K$ and \emph{directions} given by affine maps $u_i:K\to[0,1]$ we
+introduce the \emph{transport defect} $D_K(u)$ --- the least $D$ admitting a
+probability measure on $K$ with all $u_i$-marginals $\le D\cdot\mathrm{Leb}$
+--- so every covering by planks in these directions satisfies
+$\sum\rw\ge1/D_K(u)$, and we prove a minimax duality for $D_K$ with exact
+certificates on both sides. On the triangle we determine exactly when the
+transport method certifies the sharp constant $1$: for three pairwise
+non-parallel directions a uniform-marginal witness measure exists ($D=1$) if
+and only if the mid-level lines concur; for every concurrent triple we exhibit
+the witness, the tight covering with $\sum\rw=1$, and prove its uniqueness --- a
+two-parameter family of rigid configurations extending the median case. We also
+settle, partly by an exact-rational computation, one \emph{non-concurrent}
+triple, the first for which the three-plank bound is established. Calibrations:
+the uniform measure gives $D\le d$ on any $d$-dimensional body, and the
+$d$-simplex facets have $D=(d+1)/2$. No result resolves the conjecture for the
+triangle, let alone the plane.
 \end{abstract}
 \maketitle
 
@@ -191,6 +186,14 @@ obstruction (Proposition~\ref{thm:nogo}, Remark~\ref{rem:nogo},
 \S\ref{sec:nogo}); and Appendix~\ref{app:tilings}, the classification of
 boundary tilings of cyclic triples (Proposition~\ref{prop:tilings}) --- the
 combinatorial engine behind both rigidity results.
+
+\emph{A first non-concurrent case.} Beyond the concurrent locus, where the
+transport method no longer certifies the sharp constant, \S\ref{sec:problems}
+frames the covering constant $C_\Delta$ as the remaining open object and, for
+one explicit non-concurrent triple, establishes $C_\Delta=1$ (the three-plank
+bound) --- in part by an exact-rational computation with an independent
+certificate checker (Theorem~\ref{thm:sandwichbang}). This is a single triple,
+not the family, and does not bear on Conjecture~\ref{conj:bang}.
 
 \smallskip
 \noindent\textbf{Comparison with the general bound.}\ On the triangle the
@@ -2499,6 +2502,195 @@ Exact experiments (archived in \texttt{covering\_constant.py}) support the
 conjecture: float-guided minimization of $\sum r$ over exactly-verified
 coverings of the sandwich and two further non-concurrent triples never
 produced a certified covering with $\sum r<1$.
+
+\subsection*{A partially computer-assisted case of the program}
+We settle Problem~\ref{prob:covconst} at one non-concurrent triple: the
+\emph{sandwich} $\tau_0=(\tfrac{13}{25},\tfrac12,\tfrac12)$ of
+Remark~\ref{rem:sandwich} ($\Pi=\tfrac{13}{100}\ne\tfrac{12}{100}=Q$, so it is
+non-concurrent by Theorem~\ref{thm:canon}). This is the first non-concurrent
+triple for which the three-plank bound is established. The proof is by hand
+except for one finite emptiness check, isolated below and discharged by an
+exact-rational computation with an independent certificate checker
+(Appendix~\ref{app:ancillary}); we mark the boundary explicitly.
+
+Throughout, a covering is by three planks $P_i=\{u_i\in[l_i,h_i]\}$, one per
+direction, $r_i=h_i-l_i\ge0$. The first tool is the two-direction case as a
+local instrument.
+
+\begin{lemma}[two-plank tool]\label{lem:twoplank}
+Let $K'\subseteq\Delta$ be a convex body and $u_j,u_k$ two non-parallel
+directions with extents $w_j=|u_j(K')|$, $w_k=|u_k(K')|>0$. If two planks
+$\{u_j\in I_j\}$, $\{u_k\in I_k\}$ cover $K'$, then
+$|I_j|/w_j+|I_k|/w_k\ge1$.
+\end{lemma}
+\begin{proof}
+Gardner's theorem \cite[Theorem~1]{Gardner88} applied to the convex body $K'$
+and the directions $u_j,u_k$ gives a probability measure $\nu$ on $K'$ whose
+pushforward under each of $u_j,u_k$ is uniform on the respective range; so
+$\nu(\{u_j\in I_j\})\le|I_j|/w_j$ and likewise for $k$. Covering gives
+$1=\nu(K')\le|I_j|/w_j+|I_k|/w_k$.
+\end{proof}
+
+\begin{theorem}[extreme regime]\label{thm:extreme}
+For a cyclic parameter $\tau\in(0,1)^3$ put
+\[
+w_0(\tau)=\tfrac12\,\min_{\text{cyclic }\varrho}\ \min\Bigl(\tau_1,\,1-\tau_1,\,
+\tfrac{(1-\tau_2)\tau_1}{1+\tau_1},\,\tfrac{\tau_3(1-\tau_1)}{2-\tau_1}\Bigr),
+\]
+the inner minimum taken with $(\tau_1,\tau_2,\tau_3)$ cyclically rotated; then
+$w_0(\tau)>0$ and $w_0(\tau_0)=\tfrac2{25}$. If a covering of $\Delta$ by three
+planks in the directions of $\tau$ has $\max_i r_i\ge1-w_0(\tau)$, then
+$\sum_i r_i\ge1$, with equality only for a trivial covering (some $r_i=1$, the
+others $0$).
+\end{theorem}
+\begin{proof}
+By the cyclic symmetry it suffices to treat the case where $P_1$ is the wide
+plank; write $l=l_1$, $s=1-h_1$, so $r_1=1-l-s$ and $l+s\le w_0$. The part of
+$\Delta$ not covered by $P_1$ is $K_{\mathrm{lo}}=\{u_1\le l\}$ (a triangle at
+the vertex $B$, empty iff $l=0$) and $K_{\mathrm{hi}}=\{u_1\ge1-s\}$ (a
+triangle at $C$, empty iff $s=0$); both are genuine corner triangles since
+$l,s<\min(\tau_1,1-\tau_1)$. Since each $u_i$ is affine, its range over a
+corner triangle is the interval between its values at the three corner
+vertices; a direct computation (verified symbolically in
+\texttt{c3\_extreme\_regime.py}) gives the ranges and extents
+\[
+\begin{aligned}
+&u_2(K_{\mathrm{lo}})=[1-\tfrac l{\tau_1},1],\ a_2=\tfrac l{\tau_1};\quad
+u_3(K_{\mathrm{lo}})=[\tau_3(1-l),\tau_3+\tfrac{(1-\tau_3)l}{\tau_1}],\
+a_3=\tfrac{l\,g_2}{\tau_1};\\
+&u_2(K_{\mathrm{hi}})=[\tau_2(1-\tfrac s{1-\tau_1}),\tau_2+(1-\tau_2)s],\
+b_2=\tfrac{s\,g_3}{1-\tau_1};\quad
+u_3(K_{\mathrm{hi}})=[0,\tfrac s{1-\tau_1}],\ b_3=\tfrac s{1-\tau_1},
+\end{aligned}
+\]
+with $g_2=1-\tau_3(1-\tau_1)$, $g_3=1-\tau_1(1-\tau_2)$ the dependency factors
+of Theorem~\ref{thm:canon}. All four extents strictly exceed the corner's
+$u_1$-width: $a_2-l=\tfrac{l(1-\tau_1)}{\tau_1}$, $a_3-l=\tfrac{l(1-\tau_1)
+(1-\tau_3)}{\tau_1}$, $b_2-s=\tfrac{s\tau_1\tau_2}{1-\tau_1}$,
+$b_3-s=\tfrac{s\tau_1}{1-\tau_1}$, all $>0$.
+
+\emph{Case A: no plank meets both corners.} Each nonempty corner is covered by
+the planks touching it. If $P_2\supseteq K_{\mathrm{lo}}$ and
+$P_3\supseteq K_{\mathrm{hi}}$ then $r_2\ge a_2>l$ and $r_3\ge b_3>s$; if
+instead $P_2\supseteq K_{\mathrm{hi}}$, $P_3\supseteq K_{\mathrm{lo}}$ then
+$r_2\ge b_2>s$ and $r_3\ge a_3>l$. If both $P_2,P_3$ are needed on one corner
+(forcing the other empty, so $s=0$ or $l=0$), the two-plank tool
+(Lemma~\ref{lem:twoplank}) on that corner gives $r_2+r_3\ge\min$ of its two
+extents $\ge l$ (resp.\ $\ge s$). In every sub-case
+$\sum r=(1-l-s)+(r_2+r_3)\ge1$, strict unless $l=s=0$.
+
+\emph{Case B: some plank meets both corners.} Its interval spans the gap
+between the two disjoint ranges. If $P_2$ meets both,
+$r_2\ge(1-\tfrac l{\tau_1})-(\tau_2+(1-\tau_2)s)$, which is $\ge l+s$ because
+$w_0\le\tfrac{(1-\tau_2)\tau_1}{2(1+\tau_1)}$; if $P_3$ meets both,
+$r_3\ge\tau_3(1-l)-\tfrac s{1-\tau_1}\ge l+s$ because
+$w_0\le\tfrac{\tau_3(1-\tau_1)}{2(2-\tau_1)}$. Either way
+$\sum r\ge(1-l-s)+(l+s)=1$, strict unless $l=s=0$. Equality thus forces
+$l=s=0$, i.e.\ $r_1=1$: a trivial covering.
+\end{proof}
+
+The extreme regime leaves the \emph{balanced} coverings ($r_i<1-w_0$ for all
+$i$). We reduce these to a finite computation. Write a covering as a point
+$x=(l_1,h_1,l_2,h_2,l_3,h_3)\in[0,1]^6=:\mathcal C$, call it \emph{proper} if
+all $r_i>0$; bisection produces axis-aligned boxes $B\subseteq\mathcal C$ with
+coordinate ranges $l_i\in[l_i^-,l_i^+]$, $h_i\in[h_i^-,h_i^+]$. Define four
+\emph{pruning predicates} on a box $B$:
+\begin{itemize}
+\item[(P1)] $\sum_i\max(0,h_i^--l_i^+)>1$;
+\item[(P2)] $h_i^--l_i^+\ge1-w_0$ for some $i$;
+\item[(P4)] $l_i^->h_i^+$ for some $i$;
+\item[(P3)] the enlarged configuration $I_i^+=[l_i^-,h_i^+]$ does not cover
+$\Delta$.
+\end{itemize}
+
+\begin{lemma}[soundness of the prunes]\label{lem:prunes}
+If any of \textup{(P1)--(P4)} holds for $B$, then no proper covering in $B$ has
+$\sum_i r_i\le1$. Indeed \textup{(P1)} gives $\sum r_i\ge\sum\max(0,h_i^--
+l_i^+)>1$ pointwise; \textup{(P2)} gives $r_i\ge1-w_0$, so
+Theorem~\ref{thm:extreme} applies; \textup{(P4)} forces plank $i$ empty, so at
+most two non-parallel directions are used and Theorem~\ref{thm:twodir} gives
+$\sum r\ge1$; \textup{(P3)} gives $[l_i,h_i]\subseteq I_i^+$ for every
+configuration in $B$, so $\bigcup_iP_i\subseteq\bigcup_i\{u_i\in I_i^+\}$ and a
+point uncovered by the latter is uncovered by the former --- no configuration
+in $B$ covers.
+\end{lemma}
+\begin{proof}
+Each clause is the displayed monotonicity in $l_i^\pm,h_i^\pm$; (P2), (P4)
+invoke the two named theorems.
+\end{proof}
+
+\begin{lemma}[complete non-covering test]\label{lem:noncover}
+A finite union $\bigcup_i\{u_i\in I_i^+\}$ fails to cover $\Delta$ if and only
+if either \textup{(a)} some edge of $\Delta$ is not covered by the traces of
+the $I_i^+$, or \textup{(b)} some sign cell $\{u_i<l_i^+\text{ or }u_i>h_i^+\}$
+has positive area in $\Delta$. Both tests are exact and rational.
+\end{lemma}
+\begin{proof}
+An uncovered point lies in exactly one sign cell (a relatively open convex
+polygon). If interior to $\Delta$ its cell has positive area, case (b); if on
+$\partial\Delta$ it lies on an edge whose traces miss it, case (a).
+Conversely each condition exhibits an uncovered point. Areas and endpoints are
+rational in $\tau,l^+,h^+$.
+\end{proof}
+
+\begin{lemma}[reduction to an empty tree]\label{lem:reduction}
+Let $T(\tau_0)$ be the binary tree grown from the root $\mathcal C$ by pruning
+a box when any of \textup{(P1)--(P4)} holds and otherwise bisecting its widest
+coordinate at the midpoint. Then $T(\tau_0)$ is finite, and a proper balanced
+covering of $\Delta$ with $\sum r\le1$ exists if and only if $T(\tau_0)$ has an
+unpruned leaf.
+\end{lemma}
+\begin{proof}
+Finiteness: on a small enough box one predicate always fires (bisection drives
+either $\min\sum r>1$, or the enlarged configuration to still miss a fixed
+uncovered region), so the recursion terminates; leaves are exactly the pruned
+boxes. By Lemma~\ref{lem:prunes} a pruned box holds no proper covering with
+$\sum r\le1$, and every such covering lies in some leaf, which is then
+unpruned.
+\end{proof}
+
+\begin{theorem}[$C_\Delta(\tau_0)=1$; \emph{partially computer-assisted}]
+\label{thm:sandwichbang}
+For the sandwich $\tau_0=(\tfrac{13}{25},\tfrac12,\tfrac12)$, every covering of
+$\Delta$ by three planks, one parallel to each direction, satisfies
+$\sum_i\rw\ge1$, with equality if and only if the covering is trivial (one
+plank is all of $\Delta$, the other two empty). In particular
+$C_\Delta(\tau_0)=1$.
+\end{theorem}
+\begin{proof}
+Partition coverings into (i) extreme ($\max r_i\ge1-w_0$), (ii) some plank
+empty, and (iii) proper balanced. Case (i) is Theorem~\ref{thm:extreme}
+($\sum r\ge1$, equality trivial); case (ii) is Theorem~\ref{thm:twodir}
+($\sum r\ge1$). For case (iii), by Lemma~\ref{lem:reduction} the assertion
+``every proper balanced covering has $\sum r>1$'' is equivalent to
+\emph{$T(\tau_0)$ has no unpruned leaf}: any such covering lies in a leaf,
+which is neither (P4) (proper) nor (P3) (it covers), so (P2) --- excluded,
+balanced --- or (P1), whose closed box has $\min\sum r>1$, giving
+$\sum r>1$. \emph{That $T(\tau_0)$ is empty is a finite verification in exact
+rational arithmetic}, carried out and re-verified from a certificate by an
+independent checker sharing no code with the search
+(Appendix~\ref{app:ancillary}); the tree has $812{,}651$ leaves, all pruned.
+
+Equality: (i), (ii) give equality only trivially; case (iii) is strict; and no
+proper two-plank tight covering exists --- minimizing $|I_i|+|I_j|$ over
+$2$-plank coverings gives $\tfrac{31}{25}$ for the pairs containing $u_1$ and
+$\tfrac54$ for $(u_2,u_3)$, both $>1$ (exact, \texttt{r15\_equality.py}). Hence
+$\sum\rw=1$ forces a trivial covering.
+\end{proof}
+
+\begin{remark}[the human/machine boundary]\label{rem:boundary}
+Every step above is proved by hand except the single assertion
+``$T(\tau_0)$ has no unpruned leaf'', a finite emptiness check of an explicitly
+defined tree. That check is \emph{exact} --- rational arithmetic throughout,
+no floating point, independent of hardware --- but not human-scale
+($\approx1.6\times10^6$ nodes); this is what makes
+Theorem~\ref{thm:sandwichbang} partially computer-assisted, and its validity
+rests on the independent checker of Appendix~\ref{app:ancillary}, not on
+trusting the search (Appendix~\ref{app:ancillary} also records an independent
+second search producing a different tree with the same verdict). This settles
+one triple, not the family: Problem~\ref{prob:covconst} remains open.
+\end{remark}
+
 \begin{problem}\label{prob:suff}
 Theorem~\ref{thm:char} settles the existence of uniform-marginal witness
 measures for three directions on the triangle, and Theorem~\ref{thm:simplex3}
@@ -2798,17 +2990,69 @@ computations; all scripts are archived as ancillary files
 
 \section{Ancillary files and verification protocol}\label{app:ancillary}
 
-This paper is \emph{not} computer-assisted: every theorem is proved in full
-in the text or in Appendix~\ref{app:tilings}, and no proof depends on a
-computation that is not reproduced in the text. The ancillary scripts are
-\emph{secondary verification}: exact re-derivations --- rational or symbolic
-arithmetic throughout, never floating point --- of the load-bearing
-identities and finite case enumerations, archived so that a reader can
-re-check them mechanically. Where a script enumerates cases (tiling types,
-role patterns), the enumeration is exhaustive over an explicitly finite index
-set, so no case is lost by sampling. For each script we record what it
-verifies and which statement it accompanies; all run under Python~3 with
-SymPy (or only integer/rational standard libraries where noted).
+This paper is proved by hand throughout, \emph{with a single exception}:
+Theorem~\ref{thm:sandwichbang} ($C_\Delta(\tau_0)=1$ at the sandwich
+$\tau_0$) reduces, by the human Lemmas~\ref{lem:twoplank}--\ref{lem:reduction}
+and Theorem~\ref{thm:extreme}, to the emptiness of an explicit finite
+bisection tree $T(\tau_0)$, discharged by an exact-rational computation and
+re-verified by the independent certificate checker described below; all other
+results are proved in full in the text or in Appendix~\ref{app:tilings}. Apart
+from that one lemma, the ancillary scripts are \emph{secondary verification}:
+exact re-derivations --- rational or symbolic arithmetic throughout, never
+floating point --- of load-bearing identities and finite case enumerations,
+archived so that a reader can re-check them mechanically. Where a script
+enumerates cases (tiling types, role patterns), the enumeration is exhaustive
+over an explicitly finite index set, so no case is lost by sampling. For each
+script we record what it verifies and which statement it accompanies; all run
+under Python~3 with SymPy (or only integer/rational standard libraries where
+noted).
+
+\subsection*{The certified computation (Theorem~\ref{thm:sandwichbang})}
+Following the search-versus-verification separation, the emptiness of
+$T(\tau_0)$ is established in three artifacts. The \emph{searcher}
+\texttt{c3\_balanced\_bb.py} grows $T(\tau_0)$ by depth-first bisection,
+pruning by (P1)--(P4); it may use any heuristics without affecting soundness,
+and emits a \emph{certificate}. The \emph{certificate}
+\texttt{c3\_sandwich\_certificate.txt} is a deterministic preorder
+serialization of $T(\tau_0)$ storing only the tree shape --- for each internal
+node the split coordinate and the exact rational split point, for each leaf the
+pruning rule and its exact witness (the plank index for (P2)/(P4), the
+uncovered edge or the positive-area sign cell for (P3)); it stores no boxes.
+The \emph{checker} \texttt{bb\_certificate\_check.py} (about one page, importing
+nothing from the searcher) reconstructs every box from the tree shape alone ---
+so a box-arithmetic error in the searcher would surface here --- and verifies
+(i) \emph{tiling}: the stream is the preorder of a binary tree whose root is
+$[0,1]^6$ and each internal node splits one coordinate at a strictly interior
+point, the whole stream is consumed, the reconstruction stack ends empty, and
+the binary-tree identity ($\#\text{leaves}=\#\text{internal}+1$) holds; and
+(ii) \emph{prunes}: each leaf is re-validated against its recorded rule and
+witness by an independent re-implementation of the triangle geometry, of
+$w_0(\tau)$, of exact polygon clipping, and of (P1)--(P4). It prints
+\texttt{CERTIFICATE VALID} only if all checks pass.
+
+The verified run has input $\tau_0=(\tfrac{13}{25},\tfrac12,\tfrac12)$,
+threshold $w_0(\tau_0)=\tfrac2{25}$ (recomputed by the checker and matched
+against the header), and output: $812{,}650$ internal nodes, $812{,}651$
+leaves, all pruned, with leaf counts
+\[
+\underbrace{286{,}024}_{\text{(P1)}}\ \
+\underbrace{53{,}907}_{\text{(P2)}}\ \
+\underbrace{428{,}672}_{\text{(P3) edge}}\ \
+\underbrace{2{,}354}_{\text{(P3) cell}}\ \
+\underbrace{41{,}694}_{\text{(P4)}} .
+\]
+The genuinely computational content is the (P1) and (P3) leaves; the (P2) and
+(P4) leaves are discharged by Theorems~\ref{thm:extreme} and~\ref{thm:twodir},
+and all but $2{,}354$ of the (P3) leaves close by the one-dimensional edge test
+of Lemma~\ref{lem:noncover}(a). SHA-256 (first $16$ hex):
+searcher \texttt{b2468aa9acc91f4f}, certificate \texttt{ead66ff2cfd547f8}
+($12{,}062{,}803$ bytes), checker \texttt{90a25ce8ea059abe}. As independent
+corroboration, a second search on the relabelled triple
+$(\tfrac12,\tfrac12,\tfrac{13}{25})$ with split ratio $\tfrac5{11}$ produces a
+\emph{different} tree ($1{,}040{,}919$ versus $1{,}625{,}301$ nodes) with the
+same empty verdict; the authority for the theorem is nonetheless the
+independent checker, since a common-mode bug in the prune code would survive
+the two-tree test but not the checker's independent re-implementation.
 
 \begin{itemize}
 \item\texttt{median\_rigidity\_enumeration.py} --- exhaustive symbolic
@@ -2861,6 +3105,18 @@ Problem~\ref{prob:defect}.
 polynomial identities, coverage and margins), the exact coverage oracle
 behind the experiments of \S\ref{sec:problems}, and
 Remark~\ref{rem:parallelpath}'s symbolic skeleton bound.
+\item\texttt{c3\_extreme\_regime.py} --- Theorem~\ref{thm:extreme}: the corner
+ranges and extents, the strict Case-A inequalities, and the Case-B spanning
+bounds (symbolic, plus exact oracle sanity checks).
+\item\texttt{c3\_balanced\_bb.py} --- the searcher for
+Theorem~\ref{thm:sandwichbang}; emits the certificate.
+\item\texttt{bb\_certificate\_check.py} --- the \emph{independent} certificate
+checker (no shared code) for Theorem~\ref{thm:sandwichbang}: tiling, the
+binary-tree identity, and re-validation of all $812{,}651$ leaves; the sole
+computer-assisted step of the paper.
+\item\texttt{r15\_equality.py} --- the equality clause of
+Theorem~\ref{thm:sandwichbang}: exact minimum widths $\tfrac{31}{25}$,
+$\tfrac{31}{25}$, $\tfrac54$ of proper two-plank coverings.
 \end{itemize}
 
 \begin{thebibliography}{9}

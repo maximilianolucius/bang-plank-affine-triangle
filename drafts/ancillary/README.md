@@ -49,3 +49,26 @@ Run: `python3 <script>.py` (SymPy required unless noted).
 |---|---|---|
 | tilt_local_max.py | THEOREM: (3/2)/(1+eps) <= D(tilt eps) <= (3/2)(1-eps)/(1-eps+eps^2) < 3/2 on (0,1/2); x*=(1-2eps)/(3(1-eps)); reproduces 135/91, 190/127, 1225/817 | notes/57-R14 |
 | c3_balanced_bb.py | exact branch-and-bound for the balanced regime of C_3(sandwich): prunes P1 (Sigma r), P2 (extreme thm), P4 (empty plank -> 2-plank thm), P3 (enlarged config fails: exact 1-D edge test + positive-area cell via exact clipping — complete failure test) | notes/57-R14 |
+
+## Round 15 additions (certification package; integrate into Appendix B after freeze lifts)
+
+| script | verifies | accompanies (future) |
+|---|---|---|
+| c3_balanced_bb.py (emit_certificate) | emits the deterministic preorder certificate of T(tau0): tree shape + per-leaf rule/witness, no boxes | Thm sandwich-bang, App B |
+| bb_certificate_check.py | INDEPENDENT checker (no shared code): reconstructs boxes, verifies tiling (binary-tree identity) + re-validates all 812651 leaves + SHA -> CERTIFICATE VALID | Thm sandwich-bang, App B (Pillar 2/4) |
+| r15_equality.py | equality classification: min proper 2-plank cover width = 31/25, 31/25, 5/4 (all >1) -> C3(sandwich)=1 attained only trivially | Thm sandwich-bang (equality) |
+
+Certification artifacts (SHA-256, full):
+  c3_balanced_bb.py        b2468aa9acc91f4fbeec9b58afed706d3b865e7f0e49ecfa2c3804eae382f4cb
+  bb_certificate_check.py  90a25ce8ea059abed4707b5314a164be40298b1fe9fe42394d56a1c69c48eb1b
+  c3_sandwich_certificate.txt (12062803 B)  ead66ff2cfd547f8e2acd7c7bf5cce67d114a0aa1146559fc5b065028de6b86c
+Checker output: 812650 internal + 812651 leaves; P1=286024 P2=53907 P3edge=428672 P3cell=2354 P4=41694; CERTIFICATE VALID.
+
+## Note on the certificate file (arXiv)
+`c3_sandwich_certificate.txt` (12 MB) is the emptiness certificate for
+Theorem 10.8, re-verified by `bb_certificate_check.py` (CERTIFICATE VALID).
+It is regenerable deterministically:
+    python3 -c "import c3_balanced_bb as bb; bb.emit_certificate('c3_sandwich_certificate.txt')"
+(the searcher is deterministic: fixed DFS, midpoint bisection, split
+coordinate = first widest). SHA-256 ead66ff2cfd547f8...  If size is a concern
+for arXiv, ship the two scripts and these instructions instead of the file.
