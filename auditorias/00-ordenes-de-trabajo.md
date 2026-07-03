@@ -291,6 +291,116 @@ fondo.
 la siguiente ronda depende del dictamen de Rosa (pasada 4). No agregar teoremas hasta que la
 auditoría externa valide §7–§8.
 
+## Estado (2026-07-03) — 4ª pasada de Rosa: "Reject, resubmit after restructuring"
+- Crítica de FONDO (correcta): el paper está sobredimensionado — "tres papers en un PDF".
+  Insiste por 3ª pasada en "promete más de lo que prueba". Ya no son frases: es arquitectura.
+- **Calibración:** ningún resultado refutado; toda la matemática verificada (rondas 5–8). Las
+  pruebas de 6.6/App A que llama "frágiles" son CORRECTAS (auditadas línea a línea); su
+  objeción es de exposición. "Reject" traducido = reestructurar, no re-derivar.
+- **Dos puntos técnicos verificados:** (a) overclaim real en §7 l.916 ("D(u) computable by LP
+  over skeleton" — el LP da solo cota superior; corregir a sandwich); (b) footgun de notación
+  α/β/γ como "edge masses" sin fijar α↦BC/β↦CA/γ↦AB.
+- **DECISIÓN ESTRATÉGICA RECOMENDADA: partir en Paper 1 (triángulo, publicable ya) + Paper 2
+  (defecto de transporte, con dualidad).** Es un cambio de alcance → pendiente OK del usuario.
+
+**Dictamen sobre la pasada 4 de Rosa: `auditorias/55-dona-rosa-pasada4-y-decision-split.md`.**
+
+## Estado (2026-07-03) — DECISIÓN: un solo paper + expansión del defecto de transporte
+- **El usuario decidió NO partir el paper.** En su lugar: aplicar TODOS los puntos aceptados de
+  Rosa (salvo el split) + EXPANDIR la dirección `D(u)` con las tareas #1 (dualidad), #3
+  (cuerpos generales), #2 (`sup D=3/2`).
+- **Encuadre obligatorio:** `D(u)` pasa de sección tardía a **columna vertebral** del paper
+  (medianas/cíclicos/facetas/caracterización = casos especiales de `D`). Así se responde la
+  crítica de "tres papers en un PDF" **por coherencia, sin partir**. La secuencia importa:
+  primero el marco (dualidad + cuerpos generales), luego los resultados nuevos.
+
+**ÓRDENES RONDA 9: `auditorias/56-ordenes-ronda9.md`.**
+
+## Estado (2026-07-03) — RONDA 9 CERRADA: la dualidad existe y está probada (24 pp)
+- **B1 [PROVED, verificado línea a línea]:** dualidad fuerte `D_K(u)=sup_ψ min_x Σψᵢ(uᵢ(x))`
+  (K, n arbitrarios; Sion + Urysohn); certificado dual de facetas en 3 líneas
+  (`ψ=(1−3t/2)₊`); cuñas `D≥1/(1−2δ_c)` con criterio exacto `δ_c=δ ⟺ p*∈T_u`;
+  **lema de no-concurrencia exterior** (mid-lines no concurren fuera de Δ̄ — conteo por
+  pares con `Σq=1`, la joya de la ronda); holgura complementaria ⟹ overclaim A1a liquidado
+  por teorema.
+- **B3(a) [PROVED]:** `δ(u)≤1/6` para TODA familia finita (centroide testigo universal, 1
+  línea) ⟹ momentos capados en 3/2. **Y el conjetural probado:** `D_{Δ^d}(facetas)=(d+1)/2`
+  ∀d≥2 (matched pair: dual + ciclo `P_k=s^k(0,…,d)/m`; verificado a mano d=3, script d=2..7).
+- **B3(b) [OPEN]:** `sup D∈[3/2,2]` — consolidado como Problem; pasa a R10-1.
+- **B2 + B4 + Parte A completas y verificadas:** `D_K` marco general desde §2; tubo
+  certificado alrededor de TODO el locus concurrente (`km²/(1+km)`, aritmética verificada:
+  `10092>9801`); abstract a UNA tesis (Cor 27/29 fuera; frase final de alcance); convención
+  de masas fijada; sumset lemma aislado; Appendix B protocolo. 24 pp limpio; pasada5
+  congelada = vivo (diff 0); 3 scripts ALL OK.
+- **DECISIÓN DEL JEFE: entregar pasada 5 YA** (no esperar B3(b) — el lazo externo es el más
+  lento; B3(b) es aditivo, no estructural). Bloque de autor sigue pendiente (usuario).
+
+**Auditoría + ÓRDENES RONDA 10: `auditorias/57-ronda9-cierre.md`.**
+R10-1 `sup D`: cacería exacta de `D>3/2` (LP dual multi-nudo) + intento de `D≤3/2` universal
+(lazo generalizado) — cualquiera de los dos desenlaces es teorema · R10-2 ¿`δ_c=δ` siempre?
+(criterio `p*∈T_u`) · R10-3 abstract ≤200 palabras · R10-4 estabilidad (fondo) · R10-5
+moonshot.
+
+## Ronda 10 — PAQUETE EJECUTABLE PREPARADO (2026-07-03)
+**Órdenes detalladas: `auditorias/58-ordenes-ronda10.md`.** Corre EN PARALELO a la lectura de
+Rosa (pasada 5). Novedades del paquete respecto del resumen:
+- **Regla de proceso bloqueante: congelación de numeración** del `.tex` mientras Rosa lee —
+  material nuevo solo en `notes/54-*` o en números nuevos al final.
+- **R10-1 Ruta B (nueva, hacer PRIMERO):** mezcla de testigos de Gardner por pares —
+  `μ=⅓(ν₁₂+ν₁₃+ν₂₃)` da `dens_i ≤ ⅔+M_i/3`; si toda tercera-marginal admite `M≤5/2` ⟹
+  **`D≤3/2` universal**. Test crítico y barato: `M*(facetas)` exacto (allí `D=3/2` fuerza
+  `M≥5/2` — la ruta vive sii se alcanza). Calibración perfecta.
+- **R10-1 Ruta A:** LP dual multi-nudo (cotas inferiores CERTIFICADAS — el lado dual no
+  tiene "grilla que miente"); terrenos: (i) clase (b) dos-aristas-compartidas (nunca
+  concurren, nunca cazada), (ii) cerrar el sandwich `τ=(13/25,½,½)`, (iii) facetas
+  inclinadas, (iv) límite casi-paralelo (lema de continuidad de `D`, desenlace informativo
+  en ambos sentidos).
+- Falta escribir (1 línea): unicidad del maximizador de `δ` (=facetas módulo flips) — la
+  igualdad `|u(G)−½|=1/6` fuerza `s∈{0,1}`.
+- Cierre de ronda: cualquiera de {terna con `D>3/2` certificada, `D≤3/2` universal,
+  `M*(facetas)`+sandwich+continuidad} es entregable. Al llegar el dictamen de Rosa, TODO se
+  pausa y se audita eso primero.
+
+## Estado (2026-07-03) — RONDA 10 CERRADA: momentos batidos, δ=δ_c teorema, Ruta B refutada
+- **Ruta B REFUTADA en el test crítico [PROVED, verificado]:** `M*(facetas)=+∞` (todo
+  testigo de par tiene `E[λ₃]=0` ⟹ tercera marginal = átomo δ₀; 3 líneas). **Miss de
+  dirección MÍO** — la refutación usaba nuestra propia lógica de baricentros; el proceso
+  (test barato primero) funcionó. Rescate real: lema del costo de par
+  (`M*≥1/(2min(m,1−m))`, `m=u_i(q_jk)`; pesos desiguales mueren igual).
+- **Ruta A [PROVED, verificados]:** TRES certificados duales exactos baten la cota de
+  momentos (`18/13>15/11` tilt; `32/29>153/142` clase (b); sandwich `D>225/224` estricto —
+  primera prueba de gap; nudos adaptados necesarios). `D=1/(1−2δ)` FALSO en general;
+  primera mitad del Problem 10.3 respondida. Verificador autocontenido
+  `dual_certificates.py` corrido ✓.
+- **R10-2 TEOREMA [PROVED, verificado caso por caso]: `δ=δ_c` SIEMPRE** — forma cerrada
+  racional de δ; cuñas de 1 nudo alcanzan siempre los momentos; jerarquía resuelta:
+  momentos = cuñas < D estricto en ternas explícitas. Lema de conteo generalizado a nivel
+  `a` (orientaciones no colapsan si `a≠½` — manejado con colisiones tipo-faceta; subcasos
+  exhaustivos revisados). 2928+507 checks máquina. Caso degenerado `c₀=0` (all-shared)
+  detectado — acomodar al integrar.
+- **Menores [PROVED]:** D lsc; camino casi-paralelo `D→1` lineal (dos lados simbólicos);
+  unicidad del maximizador de δ (Gordan). **¿D>3/2?: no apareció** — [EVIDENCE] de máximo
+  local en facetas; `sup D∈[3/2,2]` [OPEN]; el hueco es el UB cerca de facetas (esqueleto
+  explota, bracket grueso `[18/13,135/76]` en ε=1/10).
+- **Congelación de numeración RESPETADA** (tex intacto desde R9; verificado por timestamps).
+
+**Auditoría + ÓRDENES RONDA 11: `auditorias/59-ronda10-cierre.md`.**
+R11-1 hueco por ARRIBA cerca de facetas (lazo deformado + UB variacional → ¿máximo local
+en 3/2?) · R11-2 sandwich exacto (matched pair vía holgura complementaria; si no cierra en
+esqueleto ⟹ primera instancia probada de óptimo no-esquelético) · R11-3 integración del
+paquete R10 CONDICIONADA al dictamen de Rosa (+abstract ≤200) · R11-4/5 fondo.
+Regla superior: dictamen de Rosa pausa todo. REPO: 2 rondas sin commit (R9, R10).
+Parte A (precisión de Rosa): R9-A1 fixes técnicos (overclaim §7 + notación α/β/γ) · A2 abstract
+1 tesis + Cor 7.7 sobria + "Gardner solo 3 direcciones" · A3 jerarquía + terminología · A4
+rigor 6.6/App A/3.2 (exposición; pruebas ya verificadas) · A5 §8 se queda con intro propia ·
+A6 reproducibilidad + metadatos.
+Parte B (expansión): **R9-B1 dualidad de `D(u)`** (reformulación `u_{i#}μ+ρ_i=D·Leb`; dual
+candidato `sup_ψ min_x Σψ_i(u_i(x))`; Sion) · **R9-B2 `D_K` para cuerpos generales** (reencuadre
+unificador) · **R9-B3 `sup D=3/2`** (¿facetas = peor caso? ⟹ `Σrw≥2/3` universal 3-dir) ·
+B4 afilar la región que bate B-Y.
+Prioridad: A1 ya · B1→B2 (marco primero) · A2..A6 en paralelo · B3 · B4 · entrega pasada 5.
+Pendiente único no-investigador: bloque de autor (identidad real).
+
 ### Estado del repositorio git
 Repo público `maximilianolucius/bang-plank-affine-triangle`. Commits: inicial + Ronda 6 +
 **Rondas 7–8** (este commit). `refs/`, `hamilton-jacobi-*`, artefactos LaTeX y `target/`
