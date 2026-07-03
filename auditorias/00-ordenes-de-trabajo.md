@@ -243,3 +243,55 @@ esqueleto `d≥3` (ya) · **R7-2 reenfocado**: defecto de transporte `D(u)` con 
 módulo de continuidad cerca de la superficie de concurrencia (primeras cotas `>0.928` en
 territorio no concurrente = el objetivo real) · R7-4 estabilidad de TODA la familia ·
 R7-5 figuras · R7-3 decisión editorial de título.
+
+## Estado (2026-07-02, noche) — RONDA 7 CERRADA: primera cota en territorio abierto + 3ª pasada de Rosa
+- **R7-2 → §7 defecto de transporte [PROVED, verificado]:** `D(u)` bien definido;
+  `D(facetas)=3/2` exacto (testigo = triángulo inscrito `(0,⅓,⅔)…`, verificado a mano);
+  estabilidad lineal cerca de concurrencia; **Cor 7.7: `Σrw≥27/29>4√3−6` para ternas
+  cíclicas con `max|τ_i−½|≤1/60`** — PRIMERA cota que bate B-Y dentro de territorio no
+  concurrente (entorno full-dim; caveat honesto en Rem 7.8: uniforme-vs-local, coberturas
+  ⊥ a las 3 direcciones). `40401>40368` ✓.
+- **R7-1 → §8 familia testigo en Δ³ [PROVED, verificado]:** Thm 8.1 (familia σ, pesos
+  cerrados `a(σ),b(σ)` rederivados a mano) — primer transporte fuera del plano;
+  Prop 8.2 (`d≥4` sin testigo en 1-esqueleto, verificado d=4..7). Fracaso `D=1/(1−2δ)`
+  general reportado como Problem 10.3 (honesto).
+- **Discrepancia chat/paper:** el chat citó el testigo de facetas con vértices del triángulo
+  medial (dan átomo, inválido); el paper usa el inscrito (correcto). Sin acción en `.tex`.
+- **R7-0:** copia congelada 11 pp entregada a Rosa; **R7-3:** título se mantiene.
+- **3ª pasada de doña Rosa (sobre 11 pp, SIN §7–§8):** "major revision bordering on reject".
+  Su tesis de fondo es CORRECTA y ya la dijo 3 veces: **los claims exceden lo probado.**
+  Dos overclaims vivos y bloqueantes: (1) "no single-measure argument can improve 1/d"
+  (l.48/153 — contradicho por §6–§7); (2) "(equivalently Conjecture 1.1 for the triangle)"
+  (l.929 — falsa equivalencia 3-planks ⟺ conjetura). Resto válido, mayormente precisión y
+  presentación (no toca validez de resultados).
+
+**Auditoría + ÓRDENES RONDA 8: `auditorias/53-ronda7-y-dona-rosa-pasada3.md`.**
+Ronda 8 = **pasada de precisión** (sin matemática nueva obligatoria): R8-1 corregir los 2
+overclaims (bloqueante) · R8-2 acotar alcance de caracterizaciones + blindar §7 antes de que
+Rosa lo vea · R8-3 rigor (Thm 6.6 Step 2, Prop 7.1 split, Gardner exacto, Apéndice A) ·
+R8-4 editorial · R8-5 figuras (ahora prioritario) · R8-7 4ª pasada de Rosa DESPUÉS · R8-6/8
+fondo.
+
+## Estado (2026-07-02, cierre Ronda 8) — PASADA DE PRECISIÓN CUMPLIDA (17 pp)
+- **R8-1 overclaims eliminados y verificados:** "single-measure" → sharpness de la uniforme
+  + Rem 2.2 con contenido real (mejor constante por 1 medida ∈ `[½,⅔]`); "equivalently
+  Conjecture" borrado (Problem 1: 3-planks es sub-problema).
+- **HALLAZGO R8-3:** la queja #7 de Rosa destapó un **hueco de prueba real** en Thm 3.2
+  (los `C_k` son abiertos, no compactos); RESUELTO con recorte a compactos, holgura
+  `(d+3−R)/(d+2)>1` verificada. (Fallo mío de auditoría en R3: lo di por correcto.)
+- **Numeración preservada** (`.aux`: 6.6/6.8 intactos vía Pocket Lemma sin numerar); 4
+  figuras TikZ (Fig. 3 verificada, vértices correctos `(0,⅓,⅔)…`); compila 17 pp limpio.
+- **Nota permanente:** el investigador volvió a escribir MAL en el chat el testigo de
+  facetas (triángulo medial `(0,½,½)…`, da átomo); el paper siempre tuvo el inscrito
+  correcto. Vigilar que no "corrija" la figura hacia el error.
+- **Pendiente único:** bloque de autor (identidad real). **R8-7 (entrega a Rosa pasada 4):
+  me toca.**
+
+**Auditoría Ronda 8: `auditorias/54-ronda8-cierre.md`.** Sin órdenes de investigación nuevas:
+la siguiente ronda depende del dictamen de Rosa (pasada 4). No agregar teoremas hasta que la
+auditoría externa valide §7–§8.
+
+### Estado del repositorio git
+Repo público `maximilianolucius/bang-plank-affine-triangle`. Commits: inicial + Ronda 6 +
+**Rondas 7–8** (este commit). `refs/`, `hamilton-jacobi-*`, artefactos LaTeX y `target/`
+excluidos por `.gitignore`. `run_remote.py` saneado (credenciales por env).

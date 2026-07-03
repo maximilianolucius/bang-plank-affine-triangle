@@ -11,7 +11,6 @@
 %  targets simplices of dimension 2N-1; the triangle is never a target).
 %==============================================================
 \usepackage{amsmath,amssymb,amsthm,mathtools}
-\usepackage{tikz}
 \usepackage[margin=1.1in]{geometry}
 \usepackage[colorlinks=true,linkcolor=blue,citecolor=blue]{hyperref}
 \theoremstyle{plain}
@@ -21,8 +20,6 @@
 \newtheorem{corollary}[theorem]{Corollary}
 \theoremstyle{definition}
 \newtheorem{conjecture}[theorem]{Conjecture}
-\newtheorem{definition}[theorem]{Definition}
-\newtheorem*{pocketlemma}{Pocket Lemma}
 \newtheorem{problem}[theorem]{Problem}
 \theoremstyle{remark}
 \newtheorem{remark}[theorem]{Remark}
@@ -37,9 +34,6 @@
 \author{[Author names]}
 \address{[Affiliation]}
 \email{[email]}
-\subjclass[2020]{52C17 (52A40, 52A10)}
-\keywords{Plank problem, relative width, affine plank conjecture, covering,
-rigidity, witness measure}
 \date{Draft --- \today}
 
 \begin{document}
@@ -47,31 +41,32 @@ rigidity, witness measure}
 Bang's affine (relative-width) plank conjecture asserts that if a convex body $K$
 is covered by planks $P_1,\dots,P_n$ then $\sum_i \rw_K(P_i)\ge 1$, where
 $\rw_K(P)=\wid(P)/\wid_K(u_P)$ is the width of $P$ relative to the width of $K$ in
-$P$'s direction. It is open for non-symmetric bodies, already in the plane. We
-study the triangle, developing a \emph{transport} method (witness measures with
-uniform marginals) alongside boundary tilings. Main results: (1) three planks
-parallel to the medians satisfy $\sum\rw\ge1$, with equality if and only if each
-is the central third of its median; (2) an explicit witness measure for every
-cyclic triple whose mid-level lines concur (a two-parameter family), with the
-bound attained at each member by a covering that is unique for its directions;
-(3) a characterization: for three pairwise non-parallel directions on the
-triangle, a witness measure exists if and only if the mid-level lines concur ---
-settling the existence question of Gardner (1988) for three directions on the
-triangle; (4) a quantification of the method off the concurrent locus by a
-\emph{transport defect} $D(u)$, with $\sum\rw\ge1/D(u)$ for coverings by planks
-parallel to the given triple: $D=\tfrac32$ exactly at the facet triple, and near
-concurrence $D\le1+O(\varepsilon)$, so that planks parallel to any cyclic triple
-with parameters within $\tfrac1{60}$ of the medians satisfy
-$\sum\rw\ge\tfrac{27}{29}>4\sqrt3-6$ --- past the constant of
-Bakaev--Yehudayoff on the triangle, but only for these restricted direction
-families, whereas their bound is uniform over all coverings; (5) on the
-$3$-simplex, a one-parameter family of concurrent direction quadruples carrying
-explicit skeleton witness measures. Supporting results: $\sum\rw\ge1/d$ for
-$d\ge2$ via the uniform measure, sharp two-direction and facet-parallel cases,
-the ``three facets $+$ one plank'' case, and sharpness of the chord-lemma step
-in Bang's sign argument. All our theorems bound coverings by planks in specified
-direction families on a fixed body, or characterize witness measures; none
-resolves the conjecture for the triangle, let alone the plane.
+$P$'s direction. It is open for non-symmetric bodies, and open already for three
+planks in the plane. We study the triangle as a concrete test body. We give (i) a
+short single-measure proof of $\sum\rw\ge 1/d$ for $d\ge2$, whose per-plank estimate
+is sharp at the simplex, so that no single-measure argument can improve on $1/d$;
+(ii) sharp
+$\sum\rw\ge 1$ for two directions and for facet-parallel families (all dimensions);
+(iii) a Hunter-free proof of the ``three facets $+$ one arbitrary plank'' case; and,
+as our main results, (iv) what is, to our knowledge, the first \emph{tight
+non-facet} case with full rigidity:
+three planks parallel to the medians of a triangle satisfy $\sum\rw\ge1$ with
+equality if and only if each is the central third of its median; (v) a
+\emph{weighted-perimeter theorem} extending the bound to a two-parameter family of
+generic concurrent direction triples, via an explicit witness measure with edge
+masses $1-2p_j$; and (vi) tightness and rigidity across that entire family: the
+bound is attained at every member by an explicit covering, unique for its
+directions --- a two-parameter family of sharp configurations. We isolate the
+transport method behind (i)--(vi) as a
+\emph{uniform-marginal witness measure} and give a dimension-agnostic necessary
+condition for its existence (concurrence of the mid-level lines); on the
+triangle the condition is also sufficient, giving a complete characterization
+for three directions: a witness measure exists if and only if the mid-level
+lines concur. Finally we
+record a structural obstruction: the chord-lemma step in the sign argument of Bang,
+which yields the chord-normalized bound $\sum \wid(P_i)/\ell_K(u_i)\ge1$, is sharp,
+so that argument cannot be pushed past the longest chord: no normalizer strictly
+between chord and width is reachable by it. We claim no proof of the conjecture.
 \end{abstract}
 \maketitle
 
@@ -100,14 +95,7 @@ reduction: that reduction sends a covering by $N$ planks to a simplex of dimensi
 $2N-1$, so the triangle (the $2$-simplex) is never a target
 (Remark~\ref{rem:ambrus}). Our results are new sharp cases for a fixed body, a
 rigidity theorem, a dimension-agnostic structural characterization, and an
-obstruction; we prove nothing about the general conjecture. Since the
-distinctions matter, we spell them out: five statements should be kept apart ---
-(a) bounds for coverings by planks parallel to a \emph{fixed direction family};
-(b) existence and characterization of \emph{witness measures}; (c) bounds for
-\emph{all} coverings of the triangle; (d) Conjecture~\ref{conj:bang} for the
-triangle; (e) Conjecture~\ref{conj:bang} in the plane. Every theorem in this
-paper lives at level (a) or (b); at level (c) we prove nothing beyond the
-universal $1/d$ of Theorem~\ref{thm:oned}, and (d), (e) remain wide open.
+obstruction; we prove nothing about the general conjecture.
 
 \begin{remark}\label{rem:ambrus}
 Ambrus's reduction~\cite{Ambrus} sends a covering by $N$ planks to a covering of a
@@ -129,35 +117,27 @@ not increase $|I|$.
 \subsection*{Results}
 Theorem~\ref{thm:oned} (\S\ref{sec:measure}), Theorems~\ref{thm:twodir}
 and~\ref{thm:facet} (\S\ref{sec:sharp}), Theorem~\ref{thm:3plus1}
-(\S\ref{sec:3plus1}), and the main results: Theorem~\ref{thm:median} with rigidity
+(\S\ref{sec:3plus1}), and the centerpieces: Theorem~\ref{thm:median} with rigidity
 (\S\ref{sec:median}); the weighted-perimeter Theorem~\ref{thm:wper}
 (\S\ref{sec:concur}), which extends the sharp bound from the medians to a
-two-parameter family of concurrent triples; and
+two-parameter family of generic concurrent triples; and
 Theorem~\ref{thm:tight}, which shows the bound is attained at every member of
 that family by an explicit unique tight covering.
 Proposition~\ref{prop:concur} (\S\ref{sec:concur}) is the dimension-agnostic
 necessary condition, Corollary~\ref{cor:iff} the resulting characterization for
 cyclic triples, and Theorem~\ref{thm:char} the full three-direction
-characterization on the triangle. Section~\ref{sec:defect} quantifies the
-method off the concurrent locus (the transport defect: exact value $\tfrac32$
-at the facets, Theorem~\ref{thm:facetdefect}; linear stability near
-concurrence, Theorem~\ref{thm:defectstab}; Corollary~\ref{cor:beyond} then
-gives $\sum\rw\ge\tfrac{27}{29}>4\sqrt3-6$ near the medians --- for coverings
-in the given direction families only, see Remark~\ref{rem:beyond});
-\S\ref{sec:simplex3} constructs the witness family
-on $\Delta^3$ (Theorem~\ref{thm:simplex3}). Proposition~\ref{thm:nogo} and
-Remark~\ref{rem:nogo} (\S\ref{sec:nogo})
-record the normalizer obstruction. Appendix~\ref{app:tilings} classifies the
+characterization on the triangle; Proposition~\ref{thm:nogo} (\S\ref{sec:nogo})
+is the normalizer obstruction. Appendix~\ref{app:tilings} classifies the
 boundary tilings of cyclic triples (Proposition~\ref{prop:tilings}), the
 combinatorial engine behind both rigidity results.
 
-\section{The uniform-measure bound $\sum\rw\ge 1/d$}\label{sec:measure}
+\section{The single-measure bound $\sum\rw\ge 1/d$}\label{sec:measure}
 \begin{theorem}\label{thm:oned}
 Let $d\ge2$. If $K\subset\R^d$ is covered by planks $P_1,\dots,P_n$, then
-$\sum_i\rw_K(P_i)\ge 1/d$. The per-plank estimate $\mu(P)\le d\,\rw_K(P)$ for the
-uniform measure $\mu$ is sharp at the simplex; hence the argument, run with the
-uniform measure, cannot improve the constant $1/d$. (For $d=1$ the conjecture
-itself is trivial: intervals covering an interval satisfy $\sum\rw\ge1$.)
+$\sum_i\rw_K(P_i)\ge 1/d$. The per-plank estimate $\mu(P)\le d\,\rw_K(P)$ used in the
+proof is sharp at the simplex; hence no single-measure argument can improve the
+constant $1/d$. (For $d=1$ the conjecture itself is trivial: intervals covering an
+interval satisfy $\sum\rw\ge1$.)
 \end{theorem}
 \begin{proof}
 Let $\mu$ be the uniform probability measure on $K$. Fix $u$, normalize
@@ -171,24 +151,17 @@ $\mu(P)=\int_I f\le d\,\rw_K(P)$ for each plank, and
 $1=\mu(K)\le\sum_i\mu(P_i)\le d\sum_i\rw_K(P_i)$. For sharpness of the per-plank
 estimate: equality in $\max f\le d/w$ forces $V\propto h^{d-1}$ (conical sections),
 realized by the simplex $K=\Delta^d$ with $u$ a vertex--facet direction, where a
-thin plank at the facet has $\mu(P)=(d-o(1))\rw_K(P)$. Thus for the simplex the
-\emph{uniform} measure cannot certify a constant larger than $1/d$ by the union
+thin plank at the facet has $\mu(P)=(d-o(1))\rw_K(P)$. Thus for the simplex no
+single probability measure can certify a constant larger than $1/d$ by the union
 bound; this does \emph{not} assert any covering of the simplex with
 $\sum\rw$ near $1/d$ (indeed Theorem~\ref{thm:facet} gives $\sum\rw\ge1$ for
 facet-parallel coverings).
 \end{proof}
-\begin{remark}\label{rem:oneall}
-Other measures do better for \emph{restricted} direction families: the witness
-measures of \S\ref{sec:concur} certify the full constant $1$ for suitable triples,
-and \S\ref{sec:defect} quantifies the best constant certifiable per triple. For
-\emph{all} directions simultaneously, however, no single measure certifies the
-constant $1$: uniform marginals in all directions would force
-$\mathbb E[x_k]=\tfrac12$ against $\sum x_k=1$ (Gardner's
-obstruction~\cite{Gardner88}). On the triangle the best constant certifiable by
-one measure against all directions at once lies between $\tfrac12$ (the uniform
-measure; Proposition~\ref{prop:defect}(iv)) and $\tfrac23$ (the facet triple
-already forces it; Theorem~\ref{thm:facetdefect}); we do not pursue its exact
-value.
+\begin{remark}
+The bound cannot exceed $1/d$ by a single measure: uniform marginals in all
+directions would force $\mathbb E[x_k]=1/2$ against $\sum x_k=1$. This is Gardner's
+obstruction~\cite{Gardner88}: for the triangle there is no relative-width measure
+for the three side-directions.
 \end{remark}
 
 \section{Sharp cases: two directions and facet-parallel families}\label{sec:sharp}
@@ -199,15 +172,13 @@ directions are parallel the statement is trivial: all planks share one normalize
 coordinate $f$, the intervals $f(P_i)$ cover $[0,1]$, and $\sum\rw=\sum|I_i|\ge1$.)
 \end{theorem}
 \begin{proof}
-We use Gardner's existence theorem \cite[Theorem~1]{Gardner88}, whose exact
-statement is: \emph{for a convex body $K\subset\R^n$ and two directions
-$\theta_1,\theta_2$, there exists a relative-width measure on $K$ for
-$\{\theta_1,\theta_2\}$} --- a probability measure $\nu$, possibly singular,
-such that $\nu(S\cap K)$ equals the relative width of $S$ for every slab $S$
-orthogonal to $\theta_1$ or $\theta_2$; equivalently, the pushforward of $\nu$
-under each normalized affine coordinate $f_{\theta_i}:K\to[0,1]$ is
-$\Leb[0,1]$. Applying this to $K=\Delta$ and our two directions gives $\nu$
-with $f_{u\#}\nu=f_{v\#}\nu=\Leb$. Then $\nu(P)=|I|=\rw(P)$ for each plank, and
+Let $f_u,f_v:\Delta\to[0,1]$ be the two affine coordinates; since the directions are
+non-parallel, $\Phi=(f_u,f_v)$ is an
+affine bijection onto a triangle $T\subset[0,1]^2$ with full projections. By
+\cite[Theorem~1]{Gardner88}, which constructs a relative-width measure for any
+\emph{two} directions on any planar convex body,
+there is a probability measure $\nu$ on $\Delta$ with $f_{u\#}\nu=f_{v\#}\nu=\Leb$.
+Then $\nu(P)=|I|=\rw(P)$ for each plank, and
 $1=\nu(\Delta)\le\sum\nu(P_i)=\sum\rw(P_i)$.
 \end{proof}
 \begin{theorem}\label{thm:facet}
@@ -224,23 +195,15 @@ $\lambda\in\Delta^d$ is uncovered iff $\lambda_k\in C_k$ for every $k$; since
 $C_k\subset[0,1]$, an uncovered point exists \emph{iff}
 $1\in C_1+\dots+C_{d+1}$ (Minkowski sum).
 
-Assume $R<1$; we produce an uncovered point. Each $U_k$ is a finite union of
-closed intervals, so $C_k$ is a finite union of intervals, relatively open in
-$[0,1]$, with $|C_k|=1-|U_k|\ge1-R>0$; it need not be compact, so fix
-$\eta=\tfrac{1-R}{d+2}>0$ and choose a \emph{compact} $C_k'\subseteq C_k$ (shave
-each component) with $|C_k'|\ge|C_k|-\eta$. The one-dimensional
-Brunn--Minkowski inequality $|A+B|\ge|A|+|B|$ holds for nonempty compact
-$A,B\subset\R$: $A+B\supseteq(A+\min B)\cup(\max A+B)$, and the two translates
-meet only at $\max A+\min B$. Iterating it, $D:=C_1'+\dots+C_d'$ (compact)
-satisfies $|D|\ge\sum_{k=1}^d|C_k'|\ge d-\sum_{k=1}^d(|U_k|+\eta)$; as
-$D\subseteq[0,d]$,
-$|[0,1]\setminus D|\le|[0,d]\setminus D|\le\sum_{k=1}^d(|U_k|+\eta)$, whence
-$|D\cap[0,1]|\ge1-\sum_{k=1}^d(|U_k|+\eta)$. Also $(1-C_{d+1}')\cap[0,1]$ has
-measure $|C_{d+1}'|\ge1-|U_{d+1}|-\eta$. Both sets lie in $[0,1]$ and their
-measures sum to at least $2-R-(d+1)\eta>1$, so they intersect: there is $t\in D$
-with $1-t\in C_{d+1}'$. Writing $t=\lambda_1+\dots+\lambda_d$ with
-$\lambda_k\in C_k'\subseteq C_k$ and $\lambda_{d+1}=1-t\in C_{d+1}$ gives an
-uncovered $\lambda\in\Delta^d$.
+Assume $R<1$; we produce an uncovered point. Each $C_k$ is nonempty compact
+($|C_k|=1-|U_k|\ge1-R>0$). Put $D=C_1+\dots+C_d$. By the one-dimensional
+Brunn--Minkowski inequality $|A+B|\ge|A|+|B|$ (for nonempty compact $A,B\subset\R$,
+iterated), $|D|\ge\sum_{k=1}^d|C_k|=d-\sum_{k=1}^d|U_k|$; as $D\subseteq[0,d]$,
+$|[0,1]\setminus D|\le|[0,d]\setminus D|\le\sum_{k=1}^d|U_k|$, whence
+$|D\cap[0,1]|\ge1-\sum_{k=1}^d|U_k|$. Also $(1-C_{d+1})\cap[0,1]$ has measure
+$|C_{d+1}|=1-|U_{d+1}|$. Both sets lie in $[0,1]$ and their measures sum to
+$2-\sum_k|U_k|\ge2-R>1$, so they intersect: there is $t\in D$ with $1-t\in C_{d+1}$.
+Then $t+(1-t)=1\in C_1+\dots+C_{d+1}$, i.e.\ an uncovered $\lambda$ exists.
 Contrapositively, covering forces $R\ge1$. Sharpness: the facet tiling
 $I_k=[0,\tfrac1{d+1}]$ gives $\sum\rw=1$.
 \end{proof}
@@ -279,35 +242,11 @@ $P_i=\{m_i\in I_i\}$, $I_i=[l_i,h_i]$, $r_i=|I_i|>0$.
 If three median planks cover $\Delta$, then $r_1+r_2+r_3\ge1$, with equality if and
 only if $I_1=I_2=I_3=[\tfrac13,\tfrac23]$.
 \end{theorem}
-We are not aware of a previous tight \emph{non-facet} three-direction rigidity
-result for the triangle: the sharp cases recorded in the survey
+To our knowledge this is the first tight \emph{non-facet} case of the three-plank
+problem with full rigidity: the sharp cases recorded in the survey
 \cite{Verreault} (and in \cite{Gardner88,BY26}) concern facet/coordinate directions,
-two directions, or symmetric bodies.
-
-\begin{figure}[ht]
-\centering
-\begin{tikzpicture}[scale=3.4]
-  \coordinate (A) at (0,0); \coordinate (B) at (1,0); \coordinate (C) at (0.5,0.866);
-  \fill[blue!40,opacity=.5]  (0,0) -- (0.3333,0) -- (0.8333,0.2887)
-       -- (0.6667,0.5773) -- (0.1667,0.2887) -- cycle;
-  \fill[red!40,opacity=.5]   (0.3333,0) -- (0.6667,0) -- (0.6667,0.5773)
-       -- (0.5,0.866) -- (0.3333,0.5773) -- cycle;
-  \fill[green!50,opacity=.5] (0.6667,0) -- (1,0) -- (0.8333,0.2887)
-       -- (0.3333,0.5773) -- (0.1667,0.2887) -- cycle;
-  \draw[thick] (A) -- (B) -- (C) -- cycle;
-  \node[below left]  at (A) {$A$};
-  \node[below right] at (B) {$B$};
-  \node[above]       at (C) {$C$};
-  \node at (0.17,0.09)  {$P_1$};
-  \node at (0.5,0.62)   {$P_2$};
-  \node at (0.83,0.09)  {$P_3$};
-\end{tikzpicture}
-\caption{The tight median covering of Theorem~\ref{thm:median}:
-$I_1=I_2=I_3=[\tfrac13,\tfrac23]$. Each plank $P_i=\{m_i\in[\tfrac13,\tfrac23]\}$
-is the central-thirds band of its median; the three traces tile each edge, and
-the planks cover $\Delta$ with $\sum\rw=1$.}
-\label{fig:median}
-\end{figure}
+two directions, or symmetric bodies, and we are not aware of a comparable tilted
+tight instance in the literature.
 \begin{proof}[Proof of the bound]
 Let $\mu$ be the perimeter measure: uniform in the parameter on each of the three
 edges, mass $\tfrac13$ each. A direct computation shows each pushforward
@@ -410,49 +349,16 @@ $\max_jp_j<\tfrac12$ iff all three masses are positive, so every valid cyclic tr
 admits $\mu_p$.
 \end{proof}
 Taking $p$ the centroid recovers Theorem~\ref{thm:median}'s bound ($\tau_i=\tfrac12$,
-equal masses). For $p$ off the centroid the directions are tilted non-median
+equal masses). For $p$ off the centroid the directions are generic non-median
 triples; e.g.\ $p=(\tfrac9{20},\tfrac3{10},\tfrac14)$ gives
 $\tau=(\tfrac59,\tfrac45,\tfrac16)$ with masses $(\tfrac12,\tfrac1{10},\tfrac25)$.
 Theorem~\ref{thm:wper} thus proves the bound of Conjecture~\ref{conj:bang} for a
-two-parameter family of direction triples on the triangle, answering the
+two-parameter family of generic direction triples on the triangle, answering the
 finite-direction existence question of~\cite{Gardner88} affirmatively for the cyclic
-concurrent family. Figure~\ref{fig:wper} shows the running example.
-
-\begin{figure}[ht]
-\centering
-\begin{tikzpicture}[scale=3.4]
-  \coordinate (A) at (0,0); \coordinate (B) at (1,0); \coordinate (C) at (0.5,0.866);
-  \draw[dashed,gray] (0.5,0) -- (0.75,0.433) -- (0.25,0.433) -- cycle;
-  \draw[thick] (A) -- (B) -- (C) -- cycle;
-  \draw[blue]  (0.1,0)    -- (0.75,0.433);
-  \draw[red]   (0.5,0)    -- (0.3125,0.54125);
-  \draw[green!60!black] (0.6,0) -- (0.25,0.433);
-  \fill (0.425,0.2165) circle (0.012) node[below right,font=\small] {$p$};
-  \node[below left]  at (A) {$A$};
-  \node[below right] at (B) {$B$};
-  \node[above]       at (C) {$C$};
-  \node[below,font=\scriptsize] at (0.5,-0.04) {$w_{AB}=\gamma=\tfrac12$};
-  \node[right,font=\scriptsize] at (0.83,0.47) {$w_{BC}=\alpha=\tfrac1{10}$};
-  \node[left,font=\scriptsize]  at (0.17,0.47) {$w_{CA}=\beta=\tfrac25$};
-  \begin{scope}[shift={(1.28,0.08)}]
-    \draw[blue] (0,0.2) -- (0.12,0.2)
-      node[right,font=\scriptsize,black] {$\{u_1=\tfrac12\}$};
-    \draw[red] (0,0.06) -- (0.12,0.06)
-      node[right,font=\scriptsize,black] {$\{u_2=\tfrac12\}$};
-    \draw[green!60!black] (0,-0.08) -- (0.12,-0.08)
-      node[right,font=\scriptsize,black] {$\{u_3=\tfrac12\}$};
-  \end{scope}
-\end{tikzpicture}
-\caption{The weighted-perimeter witness of Theorem~\ref{thm:wper} at
-$p=(\tfrac9{20},\tfrac3{10},\tfrac14)$, i.e.\
-$\tau=(\tfrac59,\tfrac45,\tfrac16)$: the three mid-level lines $\{u_i=\tfrac12\}$
-concur at $p$, which lies in the open medial triangle (dashed), and $\mu_p$ puts
-the indicated masses uniformly on the edges.}
-\label{fig:wper}
-\end{figure}
+concurrent family.
 
 Combining necessity (Proposition~\ref{prop:concur}) with the explicit construction
-(Theorem~\ref{thm:wper}) yields a \emph{characterization}:
+(Theorem~\ref{thm:wper}) yields the first \emph{characterization} in this setting:
 \begin{corollary}\label{cor:iff}
 Call a direction triple \emph{cyclic} if its vertex values are
 $u_1=(\tau_1,0,1)$, $u_2=(0,1,\tau_2)$, $u_3=(1,\tau_3,0)$ with
@@ -483,27 +389,6 @@ All remaining role assignments are classified by Theorem~\ref{thm:char} below.
 The bound of Theorem~\ref{thm:wper} is in fact \emph{attained} at every member
 of the family, and the tight covering is unique --- a two-parameter family of
 sharp configurations extending the median rigidity of \S\ref{sec:median}.
-
-The coverage argument below rests on an elementary topological fact, which we
-isolate.
-
-\begin{pocketlemma}
-Let $H$ be an open convex subset of the plane of $\Delta$ such that
-$P:=H\cap\operatorname{int}\Delta\ne\varnothing$ and
-$\overline P\cap\partial\Delta$ is finite. Then $H\subseteq\overline\Delta$; in
-particular $H$ is bounded.
-\end{pocketlemma}
-
-\begin{proof}
-Suppose $y\in H\setminus\overline\Delta$, and choose a disk $B\subseteq P$. For
-$z\in B$ the segment $[z,y]$ lies in $H$ by convexity and joins
-$\operatorname{int}\Delta$ to the complement of $\overline\Delta$; let $w(z)$ be
-the first point of $\partial\Delta$ on it, starting from $z$. Then
-$[z,w(z))\subseteq H\cap\operatorname{int}\Delta$, so
-$w(z)\in\overline P\cap\partial\Delta$, a finite set. But for a fixed boundary
-point $w$, every $z$ with $w(z)=w$ lies on the line through $y$ and $w$, and
-finitely many lines cannot cover the disk $B$ --- a contradiction.
-\end{proof}
 
 \begin{theorem}[tightness and rigidity of the cyclic family]\label{thm:tight}
 Let $p$ and $u_1,u_2,u_3$ be as in Theorem~\ref{thm:wper}. Write
@@ -567,17 +452,18 @@ $\sigma\in\{\mathrm{lo},\mathrm{hi}\}^3$, where $P_\sigma=H_\sigma\cap
 $\{u_i<l_i\ (\sigma_i=\mathrm{lo}),\ u_i>h_i\ (\sigma_i=\mathrm{hi})\}$; write
 $c_i$ for the active bound ($l_i$ or $h_i$). We show each $P_\sigma$ is empty.
 
-First, $\overline{P_\sigma}\cap\partial\Delta$ is finite. Indeed, such a point
-$x$ satisfies the closed pattern constraints ($u_j(x)\le l_j$ if
-$\sigma_j=\mathrm{lo}$, $u_j(x)\ge h_j$ if $\sigma_j=\mathrm{hi}$), and, lying
-on the tiled boundary, is covered by some $P_j$, so $u_j(x)\in[l_j,h_j]$;
-together these force $u_j(x)=c_j$ for that $j$. Each $u_j$ is affine and
-nonconstant on each edge (its two vertex values there are distinct), so
-$\{u_j=c_j\}$ meets each edge in at most one point: at most $3\times3=9$ points
-in all. By the Pocket Lemma applied to $H_\sigma$ (whose intersection
-with $\operatorname{int}\Delta$ is $P_\sigma$),
-$H_\sigma\subseteq\overline\Delta$ whenever $P_\sigma\ne\varnothing$; in
-particular $H_\sigma$ is bounded.
+First, $\overline{P_\sigma}\cap\partial\Delta$ is finite: such a point $x$
+satisfies the closed pattern constraints, and is covered by some $P_j$ (the
+boundary is tiled), forcing $u_j(x)=c_j$; each $u_j$ is nonconstant on each
+edge (its vertex values there are distinct), so $x$ lies in a set of at most
+nine points. Next, $H_\sigma\subseteq\overline\Delta$ whenever
+$P_\sigma\ne\varnothing$: otherwise pick $y\in H_\sigma\setminus\overline\Delta$
+and a disk $B\subset P_\sigma$; for each $z\in B$ the segment $[z,y]\subset
+H_\sigma$ crosses $\partial\Delta$ at a point of
+$\overline{P_\sigma}\cap\partial\Delta$, and segments through the fixed $y$
+meeting a common crossing point have collinear $z$, so a disk of $z$'s produces
+infinitely many crossing points --- contradicting finiteness. In particular
+$H_\sigma$ is bounded.
 
 No two of the lines $\ell_i=\{u_i=c_i\}$ are parallel: $u_i\parallel u_j$ would
 force $\tau_1(1-\tau_2)=1$, $\tau_2(1-\tau_3)=1$ or $\tau_3(1-\tau_1)=1$,
@@ -613,18 +499,13 @@ x^\ast=\tfrac1{2S^2}\Bigl(\alpha\beta(1-\alpha)(1+\alpha-\beta),\;
 \beta\gamma(1-\beta)(\alpha+2\beta),\;
 \alpha\gamma(\alpha+\beta)(2-2\alpha-\beta)\Bigr),
 \]
-all positive: $\alpha,\beta,\gamma>0$ handle the leading factors (with
-$1-\alpha=\beta+\gamma>0$), while $1+\alpha-\beta>1-\beta>0$, $\alpha+2\beta>0$,
-and $2-2\alpha-\beta=\beta+2\gamma>0$ using $\alpha+\beta+\gamma=1$. So
-$x^\ast\in\operatorname{int}\Delta$ and
+all positive, so $x^\ast\in\operatorname{int}\Delta$ and
 $u_i(x^\ast)>\lambda_i$ for every $i$: $x^\ast$ is uncovered by
 $(\,[0,\lambda_i]\,)$. Symmetrically the point $y^\ast$ with
 $u_i(y^\ast)=\rho_i-\delta$, with coordinates
 $\frac1{2S^2}\bigl(\alpha\gamma(1-\alpha)(2\alpha+\beta),\,
 \alpha\beta(1-\beta)(1+\beta-\alpha),\,
-\beta\gamma(\alpha+\beta)(2-\alpha-2\beta)\bigr)$, positive likewise
-($2\alpha+\beta>0$, $1+\beta-\alpha>1-\alpha>0$,
-$2-\alpha-2\beta=\alpha+2\gamma>0$), is uncovered by
+\beta\gamma(\alpha+\beta)(2-\alpha-2\beta)\bigr)$, is uncovered by
 $(\,[\rho_i,1]\,)$. Hence $(I_i')=(I_i)$.
 \end{proof}
 
@@ -694,333 +575,20 @@ For the bound, a covering of $\Delta$ covers $e$, on which the $i$-th plank
 traces an interval of length $r_i$; hence $\sum r_i\ge1$.
 \end{proof}
 
-\begin{remark}\label{rem:charscope}
+\begin{remark}
 Theorem~\ref{thm:char} answers the existence question of~\cite{Gardner88}
-completely for three directions on the triangle. In particular, \emph{within the
-uniform-marginal witness-measure approach}, the remaining three-direction case
-is that of non-concurrent triples, for which no witness measure can exist. This
-is a statement about the reach of the method, not a reduction of
-Conjecture~\ref{conj:bang} on the triangle (which concerns arbitrarily many
-planks in arbitrary directions).
+completely for three directions on the triangle. In particular the open case of
+Conjecture~\ref{conj:bang} on the triangle is reduced to \emph{non-concurrent}
+triples, for which no single witness measure can exist.
 \end{remark}
 
 \smallskip
 The concurrence condition is dimension-agnostic: the cyclic medians of $\Delta^d$
 ($m_i(e_i)=\tfrac12$, $m_i(e_{i+1})=0$, $m_i(e_{i-1})=1$, else $\tfrac12$) have
-row-sums $\tfrac{d+1}2$, hence concur at the centroid in every dimension. (A
-caution specific to $d=3$: there $m_{i+2}=1-m_i$, so this literal family collapses
-to two directions up to flips; this happens exactly when $d+1$ divides $4$.)
-Section~\ref{sec:simplex3} constructs witness measures for a non-degenerate
-one-parameter family of concurrent quadruples on $\Delta^3$, extending the
-transport method beyond the plane; for $d\ge4$ the question is open
-(Problem~\ref{prob:suff}).
-
-\section{The transport defect}\label{sec:defect}
-Theorem~\ref{thm:char} says the transport method certifies the full bound
-$\sum\rw\ge1$ exactly when the mid-lines concur. We now quantify how the method
-degrades off the concurrent locus. Throughout, $u=(u_1,u_2,u_3)$ is a triple of
-normalized affine directions on $\Delta$, pairwise non-parallel.
-
-\begin{definition}\label{def:defect}
-The \emph{transport defect} of $u$ is
-\[
-D(u)\;=\;\inf\bigl\{D\ge1:\ \exists\,\mu\in\mathcal P(\Delta)\ \text{with}\
-u_{i\#}\mu\le D\cdot\Leb\ \text{on }[0,1]\ \text{for }i=1,2,3\bigr\}.
-\]
-\end{definition}
-
-\begin{proposition}\label{prop:defect}
-(i) The infimum is attained. (ii) Every covering of $\Delta$ by finitely many
-planks, each parallel to one of the three directions, satisfies
-$\sum\rw\ge 1/D(u)$. (iii) $D(u)=1$ if and only if the mid-lines concur;
-otherwise $D(u)>1$. (iv) $D(u)\le2$.
-\end{proposition}
-
-\begin{proof}
-(i) Take $D_n\downarrow D(u)$ and admissible $\mu_n$; by weak-$*$ compactness of
-$\mathcal P(\Delta)$ pass to a limit $\mu$. For every open interval $J$ the set
-$u_i^{-1}(J)$ is relatively open in $\Delta$, so
-$\mu(u_i^{-1}(J))\le\liminf_n\mu_n(u_i^{-1}(J))\le D(u)|J|$; open intervals
-determine the bound $u_{i\#}\mu\le D(u)\Leb$ by outer regularity. (Taking
-$J=(-\delta,1+\delta)$ also shows $D(u)\ge1$.)
-(ii) For a plank $P$ parallel to $u_i$ with normalized interval $I$,
-$\mu(P\cap\Delta)=u_{i\#}\mu(I)\le D(u)\,|I|\le D(u)\rw(P)$; summing over a
-covering gives $1\le D(u)\sum\rw$.
-(iii) If $D(u)=1$, the attained $\mu$ has $u_{i\#}\mu\le\Leb$ with both sides of
-total mass $1$ on $[0,1]$, hence $u_{i\#}\mu=\Leb$, and Theorem~\ref{thm:char}
-forces concurrence; the converse is Theorem~\ref{thm:char} again.
-(iv) The normalized uniform measure on $\Delta$ satisfies
-$\mu(u^{-1}(J))\le2|J|$ for every direction and interval, by the per-plank
-estimate in the proof of Theorem~\ref{thm:oned} with $d=2$.
-\end{proof}
-
-The necessary condition of Proposition~\ref{prop:concur} can now be made
-quantitative. Define the \emph{concurrence defect}
-\begin{equation}\label{eq:cdefect}
-\delta(u)\;=\;\min_{p\in\Delta}\ \max_{i}\ \bigl|u_i(p)-\tfrac12\bigr|,
-\end{equation}
-a minimum of a continuous function on a compact set, hence attained; clearly
-$\delta(u)=0$ if and only if the mid-lines concur. Moreover $\delta(u)<\tfrac12$:
-at any interior $p$ each $u_i(p)\in(0,1)$, since an affine function on $\Delta$
-attaining its minimum $0$ at an interior point would be identically $0$.
-
-\begin{proposition}\label{prop:moment}
-$D(u)\ \ge\ \dfrac1{1-2\delta(u)}$. In particular, for the facet triple
-$u=(\lambda_1,\lambda_2,\lambda_3)$ one has $\delta=\tfrac16$ and $D\ge\tfrac32$.
-\end{proposition}
-
-\begin{proof}
-Let $\nu$ be a probability measure on $[0,1]$ with $\nu\le D\Leb$ and
-distribution function $F(t)\le\min(1,Dt)$. Its mean is
-$\int_0^1(1-F)\ge\int_0^1\max(0,1-Dt)\,dt=\tfrac1{2D}$, and by the mirror
-argument the mean lies in $[\tfrac1{2D},\,1-\tfrac1{2D}]$. If $\mu$ is
-admissible for $D$ and $p$ is its barycenter, then $p\in\Delta$ and the mean of
-$u_{i\#}\mu$ is $u_i(p)$, so
-$\delta(u)\le\max_i|u_i(p)-\tfrac12|\le\tfrac12-\tfrac1{2D}$, which rearranges
-to the claim. For the facets, $\sum_i\lambda_i(p)=1$ forces some
-$\lambda_i(p)\le\tfrac13$, so $\delta\ge\tfrac16$; the centroid attains
-$\tfrac16$.
-\end{proof}
-
-At the facets the moment bound is exact:
-
-\begin{theorem}\label{thm:facetdefect}
-For the facet triple, $D(\lambda_1,\lambda_2,\lambda_3)=\tfrac32$. The infimum
-is attained by the uniform probability measure on the perimeter of the inscribed
-triangle with vertices
-\[
-P_0=(0,\tfrac13,\tfrac23),\qquad P_1=(\tfrac23,0,\tfrac13),\qquad
-P_2=(\tfrac13,\tfrac23,0),
-\]
-whose three marginals all equal $\tfrac32\cdot\mathbf 1_{[0,2/3]}$.
-\end{theorem}
-
-\begin{proof}
-The lower bound is Proposition~\ref{prop:moment}. For the upper bound give each
-side of the loop mass $\tfrac13$, uniformly in the parameter. The coordinate
-$\lambda_1$ is affine on each side, with values $0\to\tfrac23$ on $P_0P_1$
-(density $\tfrac12$ on $[0,\tfrac23]$), $\tfrac23\to\tfrac13$ on $P_1P_2$
-(density $1$ on $[\tfrac13,\tfrac23]$), and $\tfrac13\to0$ on $P_2P_0$ (density
-$1$ on $[0,\tfrac13]$); the total is $\tfrac32$ on $[0,\tfrac23]$. The loop is
-invariant under the cyclic rotation of $\Delta$, so the same holds for
-$\lambda_2,\lambda_3$.
-\end{proof}
-
-\begin{figure}[ht]
-\centering
-\begin{tikzpicture}[scale=3.4]
-  \coordinate (A) at (0,0); \coordinate (B) at (1,0); \coordinate (C) at (0.5,0.866);
-  \draw[dashed,gray] (0.3333,0) -- (0.6667,0) -- (0.8333,0.2887)
-       -- (0.6667,0.5773) -- (0.3333,0.5773) -- (0.1667,0.2887) -- cycle;
-  \draw[thick] (A) -- (B) -- (C) -- cycle;
-  \draw[very thick,blue,-stealth] (0.6667,0.5773) -- (0.4167,0.4330);
-  \draw[very thick,blue] (0.4167,0.4330) -- (0.1667,0.2887);
-  \draw[very thick,blue,-stealth] (0.1667,0.2887) -- (0.4167,0.14435);
-  \draw[very thick,blue] (0.4167,0.14435) -- (0.6667,0);
-  \draw[very thick,blue,-stealth] (0.6667,0) -- (0.6667,0.28865);
-  \draw[very thick,blue] (0.6667,0.28865) -- (0.6667,0.5773);
-  \fill (0.6667,0.5773) circle (0.012) node[above right,font=\small] {$P_0$};
-  \fill (0.1667,0.2887) circle (0.012) node[left,font=\small] {$P_1$};
-  \fill (0.6667,0) circle (0.012) node[below,font=\small] {$P_2$};
-  \node[below left]  at (A) {$A$};
-  \node[below right] at (B) {$B$};
-  \node[above]       at (C) {$C$};
-\end{tikzpicture}
-\caption{The witness of Theorem~\ref{thm:facetdefect}: the uniform measure on
-the inscribed loop $P_0P_1P_2$ (mass $\tfrac13$ per side) has all three
-marginals equal to $\tfrac32\cdot\mathbf1_{[0,2/3]}$, so $D=\tfrac32$ for the
-facet triple. Dashed: the hexagon $\{\max_i\lambda_i\le\tfrac23\}$, whose
-alternate vertices the loop connects.}
-\label{fig:loop}
-\end{figure}
-
-\begin{remark}\label{rem:complement}
-Theorem~\ref{thm:facetdefect} makes precise the complementarity of the two
-methods in this paper: for facet directions the tiling argument of
-Theorem~\ref{thm:facet} certifies the sharp bound $1$, while the transport
-method cannot certify more than $1/D=\tfrac23$ --- and now provably certifies
-exactly that. Conversely, for the concurrent cyclic triples the transport bound is
-sharp (Theorems~\ref{thm:wper} and~\ref{thm:tight}) where no facet tiling is
-available.
-\end{remark}
-
-Near the concurrent locus the defect is small, with an explicit modulus; this
-gives bounds beyond the general constant of~\cite{BY26} on open sets of
-non-concurrent triples, for coverings in the corresponding direction families
-(see Remark~\ref{rem:beyond}).
-
-\begin{theorem}\label{thm:defectstab}
-Let $\tau^*\in(0,1)^3$ be a concurrent cyclic parameter with edge masses
-$(\alpha,\beta,\gamma)$ as in Theorem~\ref{thm:wper}, and let
-$m=\min_i\min(\tau_i^*,1-\tau_i^*)$. If $\tau\in(0,1)^3$ is a cyclic parameter
-with $\varepsilon:=\max_i|\tau_i-\tau_i^*|<m$, then
-\[
-D(u_\tau)\ \le\ 1+\frac{\varepsilon}{m(m-\varepsilon)},
-\qquad\text{hence}\qquad
-\sum\rw\ \ge\ 1-\frac{\varepsilon}{m(m-\varepsilon)}
-\]
-for every covering of $\Delta$ by planks parallel to the directions of $\tau$.
-\end{theorem}
-
-\begin{proof}
-Keep the \emph{frozen} weights: let $\mu$ be the measure with masses
-$(\gamma,\alpha,\beta)$ on the edges $(AB,BC,CA)$, uniform in the parameter, and
-push it forward by the \emph{perturbed} directions. For $u_1$ (vertex values
-$(\tau_1,0,1)$) the marginal density is $\alpha+\gamma/\tau_1$ on $[0,\tau_1]$
-and $\alpha+\beta/(1-\tau_1)$ on $[\tau_1,1]$; at $\tau_1^*$ both equal $1$ by
-the choice of weights in Theorem~\ref{thm:wper}. Subtracting,
-\[
-\Bigl(\alpha+\frac{\gamma}{\tau_1}\Bigr)-1
-=\frac{\gamma\,(\tau_1^*-\tau_1)}{\tau_1\tau_1^*},\qquad
-\Bigl(\alpha+\frac{\beta}{1-\tau_1}\Bigr)-1
-=\frac{\beta\,(\tau_1-\tau_1^*)}{(1-\tau_1)(1-\tau_1^*)},
-\]
-and since $\gamma,\beta\le1$, $\tau_1^*\ge m$, $1-\tau_1^*\ge m$ and
-$\tau_1,1-\tau_1\ge m-\varepsilon$, both deviations are at most
-$\varepsilon/(m(m-\varepsilon))$ in absolute value; the same computation applies
-to $u_2,u_3$. Hence $u_{i\#}\mu\le(1+\varepsilon/(m(m-\varepsilon)))\Leb$ for
-all $i$, and Proposition~\ref{prop:defect}(ii) with
-$1/(1+x)\ge1-x$ gives the covering bound.
-\end{proof}
-
-\begin{corollary}\label{cor:beyond}
-Every covering of $\Delta$ by planks parallel to the directions of a cyclic
-parameter $\tau$ with $\max_i|\tau_i-\tfrac12|\le\tfrac1{60}$ satisfies
-\[
-\sum\rw\ \ge\ \tfrac{27}{29}\ >\ 4\sqrt3-6 .
-\]
-\end{corollary}
-
-\begin{proof}
-Apply Theorem~\ref{thm:defectstab} with $\tau^*=(\tfrac12,\tfrac12,\tfrac12)$
-(the medians, concurrent with $\alpha=\beta=\gamma=\tfrac13$), $m=\tfrac12$,
-$\varepsilon=\tfrac1{60}$: the loss is
-$\frac{1/60}{(1/2)(1/2-1/60)}=\tfrac2{29}$. The comparison
-$\tfrac{27}{29}>4\sqrt3-6$ is $(\tfrac{201}{29})^2=\tfrac{40401}{841}>48$, i.e.\
-$40401>40368$.
-\end{proof}
-
-\begin{remark}\label{rem:beyond}
-The set of triples covered by Corollary~\ref{cor:beyond} is a full-dimensional
-neighbourhood in the three-parameter space of cyclic triples, and the concurrent
-ones form a codimension-one subset of it: the corollary is a bound strictly
-inside non-concurrent territory, where by Theorem~\ref{thm:char} no witness
-measure exists and $\sum\rw\ge1$ remains open. We stress the honest comparison:
-the bound $4\sqrt3-6$ of~\cite{BY26} is uniform over \emph{all} direction
-triples, while ours improves on it only on this neighbourhood; far from the
-concurrent locus the moment bound (Proposition~\ref{prop:moment}) shows the
-transport method degrades irreparably --- at the facets down to $\tfrac23$.
-\end{remark}
-
-\begin{remark}\label{rem:sandwich}
-$D(u)$ is computable to certified precision by exact linear programming over
-skeleton measures. For example, for the (non-concurrent) cyclic parameter
-$\tau=(\tfrac{13}{25},\tfrac12,\tfrac12)$ one gets
-$\tfrac{225}{224}\le D(u_\tau)\le\tfrac{112}{111}$: the lower bound from
-Proposition~\ref{prop:moment} with $\delta=\tfrac1{450}$, the upper from the
-optimal edge-skeleton measure. Whether the moment bound is exact off the
-symmetric cases --- as it is at the facets and, trivially, on the concurrent
-locus --- we leave open; the ancillary script
-\texttt{transport\_defect.py} contains the exact computations.
-\end{remark}
-
-\section{A witness family on the 3-simplex}\label{sec:simplex3}
-Let $\Delta^3=\operatorname{conv}(e_1,\dots,e_4)$ and fix $\sigma\in(0,1)$.
-Define four normalized affine directions by their vertex values (indices mod
-$4$):
-\begin{equation}\label{eq:sigma-family}
-u_i(e_i)=0,\qquad u_i(e_{i+1})=1,\qquad u_i(e_{i+2})=\sigma,\qquad
-u_i(e_{i+3})=1-\sigma .
-\end{equation}
-Each row sums to $2$, so the mid-hyperplanes $\{u_i=\tfrac12\}$ concur at the
-centroid (Proposition~\ref{prop:concur}); at $\sigma=\tfrac12$ the
-$\{u_i=\tfrac12\}$ are the ``median'' planes through an edge and the midpoint of
-the opposite edge. The four directions are pairwise non-parallel for every
-$\sigma$: an affine relation $u_{i+1}=c\,u_i+e$ forces, comparing vertex values,
-$(1-\sigma)^2=1$, and $u_{i+2}=c\,u_i+e$ forces $2\sigma(1-\sigma)=0$, both
-impossible on $(0,1)$.
-
-\begin{theorem}\label{thm:simplex3}
-Let $\sigma\in(0,\tfrac12]$ and set
-\[
-a(\sigma)=\frac{(1-\sigma)(1-2\sigma)}{2(\sigma^2-4\sigma+2)},\qquad
-b(\sigma)=\frac{\sigma(2-3\sigma)}{2(\sigma^2-4\sigma+2)} .
-\]
-The measure $\mu_\sigma$ placing mass $a(\sigma)$ on each of the four cycle
-edges $e_ie_{i+1}$ and mass $b(\sigma)$ on each of the two diagonals
-$e_1e_3$, $e_2e_4$, uniformly in the parameter on each edge, is a probability
-measure on the $1$-skeleton of $\Delta^3$ with
-\[
-u_{i\#}\mu_\sigma=\Leb[0,1]\qquad\text{for }i=1,\dots,4 .
-\]
-Consequently every covering of $\Delta^3$ by planks parallel to these four
-directions satisfies $\sum\rw\ge1$. For $\sigma\in(\tfrac12,1)$ the same holds
-with the flip $u\mapsto1-u$ (which exchanges $\sigma\leftrightarrow1-\sigma$ and
-reverses the cyclic order). Moreover $\mu_\sigma$ is the unique cyclically
-invariant edge-uniform witness, and at $\sigma=\tfrac12$ (where $a=0$,
-$b=\tfrac12$) it is the unique witness supported on the $1$-skeleton at all.
-\end{theorem}
-
-\begin{proof}
-Positivity of the weights on $(0,\tfrac12]$: the roots of $\sigma^2-4\sigma+2$
-are $2\pm\sqrt2$, so the denominator is positive on
-$(0,\tfrac12]\subset(0,2-\sqrt2)$, and the numerators are nonnegative there
-(vanishing only at $\sigma=\tfrac12$, where the middle piece below is empty).
-
-By the cyclic symmetry of \eqref{eq:sigma-family} it suffices to compute the
-$u_1$-marginal. The six edges push forward as follows ($\sigma<\tfrac12$; each
-edge uniform, mass as assigned): $e_1e_2$, values $0\to1$, density $a$ on
-$[0,1]$; $e_2e_3$, values $1\to\sigma$, density $a/(1-\sigma)$ on $[\sigma,1]$;
-$e_3e_4$, values $\sigma\to1-\sigma$, density $a/(1-2\sigma)$ on
-$[\sigma,1-\sigma]$; $e_4e_1$, values $1-\sigma\to0$, density $a/(1-\sigma)$ on
-$[0,1-\sigma]$; $e_1e_3$, values $0\to\sigma$, density $b/\sigma$ on
-$[0,\sigma]$; $e_2e_4$, values $1\to1-\sigma$, density $b/\sigma$ on
-$[1-\sigma,1]$. The total density is
-\[
-a+\frac{a}{1-\sigma}+\frac b\sigma\ \text{ on }[0,\sigma]\ \text{and on }
-[1-\sigma,1],\qquad
-a+\frac{2a}{1-\sigma}+\frac{a}{1-2\sigma}\ \text{ on }[\sigma,1-\sigma],
-\]
-and a direct expansion shows both expressions equal $1$ exactly for the stated
-$a(\sigma),b(\sigma)$; the total mass $4a+2b=1$ is then automatic, since
-pushforward preserves mass. The covering bound follows as in
-Proposition~\ref{prop:defect}(ii) with $D=1$. Uniqueness among cyclically
-invariant edge-uniform measures: the middle-piece equation determines $a$ and
-either outer equation then determines $b$. (Exact linear algebra, recorded in
-the ancillary files, shows uniqueness among \emph{all} edge-uniform weightings.)
-At $\sigma=\tfrac12$ the values \eqref{eq:sigma-family}
-make $u_i$ \emph{constant} ($\equiv\tfrac12$) on the cycle edge
-$e_{i+2}e_{i+3}$; any skeleton measure giving positive mass to a cycle edge
-would push forward to an atom at $\tfrac12$ under the corresponding direction,
-so all four cycle-edge masses vanish, and on the two diagonals each direction is
-affine onto $[0,\tfrac12]$ or $[\tfrac12,1]$, forcing the uniform density
-$\tfrac12+\tfrac12$ split.
-\end{proof}
-
-\begin{proposition}\label{prop:skelobstruction}
-For $d\ge4$, consider the cyclic medians of $\Delta^d$: $u_i(e_i)=0$,
-$u_i(e_{i+1})=1$ and $u_i(e_j)=\tfrac12$ otherwise (indices mod $d+1$). Then
-\emph{every} edge $e_je_k$ of $\Delta^d$ is constant for some direction, and
-consequently no measure supported on the $1$-skeleton has uniform marginals for
-all $d+1$ directions.
-\end{proposition}
-
-\begin{proof}
-Fix an edge $\{j,k\}$. Removing $j,k$ from the cycle on $d+1\ge5$ vertices
-leaves at least three vertices in at most two arcs, so some arc contains two
-cyclically consecutive vertices $\{m,m+1\}$ disjoint from $\{j,k\}$; then $u_m$
-takes the value $\tfrac12$ at both $e_j$ and $e_k$, hence is constant on the
-edge. A skeleton measure with positive mass on $e_je_k$ pushes forward under
-$u_m$ to a measure with an atom at $\tfrac12$, which is not $\le D\cdot\Leb$ for
-any finite $D$; so all edge masses vanish.
-\end{proof}
-
-\begin{remark}
-The obstruction is specific to the all-$\tfrac12$ interior values; whether
-distinct interior values (the $d\ge4$ analogue of
-\eqref{eq:sigma-family}) revive the skeleton, or the mass must move to
-$2$-faces, is open and part of Problem~\ref{prob:suff}.
-\end{remark}
+row-sums $\tfrac{d+1}2$, hence concur at the centroid in every dimension. Whether a
+witness measure then exists for $d\ge3$ is open (the perimeter measure is special to
+$d=2$); this is a higher-dimensional instance of the finite-direction question left
+open by Gardner~\cite{Gardner88}.
 
 \section{A normalizer obstruction}\label{sec:nogo}
 For a direction $u$ let $\ell_K(u)$ be the length of the longest chord of $K$
@@ -1030,64 +598,49 @@ via the chord lemma. Consider interpolating the normalizer,
 $N_c=(1-c)\ell+c\,\wid$, $c\in[0,1]$: $N_c=\ell$ at $c=0$ (chord bound) and
 $N_c=\wid$ at $c=1$ (Conjecture~\ref{conj:bang}).
 \begin{proposition}\label{thm:nogo}
-For a convex body $K$, a direction $u$ with $\|u\|=a/2$ and
-$\ell=\ell_K(u)\ge a$, the body $(K-u)\cap(K+u)$ contains a homothet of $K$ of
-ratio $(\ell-a)/\ell$ \cite[Lem.~2.3]{Verreault}, and this ratio is sharp: for
-$K$ a segment of length $\ell$ parallel to $u$, the set $(K-u)\cap(K+u)$ is a
-segment of length exactly $\ell-a$, and no homothet of $K$ of larger ratio fits
-in it.
+The chord-lemma step is sharp: for $u$ with $\|u\|=a/2$, the body
+$(K-u)\cap(K+u)$ contains a homothet of $K$ of ratio $(\ell-a)/\ell$
+\cite[Lem.~2.3]{Verreault}, and this ratio is attained (by a segment). Consequently
+the iterated chord-lemma placement of a Bang-system witness $x_0+\sum_j\pm u_j$
+proves $\sum_i\wid(P_i)/N(u_i)\ge1$ for $N=\ell$ and for no direction-normalizer
+$N>\ell$; in particular it does not establish $\sum_i\wid(P_i)/N_c(u_i)\ge1$ for
+any $c>0$.
 \end{proposition}
 \begin{proof}
-The containment is \cite[Lem.~2.3]{Verreault}. For sharpness let
-$K=[y,z]$ with $z-y=\ell\,\hat u$ and $u=\tfrac a2\hat u$: then
-$K-u=[y-\tfrac a2\hat u,\,z-\tfrac a2\hat u]$ and
-$K+u=[y+\tfrac a2\hat u,\,z+\tfrac a2\hat u]$, whose intersection is
-$[y+\tfrac a2\hat u,\,z-\tfrac a2\hat u]$, a segment of length $\ell-a$; a
-homothet of $K$ contained in it has ratio at most $(\ell-a)/\ell$.
+The placement argument runs as follows: iterating the chord lemma over the
+directions $u_j$, the common intersection $\bigcap_j\bigl((K-u_j)\cap(K+u_j)\bigr)$
+(in the appropriate nested form) is nonempty as soon as
+$\sum_j\wid(P_j)/\ell_j<1$, which places the witness and forces
+$\sum\wid(P_j)/\ell_j\ge1$ for coverings. The movement budget available in
+direction $u$ is therefore governed by the homothety ratio $(\ell-a)/\ell$. This
+ratio is tight: for a segment $K=[y,z]$ of length $\ell$ parallel to $u$,
+$(K-u)\cap(K+u)$ is a segment of length exactly $\ell-a$. Hence the total budget in
+direction $u$ is exactly the longest chord $\ell(u)$ and cannot be stretched to any
+$N(u)>\ell(u)$; since $N_c(u)=(1-c)\ell(u)+c\wid_K(u)>\ell(u)$ whenever $c>0$ and
+$\wid_K(u)>\ell(u)$, the claim follows.
 \end{proof}
-\begin{remark}[methodological obstruction]\label{rem:nogo}
-The reading of Proposition~\ref{thm:nogo} that matters here is about the
-\emph{sign argument}: iterating the chord lemma over the directions $u_j$
-places a Bang-system witness $x_0+\sum_j\pm u_j$ as soon as
-$\sum_j\wid(P_j)/\ell_j<1$, which is how the chord bound
-$\sum\wid(P_j)/\ell_j\ge1$ of~\cite{BY26} follows. The movement budget in
-direction $u$ is governed by the homothety ratio of
-Proposition~\ref{thm:nogo}, which is exactly $(\ell-a)/\ell$ and cannot be
-stretched: the placement route proves the bound for the normalizer
-$N=\ell$ and for no direction-normalizer $N>\ell$; in particular it does not
-establish $\sum_i\wid(P_i)/N_c(u_i)\ge1$ for any $c>0$. This does \emph{not}
-show the latter inequality false; it shows this route cannot prove it. Beating
-$2/(1+\sqrt d)$ by such a normalizer therefore requires a witness that is not a
-Bang-system point, i.e.\ one exploiting the coupling of the covering ---
-consistent with the sharpness of~\cite{BY26} for the cube.
+\begin{remark}
+Proposition~\ref{thm:nogo} does \emph{not} show $\sum\wid(P_i)/N_c(u_i)\ge1$ is false
+for $c>0$; it shows the sign-argument route cannot prove it. Beating $2/(1+\sqrt d)$ by
+this normalizer therefore requires a witness that is not a Bang-system point, i.e.\
+one exploiting the coupling of the covering. This is consistent with the
+sharpness of~\cite{BY26} for the cube.
 \end{remark}
 
 \section{Open problems}
 \begin{problem}
-The three-plank case for non-concurrent tilted triples on the triangle:
-Theorem~\ref{thm:char} settles the concurrent case, and shows that for
-non-concurrent triples no witness measure exists, so a different mechanism is
-needed there. (This is the three-plank sub-problem; Conjecture~\ref{conj:bang}
-for the triangle concerns coverings by arbitrarily many planks and is not
-reduced to it.)
+The three-plank case for three genuinely tilted directions on the triangle
+(equivalently Conjecture~\ref{conj:bang} for the triangle). By
+Theorem~\ref{thm:char} the remaining case is that of \emph{non-concurrent}
+triples, where no single witness measure exists.
 \end{problem}
 \begin{problem}\label{prob:suff}
 Theorem~\ref{thm:char} settles the existence of uniform-marginal witness
-measures for three directions on the triangle, and Theorem~\ref{thm:simplex3}
-gives an affirmative one-parameter family of concurrent quadruples on
-$\Delta^3$. For $d\ge3$ the concurrence condition of
-Proposition~\ref{prop:concur} remains necessary; is it sufficient for $d+1$
-directions on $\Delta^d$? For the cyclic medians of $\Delta^d$ with $d\ge4$,
-any witness must vanish on the $1$-skeleton
-(Proposition~\ref{prop:skelobstruction}); the first open cases are supports on
-$2$-faces, or interior vertex values as in \eqref{eq:sigma-family}.
-\end{problem}
-\begin{problem}\label{prob:defect}
-Is the moment bound of Proposition~\ref{prop:moment} always exact, i.e.\ does
-$D(u)=1/(1-2\delta(u))$ hold for every pairwise non-parallel triple on the
-triangle (as it does at the facets and on the concurrent locus)? In particular,
-is $\sup_uD(u)=\tfrac32$, attained at the facet triple? A small exact sweep
-(ancillary files) finds no triple with $\delta(u)>\tfrac16$.
+measures for three directions on the triangle. For $d\ge3$ the concurrence
+condition of Proposition~\ref{prop:concur} remains necessary; is it sufficient
+for $d+1$ directions on $\Delta^d$? The first test case is the cyclic medians
+of $\Delta^d$, which concur at the centroid in every dimension
+(\S\ref{sec:concur}).
 \end{problem}
 \begin{problem}
 Whether $\sum\wid(P_i)/N_c(u_i)\ge1$ holds for some $c>0$ (a coupling certificate),
@@ -1156,45 +709,29 @@ are finitely many closed sets whose union contains $[0,1]$ minus finitely many
 points, that union is all of $[0,1]$. So on each edge the \emph{nondegenerate}
 traces tile $[0,1]$; in particular, finitely many closed intervals of positive
 length with disjoint interiors covering $[0,1]$ abut consecutively from $0$
-to~$1$. Consequently the case analysis below requires no genericity in $\tau$
-or in the endpoints: whenever an endpoint coincidence (e.g.\ $h_i=\tau_i$ or
-$l_i=\tau_i$) makes a trace degenerate, (O2) discards it, and every case
-argument uses only the defining non-strict inequalities of the types.
+to~$1$.
 
 \subsection*{Symmetries}
-Two operations act on the data $(\tau;I_1,I_2,I_3)$ and transport edge-tilings
-to edge-tilings.
-
-The \emph{rotation} $\varrho$ is induced by the affine map $A\to B\to C\to A$
-of $\Delta$: it carries the cyclic triple with parameter
-$(\tau_1,\tau_2,\tau_3)$ to the one with parameter $(\tau_2,\tau_3,\tau_1)$ and
-acts by $(I_1,I_2,I_3)\mapsto(I_2,I_3,I_1)$, shifting type vectors cyclically.
-
-The \emph{reflected flip} $\varsigma$ is the affine reflection of $\Delta$
-swapping $B$ and $C$, composed with the flip $s\mapsto1-s$ of each normalized
-direction. The flip replaces each $u_i$ by $1-u_i$ and each $I_i$ by $1-I_i$
-($1-[l,h]=[1-h,1-l]$), leaving every plank, every width, every trace and the
-tiling conditions unchanged; the reflection then restores the cyclic
-normalization (value $0$ and $1$ at the prescribed vertices), and the composite
-carries the parameter $(\tau_1,\tau_2,\tau_3)$ to
-$(1-\tau_1,\,1-\tau_3,\,1-\tau_2)$, acting by
-$(I_1,I_2,I_3)\mapsto(1-I_1,\,1-I_3,\,1-I_2)$; on type vectors it acts by
-$(X_1,X_2,X_3)\mapsto(\bar X_1,\bar X_3,\bar X_2)$, where the bar exchanges
-$\mathrm L\leftrightarrow\mathrm R$ and fixes $\mathrm M$.
-
-One checks $\varsigma^2=\mathrm{id}$ and
-$\varsigma\varrho\varsigma=\varrho^{-1}$, so
-$G=\langle\varrho,\varsigma\rangle$ is a group of order $6$ (isomorphic to
-$S_3$). Each $g\in G$ maps the edge-tiling problem with parameter $\tau$
-\emph{bijectively} onto the problem with parameter $g(\tau)$. Since
-Proposition~\ref{prop:tilings} is proved for \emph{all} $\tau\in(0,1)^3$
-simultaneously, it suffices to treat one representative of each $G$-orbit of
-the $27$ type vectors $(X_1,X_2,X_3)\in\{\mathrm L,\mathrm M,\mathrm R\}^3$:
+The rotation $A\to B\to C\to A$ maps the cyclic triple with parameters
+$(\tau_1,\tau_2,\tau_3)$ to the cyclic triple with parameters
+$(\tau_2,\tau_3,\tau_1)$ and acts on solutions by
+$(I_1,I_2,I_3)\mapsto(I_2,I_3,I_1)$, shifting type vectors cyclically. The
+reflection swapping $B$ and $C$, composed with the flip $s\mapsto1-s$ of each
+normalized direction (which leaves every plank unchanged), maps the cyclic
+triple $(\tau_1,\tau_2,\tau_3)$ to the cyclic triple
+$(1-\tau_1,\,1-\tau_3,\,1-\tau_2)$ and acts by
+$(I_1,I_2,I_3)\mapsto(1-I_1,\,1-I_3,\,1-I_2)$ (where $1-[l,h]=[1-h,1-l]$),
+exchanging types $\mathrm L\leftrightarrow\mathrm R$. Since we prove
+Proposition~\ref{prop:tilings} for \emph{all} $\tau$ at once, these symmetries
+permute the class of problems, and the $27$ type vectors
+$(X_1,X_2,X_3)\in\{\mathrm L,\mathrm M,\mathrm R\}^3$ reduce to seven orbit
+representatives:
 \[
 \mathrm{MMM};\quad \mathrm{LLL}\ (\sim\mathrm{RRR});\quad \mathrm{MML};\quad
 \mathrm{LLM};\quad \mathrm{LLR};\quad \mathrm{LMR};\quad \mathrm{LRM}
 \]
-(orbit sizes $1,2,6,6,6,3,3$, summing to $27$).
+(orbit sizes $1,2,6,6,6,3,3$). It suffices to analyze one representative per
+orbit.
 
 \subsection*{Case MMM}
 By (O1), on every edge $T_c=[0,\,1-l_c/\tau_c]$ and
@@ -1223,32 +760,7 @@ $1-\lambda_1/\tau_1
 $0<\lambda_i<\tau_i<\rho_i<1$ reduces to
 $\tau_{i+1}(\tau_{i+2}-1)<\tau_1\tau_2\tau_3$ and $\tau_i(1-\tau_{i+1})<1$,
 both automatic; so the solution is of type MMM and, by construction, tiles each
-edge as $[0,l_f]\cup[l_f,h_f]\cup[h_f,1]$ (Figure~\ref{fig:tiling}).
-
-\begin{figure}[ht]
-\centering
-\begin{tikzpicture}[xscale=9,yscale=1]
-  \draw[very thick,blue!70]  (0,0)      -- (0.6897,0);
-  \draw[very thick,red!70]   (0.6897,0.06) -- (0.8276,0.06);
-  \draw[very thick,green!60!black] (0.8276,0) -- (1,0);
-  \foreach \x in {0,0.6897,0.8276,1} \draw (\x,-0.08) -- (\x,0.14);
-  \node[below,font=\scriptsize] at (0,-0.1) {$0$};
-  \node[below,font=\scriptsize] at (0.6897,-0.1) {$\tfrac{20}{29}$};
-  \node[below,font=\scriptsize] at (0.8276,-0.1) {$\tfrac{24}{29}$};
-  \node[below,font=\scriptsize] at (1,-0.1) {$1$};
-  \node[above,font=\scriptsize,blue!70] at (0.34,0.1)
-    {$T_1=[0,\,1-\frac{l_1}{\tau_1}]$};
-  \node[above,font=\scriptsize,red!70] at (0.72,0.28) {$T_2=I_2$};
-  \node[above,font=\scriptsize,green!60!black] at (0.93,0.1)
-    {$T_3=[\frac{1-h_3}{1-\tau_3},\,1]$};
-\end{tikzpicture}
-\caption{The MMM edge tiling on $AB$ (roles $(c,f,g)=(1,2,3)$) for the running
-example $\tau=(\tfrac59,\tfrac45,\tfrac16)$: the traces of
-$I=([\tfrac5{29},\tfrac{25}{29}],[\tfrac{20}{29},\tfrac{24}{29}],
-[\tfrac4{29},\tfrac9{29}])$ abut at $\tfrac{20}{29}$ and $\tfrac{24}{29}$ and
-tile $[0,1]$, as forced in Case MMM.}
-\label{fig:tiling}
-\end{figure}
+edge as $[0,l_f]\cup[l_f,h_f]\cup[h_f,1]$.
 
 \subsection*{Case LLL}
 All $T_g$ are degenerate, so each edge is tiled by
@@ -1287,27 +799,17 @@ $T_1=I_1$ alone tiles $[0,1]$, forcing $h_1=1>\tau_1$ --- contradicting type
 $\mathrm L$.
 
 \subsection*{Case LMR \textup(impossible\textup)}
-\emph{On $BC$} ($(c,f,g)=(3,1,2)$): the low trace is degenerate ($I_3$ of type
-$\mathrm R$), so $T_1=I_1$ and $T_2=[\tfrac{1-h_2}{1-\tau_2},\,1]$ (O1, $I_2$
-of type $\mathrm M$) tile $[0,1]$. If $T_2=[0,1]$ then $T_1$ has empty
-interior, impossible; so $T_1$ contains $0$ and abuts $T_2$: $l_1=0$ and
-$h_1=\tfrac{1-h_2}{1-\tau_2}$.
-
-\emph{On $CA$} ($(c,f,g)=(2,3,1)$): the high trace is degenerate ($I_1$ of type
-$\mathrm L$), so $T_2=[0,\,1-l_2/\tau_2]$ (O1) and $T_3=I_3$ tile $[0,1]$. If
-$T_2=[0,1]$ then $T_3$ has empty interior, impossible; so $h_3=1$ and
-$l_3=1-l_2/\tau_2$. Since $I_3$ has positive width, $l_3<1$, which forces
-$l_2>0$.
-
-\emph{On $AB$} ($(c,f,g)=(1,2,3)$): as $h_3=1$, the high trace is
-$T_3=\bigl[0,\,\min\bigl(1,\tfrac{1-l_3}{1-\tau_3}\bigr)\bigr]$. Two subcases.
-If $\tfrac{1-l_3}{1-\tau_3}\ge1$, then $T_3=[0,1]$ and the full trace
-$T_2=I_2$ (positive length) has empty interior --- contradiction. Otherwise
+On $BC$: low trace degenerate ($I_3$ type $\mathrm R$), so $T_1=I_1$ and
+$T_2=[\tfrac{1-h_2}{1-\tau_2},\,1]$ (O1) tile $[0,1]$; as above this forces
+$l_1=0$ and $h_1=\tfrac{1-h_2}{1-\tau_2}$. On $CA$: high trace degenerate
+($I_1$ type $\mathrm L$), so $T_2=[0,\,1-l_2/\tau_2]$ (O1) and $T_3=I_3$ tile,
+forcing $h_3=1$ and $l_3=1-l_2/\tau_2$. Now on $AB$ the high trace is
 $T_3=\bigl[0,\,\tfrac{1-l_3}{1-\tau_3}\bigr]
-=\bigl[0,\,\tfrac{l_2}{\tau_2(1-\tau_3)}\bigr]$; since $\tau_2(1-\tau_3)<1$
-and $l_2>0$, its right endpoint strictly exceeds $l_2$, so the interiors of
-$T_3$ and of $T_2=[l_2,h_2]$ overlap on an interval just above $l_2$ ---
-contradiction.
+=\bigl[0,\,\tfrac{l_2}{\tau_2(1-\tau_3)}\bigr]$
+(truncated at $1$ if larger, in which case $T_2$ already has empty interior, a
+contradiction), of positive length, so $l_2>0$; since
+$\tau_2(1-\tau_3)<1$, its right endpoint exceeds $l_2$, and the interiors of
+$T_3$ and $T_2=[l_2,h_2]$ overlap --- contradiction.
 
 \subsection*{Case LRM \textup(impossible\textup)}
 On $CA$: both compressed traces are degenerate ($I_2$ of type $\mathrm R$,
@@ -1326,8 +828,7 @@ and the median enumeration was verified by two further independent exact
 computations; all scripts are archived as ancillary files.
 
 \begin{thebibliography}{9}
-\bibitem{Ambrus} G.\ Ambrus, \emph{Appendix: Plank problems}, manuscript,
-2010; available at \texttt{https://users.renyi.hu/\~{}ambrus/appendix.pdf}.
+\bibitem{Ambrus} G.\ Ambrus, \emph{Appendix: Plank problems}, manuscript, 2010.
 \bibitem{Ball91} K.\ Ball, \emph{The plank problem for symmetric bodies},
 Invent.\ Math.\ \textbf{104} (1991), 535--543.
 \bibitem{Bang51} T.\ Bang, \emph{A solution of the ``plank problem''},

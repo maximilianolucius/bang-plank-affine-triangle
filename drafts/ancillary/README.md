@@ -6,4 +6,6 @@
 - cyclic_family_tight_rigidity.py      — Theorem 6.6 (tightness & rigidity of the cyclic family): symbolic verification of the affine identity, the margin (S ± abg/S), witness positivity, and exact rational coverage checks (MMM covers; LLL/RRR leave positive area) at several family points; also the general-tau tiling solutions of Proposition A.1.
 - role_patterns_classification.py      — Theorem 6.8 (three-direction characterization): exhaustive exact classification of all 216 role assignments (concurrence conditions per class; supports the hand proof).
 - bang_Nc_nogo_chord.py                — ell<=w scan + exact segment tightness of the chord lemma (normalizer obstruction).
+- transport_defect.py                  — Section 7 (transport defect): facet loop with marginals (3/2)1_[0,2/3] (Theorem 7.4), moment bound delta(u) via exact LP, frozen-weight perturbation identities (Theorem 7.6), exact sandwich examples (Remark 7.9), small delta-landscape sweep (Problem 10.3).
+- simplex3_weighted_skeleton.py        — Section 8 (3-simplex family): exact solution of the weighted 1-skeleton system for the sigma-family (Theorem 8.1, closed forms a(sigma), b(sigma), uniqueness), degeneracy of the literal d=3 cyclic medians, and the d>=4 skeleton obstruction (Proposition 8.2).
 Run with Python 3 (+ sympy where noted; fractions/numpy stdlib otherwise).

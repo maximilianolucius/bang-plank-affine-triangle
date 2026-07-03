@@ -20,3 +20,6 @@ __pycache__/
 
 # IDE
 .idea/
+
+# stray root-level LaTeX run (no input file)
+texput.log
