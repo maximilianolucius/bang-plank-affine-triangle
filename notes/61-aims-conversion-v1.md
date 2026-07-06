@@ -45,6 +45,18 @@ corresponding)**.
   acknowledgment no longer applies (no Bisha-affiliated author remains).
   Recompiled clean (40 pp, 0/0/0); both zips rebuilt. **Pushed to GitHub**
   (`origin/main`, commit after `3d2aac2`).
+- **Layout fix (2026-07-06, later)**: with 4 authors / 6 affiliations the class's
+  one-page title layout overflowed (~90pt), so page 1 was emitted *before*
+  `\maketitle`'s `\thispagestyle{title}` — the AIMS logo header landed on page 2,
+  overprinting the MSC line and "1. Introduction". Fix: local `\@maketitle`
+  redefinition in the preamble (aims.cls untouched) — `\small` affiliation and
+  correspondence blocks (as in published AIMS papers), inter-block skips
+  12pt→6pt, `\titlesep` left at the class default 70pt (58pt and below collide
+  with the fixed header rule — tested). Verified: p.1 = logo header + full
+  4-author front matter + abstract + keywords + MSC, no overlap; p.2 clean.
+  The 89.85pt overfull vbox in the log is PRE-EXISTING (present since the very
+  first single-author AIMS compile; a figure page), unrelated to this fix.
+  Bundle rebuilt; pushed.
 
 ## Correctness gate — §5(A) audit of the checker code [PASSED]
 

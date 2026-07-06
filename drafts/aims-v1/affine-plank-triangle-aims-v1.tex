@@ -27,6 +27,37 @@
 \def\Accepted{}
 \def\Published{}
 \numberwithin{equation}{section}
+%---- Local fix (keeps aims.cls intact): with 4 authors / 6 affiliations the
+% class's one-page title layout overflows by ~90pt, which pushes
+% \thispagestyle{title} onto page 2 (the logo header overprints the text).
+% Compact the title block so it fits page 1: \small addresses (as in published
+% AIMS papers), 6pt inter-block skips, titlesep 70pt -> 45pt.
+\makeatletter
+% \titlesep stays at the class default 70pt (clears the fixed header rule).
+\def\@maketitle{%
+\begin{flushleft}
+  {\vspace*{\titlesep}\normalsize
+    {\itshape\bfseries\typeofarticle\par}
+    \vskip5pt
+    \bfseries\large\@title \par} %
+    \vskip 0.9em %
+      {\lineskip .5em%
+      \bfseries\@author\par}%
+    \vskip 6pt
+      {\small\lineskip .5em%
+       {\@address}\par}%
+    \vskip 6pt
+      {\small\lineskip .5em%
+      {\@corraddr}\par}%
+    \vskip 6pt%
+      {\usebox\absbox\par}
+    {\vspace{6pt}%
+      {\@keywords}\par}
+    \vspace{6pt}
+    \noindent\rule{\textwidth}{1mm}%
+\end{flushleft}
+}
+\makeatother
 \theoremstyle{plain}
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{proposition}[theorem]{Proposition}
