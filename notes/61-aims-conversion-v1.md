@@ -33,6 +33,18 @@ corresponding)**.
   `vlucius@mail.utdt.edu` (also the corresponding author). Maximiliano Lucius no
   longer appears; no stray old strings in the .tex (grep-verified). Recompiled
   clean (40 pp, 0/0/0); source bundle rebuilt.
+- **FINAL (2026-07-06) — four authors** (per user; supersedes all above):
+  (1) Ibrahim Alraddadi (Islamic Univ. of Madinah, `ialraddadi@iu.edu.sa`);
+  (2) Maximiliano Lucius (**Independent Researcher, CABA, Argentina**,
+  `maximiliano.lucius@gmail.com`, **corresponding**); (3) Hijaz Ahmad (Islamic
+  Univ. of Madinah [affil 1, shared w/ Alraddadi] + Near East University, Turkey
+  + Korea University, `hijazahmad@korea.ac.kr`); (4) Waleed Mohammed Abdelfattah
+  (Univ. of Business and Technology, Jeddah, `w.abdelfattah@ubt.edu.sa` + Zagazig
+  University, Egypt). Six numbered affiliations; Alharthi/Victoria removed.
+  **Funding reverted** to "no external funding": the University of Bisha
+  acknowledgment no longer applies (no Bisha-affiliated author remains).
+  Recompiled clean (40 pp, 0/0/0); both zips rebuilt. **Pushed to GitHub**
+  (`origin/main`, commit after `3d2aac2`).
 
 ## Correctness gate — §5(A) audit of the checker code [PASSED]
 
