@@ -27,3 +27,11 @@ texput.log
 # transient B&B run logs / checkpoints (regenerable from the exact scripts)
 experiments/*.log
 experiments/bb_frontier.txt
+
+# AIMS submission working dir: build artifacts + redundant template extraction
+drafts/aims-v1/*.aux
+drafts/aims-v1/*.log
+drafts/aims-v1/*.out
+drafts/aims-v1/*.synctex.gz
+drafts/aims-v1/template-orig/
+drafts/aims-v1.zip

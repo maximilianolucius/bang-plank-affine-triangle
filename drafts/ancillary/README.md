@@ -1,14 +1,32 @@
 # Ancillary files for "Transport and tiling bounds for the affine plank problem on the triangle"
 
-Protocol (see Appendix B of the paper): the paper is NOT computer-assisted.
-Every theorem is proved in full in the text or in Appendix A; no proof depends
-on a computation not reproduced in the text. These scripts are secondary
-verification: exact re-derivations (rational/symbolic arithmetic throughout,
-never floating point) of the load-bearing identities and finite case
-enumerations. Where a script enumerates cases, the index set is explicitly
-finite and swept exhaustively — no sampling, no lost cases.
+Protocol (see Appendix B of the paper): the paper is proved by hand throughout,
+with a **single exception** — Theorem "sandwichbang" (C^111_Delta(tau0)=1) is
+*partially computer-assisted*. Its one finite step is discharged by an
+exact-rational emptiness certificate, re-verified by an INDEPENDENT checker
+(`bb_certificate_check.py`) that shares no code with the search. Every other
+result is proved in full in the text or Appendix A. The remaining scripts are
+secondary verification: exact re-derivations (rational/symbolic arithmetic
+throughout, never floating point) of load-bearing identities and finite case
+enumerations, swept exhaustively over explicitly finite index sets.
 
-Inputs: none (all data hard-coded as exact rationals/symbols).
+## QUICK START — verify the computer-assisted step (Theorem sandwichbang)
+
+    python3 bb_certificate_check.py c3_sandwich_certificate.txt
+
+- Environment: Python 3 (tested on 3.14), standard library ONLY
+  (`fractions`, `hashlib`); no third-party package, no SymPy for this step.
+- Runtime: a few minutes on one core; modest memory. Exact arithmetic only
+  (no floating point) — hardware-independent.
+- On SUCCESS the final line is `CERTIFICATE VALID`, preceded by the tree stats
+  (812650 internal + 812651 leaves; P1=286024 P2=53907 P3edge=428672
+  P3cell=2354 P4=41694) and the certificate SHA-256.
+- On FAILURE (tampered/incorrect certificate) an `AssertionError` is raised and
+  `CERTIFICATE VALID` is NOT printed. The checker has been confirmed non-vacuous:
+  it rejects a tampered header, a non-interior split, a false leaf rule, and a
+  truncated tree.
+
+Other scripts — Inputs: none (all data hard-coded as exact rationals/symbols).
 Outputs: assertion-checked "OK" lines; any failure raises.
 Run: `python3 <script>.py` (SymPy required unless noted).
 

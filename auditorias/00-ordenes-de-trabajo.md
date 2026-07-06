@@ -529,6 +529,50 @@ vectores C, moonshot. Usuario: bloque de autor; commit/push del paquete R15 a pe
 - **Secuencia de envío:** integración → **mi auditoría de la pasada 7** (incl. re-correr el
   checker sobre la copia congelada) → bloque de autor resuelto → **el usuario envía a Rosa.**
 - Fondo sin cambios (boundary lemma, sandwich D, vectores C, moonshot, parser assertions).
+
+## Estado (2026-07-03) — PASADA 7 INTEGRADA Y AUDITADA: CLEARED TO SEND
+- I1–I7 ejecutados. §10 con el hito: Lem 10.3 (2-plank tool), Thm 10.4 (régimen extremo,
+  añadido con prueba completa — corrigió una premisa MÍA equivocada, el catch fue suyo),
+  Lem 10.5–10.7, Thm 10.8 `[partially computer-assisted]`, Rem 10.9 (frontera humano/máquina).
+- Verificado por el jefe: recompila 34 pp limpio; **checker re-corrido sobre el certificado
+  EMBARCADO en `ancillary/` → CERTIFICATE VALID** (SHA `ead66ff2`/`90a25ce8` = Apéndice B);
+  abstract 177 palabras; cero "NOT computer-assisted"; alcance honesto en 3 sitios; autor
+  = Maximiliano Lucius; pusheado (`00bf059`).
+- **VISTO BUENO: `auditorias/68-auditoria-pasada7-VISTO-BUENO.md`.** Cleared to send.
+  Único pulido opcional (no bloqueante): una frase en Lem 10.7 aclarando que la finitud de
+  `T(τ₀)` la certifica el checker (teselación), no se postula.
+- **PRÓXIMA ACCIÓN = USUARIO: enviar la pasada 7 a Rosa** con el hand-off
+  `notes/59-R16-handoff-pasada7.md`. Autor y commit YA resueltos — no queda pendiente técnico.
+- Fondo abierto (no bloquea): boundary/thin-plank lemma (lead 2,354 celdas → familia),
+  sandwich `D` exacto, vectores C, moonshot B-Y.
+
+## Estado (2026-07-03) — 6ª PASADA DE ROSA (sobre la pasada 7): "Major revision" — 4 puntos, TODOS correctos
+- **DOS los dejé pasar yo tras dar "cleared to send" (auditoria 68):** (1) Thm 10.8 dice
+  `C_Δ(τ₀)=1` pero Def 2.3 admite MÚLTIPLES planks y el B&B solo recorre 3 (uno por
+  dirección) ⟹ solo prueba `C¹¹¹=1`, no `C_Δ` (+ inconsistencia interna l.192 vs l.997) —
+  MISS mío completo; (2) circularidad de Lem 10.7 (finitud del árbol ≈ la no-existencia a
+  probar) — la señalé pero la sub-califiqué de "opcional". Patrón mío: fuerte en cómputo,
+  flojo en consistencia definición-vs-prueba y estructura lógica. Correctivo aplicado.
+- Puntos 3 (igualdad usa 2ª dependencia computacional no probada) y 4 ("first non-concurrent
+  triple" — las facetas también lo son y ya tienen el bound) + abstract ("for every
+  concurrent triple" demasiado amplio): TODOS correctos, verificados.
+- **La sustancia se mantiene:** el B&B es válido; prueba `C¹¹¹(τ₀)=1` (un plank por
+  dirección) — primer triple tilted no-faceta no-concurrente con el bound. Las correcciones
+  vuelven verdaderos los enunciados; no tocan la matemática (Rosa: potencial 8.5–9/10).
+
+**Dictamen + correcciones + programa: `auditorias/69-dictamen-rosa6-y-correcciones.md`.**
+Correcciones P0 (→ pasada 8): C1 jerarquía `1/D≤C≤C¹¹¹≤1` + Thm 10.8 = `C¹¹¹(τ₀)=1` (borrar
+`C_Δ=1`) + gaps `G_transp/G_mult` · C2 Lem 10.7 → lema de certificado finito (no algoritmo
+que termina) · C3 igualdad (prueba humana de min 2-plank `31/25,5/4` o quitar iff) · C4
+"first genuinely tilted non-facet non-concurrent, to our knowledge" · C5 abstract "concurrent
+**cyclic** triple" · C6 reproducibilidad (SHA-256 completos, DOI/tag, entorno; search
+evidence ≠ proof certificate).
+Programa (vectores de Rosa): **V1** continuación paramétrica (punto→abierto, reusa
+certificado) · **V2** agregación de Farkas de las 8 celdas (posible prueba HUMANA de todos
+los no-concurrentes; resuena con crux ponderado-vs-sin-peso + lead 2,354 celdas) · V3
+reframing `T_u⊂[0,1]³` · V4 integrality gap · V5 semialgebraicidad.
+Secuencia: C1–C6 → pasada 8 → **mi auditoría CON chequeo definición-vs-prueba** → re-envío
+a Rosa. Luego V1+V2. Autor ya puesto; repo en `00bf059`.
 R15-1 certificado + `bb_certificate_check.py` (checker sin búsqueda, código NO compartido;
 autoridad = `CERTIFICATE VALID`) + igualdad · R15-2 encoger la máquina (thin-plank, simetría;
 métrica = hojas restantes) + B&B parametrizado · R15-3 documentación completa TRAS

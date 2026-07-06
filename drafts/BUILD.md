@@ -4,6 +4,23 @@
 
 - **Title:** *Transport and tiling bounds for the affine plank problem on the triangle*
   (R7-3 decision 2026-07-02: KEEP; unchanged in R9).
+- **Status (2026-07-03, PASS 8 = pass 7 + Rosa-6 corrections C1-C6):** compiles
+  clean (2 passes): **0 errors, 0 undefined, 0 overfull, 35 pages**. Frozen:
+  `entregas/affine-plank-triangle-2026-07-03-pasada8.{pdf,tex}`. NOT committed
+  yet (chief audits first, then commits, per auditorias/69). Correction record:
+  `notes/60-correcciones-C1-C6-pasada8.md`.
+- **PASS 8 CORRECTIONS (auditorias/69; all 5 of Rosa's points were correct):**
+  C1 constant hierarchy 1/D <= C_Delta <= C^111_Delta <= 1 (Def 2.3 now defines
+  both; two gaps G_tr, G_mult); **Thm 10.8 restated as C^111_Delta(tau0)=1** (was
+  wrongly C_Delta=1 -- object proved = 3 planks one-per-direction = the B&B space,
+  != Def 2.3's arbitrary-plank C_Delta). C2 Lem 10.7 recast as a STATIC finite
+  covering certificate (removes the circular termination argument). C3 iff-trivial
+  equality dropped from the theorem -> auxiliary Remark (no 2nd computational
+  dependency). C4 "first non-concurrent" -> "first genuinely tilted non-facet
+  non-concurrent, to our knowledge" (facets are also non-concurrent + already
+  bounded). C5 abstract "every concurrent cyclic triple ... unique". C6 full
+  SHA-256, environment, expected output, search-evidence vs proof-certificate,
+  release tag/DOI note. Also fixed a pre-existing imprecision in Rem 6.14.
 - **Status (2026-07-03, pass 7 = pass 6 + C3 milestone, integrated):** compiles
   clean (2 passes): **0 errors, 0 undefined, 0 overfull, 34 pages**. Author set
   (Maximiliano Lucius). Frozen: `entregas/affine-plank-triangle-2026-07-03-pasada7.{pdf,tex}`.
