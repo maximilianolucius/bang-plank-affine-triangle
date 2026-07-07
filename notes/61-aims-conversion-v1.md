@@ -168,3 +168,13 @@ Ortega-Moreno, arXiv:2605.28744.
 - Did not re-run the full checker on this machine (directive: not on R11 for
   heavy work; the certificate + SHAs are unchanged from pasada 8, where
   `CERTIFICATE VALID` was established).
+
+## UPDATE 2026-07-07 — Maximiliano Lucius removed from the author list
+
+Per user. Three authors remain: (1) Ibrahim Alraddadi (Madinah,
+`ialraddadi@iu.edu.sa`) — **now corresponding** (user-confirmed); (2) Hijaz
+Ahmad (Madinah + Near East Univ. + Korea Univ.); (3) Waleed Mohammed
+Abdelfattah (UBT Jeddah + Zagazig). Affiliations renumbered 1–5 ("Independent
+Researcher, CABA" dropped). No stray Lucius strings (grep-verified). Recompiled
+clean (40 pp, 0/0/0); title page verified (logo header, no overlap). Source
+bundle rebuilt; pushed to origin/main.
