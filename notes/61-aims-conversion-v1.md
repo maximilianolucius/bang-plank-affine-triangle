@@ -178,3 +178,61 @@ Abdelfattah (UBT Jeddah + Zagazig). Affiliations renumbered 1–5 ("Independent
 Researcher, CABA" dropped). No stray Lucius strings (grep-verified). Recompiled
 clean (40 pp, 0/0/0); title page verified (logo header, no overlap). Source
 bundle rebuilt; pushed to origin/main.
+
+## UPDATE 2026-07-07 — directiva 70 (Discussion + Conclusions) + AI declaration corrected
+
+Two things this pass (executed, NOT committed — sequence is investigador → jefe
+audita 3 chequeos → commit):
+
+1. **AI-tools declaration corrected to the truth.** The version committed by the
+   user in `a574e73` named the tool "Alibaba Cloud service, Qwen 3.6 Plus" and
+   scoped it to "language editing, clarity, grammar, structure" — both false:
+   the tool was **Claude (Anthropic)** and it did the proofs, the B&B algorithm
+   (Thm sandwichbang), the certificate-generating code, and the manuscript text.
+   Rewrote the declaration (same AIMS four-part Q&A format) with the real tool
+   and real scope; kept "authors verified all statements" and the independent
+   checker (App. B). Qwen/Alibaba absent from the compiled PDF (grep-verified);
+   "Claude (Anthropic)" present. This is a research-integrity requirement (COPE/
+   AIMS: false AI disclosure is retractable), not a stylistic choice.
+
+2. **Directiva 70 executed.** Inserted `\section{Discussion}` (§11,
+   `sec:discussion`) and `\section{Conclusions}` (§12, `sec:conclusions`)
+   between the end of §10 (`sec:problems`) and `\appendix`, verbatim from the
+   directive's blocks. Pre-insert I verified every `\ref`/`\cite` against disk:
+   19 labels + 13 keys all resolve — **no citation removed or added**
+   (Strassen65/Kellerer84/Villani09/mathlib20 all present in the bibliography).
+   Appendices remain **A/B** (not renumbered).
+
+Verification: `pdflatex` ×2 → **42 pp** (was 40), 0 errors, 0 undefined
+refs/cites, 0 overfull hbox >10pt. `.aux` confirms Discussion=§11, Conclusions=
+§12, App=A/B. Read both sections in the PDF (pp. 32–33): interpretive, no
+verbatim repetition of the Intro or §10.
+
+§5 criterion point (non-blocking): left §10's title "Open problems…" as is
+(renaming = scope creep, per recommendation). The BY26 comparison now appears in
+the Intro (factual: 4√3−6) and in Discussion (interpretive: local 29/31 vs
+global, "not an improvement") — differentiated, not redundant; flagged for the
+audit, no move made.
+
+Source bundle rebuilt. Not committed.
+
+## UPDATE 2026-07-07 (later) — audit 71 corrections A/B/C applied
+
+Applied the three corrections from `auditorias/71` (all in directive-70 text the
+chief authored; pasted verbatim, so his to fix):
+- **A** (Discussion, "where it stops"): dropped the overclaim that $G_{tr}>0$
+  on the whole non-concurrent region (only proven at the facet triple; $C_\Delta$
+  open at the sandwich). Now states $D_\Delta(u)>1$ strictly off the locus
+  (Thm~thm:char), so $1/D_\Delta<1$; gap size "remains open in general"; facet
+  value $\tfrac13$.
+- **B** (Conclusions): wrong object $\sup_K D_K$ (sup over bodies) → correct
+  $\sup_u D_\Delta(u)$ (sup over non-parallel triples on the triangle), citing
+  Problem~prob:defect (renders "Problem 10.12").
+- **C** (Conclusions, optional, applied): added hedge "known to us" to the
+  first-tilted-triple claim, matching the intro and §10.
+
+Verified: `prob:defect` resolves; no stray `\sup_K D_K` or old $G_{tr}$ phrasing.
+Recompiled from clean aux: **42 pp, 0 errors, 0 undefined, 0 overfull hbox
+>10pt**. Both corrections confirmed in the rendered PDF (pp. 32–33). Source
+bundle rebuilt. **Not committed** — awaiting the chief's short re-audit; commit
+must exclude `drafts_uso_ai.zip`.

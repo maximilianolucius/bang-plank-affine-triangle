@@ -613,3 +613,26 @@ Pendiente único no-investigador: bloque de autor (identidad real).
 Repo público `maximilianolucius/bang-plank-affine-triangle`. Commits: inicial + Ronda 6 +
 **Rondas 7–8** (este commit). `refs/`, `hamilton-jacobi-*`, artefactos LaTeX y `target/`
 excluidos por `.gitignore`. `run_remote.py` saneado (credenciales por env).
+
+---
+
+## Track AIMS Mathematics (submission, 4 autores) — desde 2026-07-05
+Paper vivo migrado a `drafts/aims-v1/affine-plank-triangle-aims-v1.tex` (clase `aims`,
+4 autores, refs expandidas, declaración AIMS de IA). Conversión guiada por
+`instrucciones-modificaciones-paper-aims.md`.
+
+- **Directiva 70** (`auditorias/70-directiva-conclusions-discussion-aims.md`, 2026-07-07):
+  agregar `\section{Discussion}` (`sec:discussion`) y `\section{Conclusions}` (`sec:conclusions`)
+  entre §10 y `\appendix` — el template AIMS las exige y la conversión las omitió (hueco de
+  las instrucciones, no del investigador). Borradores LaTeX completos en la directiva; regla
+  dura: Discussion no re-enuncia teoremas, Conclusions no re-lista open problems (apunta a
+  `prob:covconst`). Pendiente: ejecución del investigador → auditoría del jefe (3 chequeos) →
+  commit. Ver checklist §5 de las instrucciones para el resto del end matter (ya completo:
+  Author contributions / AI declaration / Acknowledgments / Conflict of interest / Supplementary).
+- **Auditoría 71** (`auditorias/71-auditoria-discussion-conclusions.md`, 2026-07-07): ejecución
+  de la directiva 70 auditada. Ubicación/numeración correctas (§11/§12, apéndices A/B);
+  recompilé desde cero: 42 pp, 0 undefined, 0 overfull >10pt; 26 refs, 0 citas colgadas.
+  **Aprobado con 2 correcciones (A: overclaim `G_tr>0` general en Discussion; B: `\sup_K D_K`
+  → `\sup_u D_\Delta(u)` en Conclusions) + 1 opcional (C: hedge "to our knowledge")** — las
+  tres en texto que redacté yo en la directiva 70. Pendiente: investigador aplica A/B/C →
+  re-auditoría corta → commit (excluir `drafts_uso_ai.zip`, snapshot ajeno al paper).
